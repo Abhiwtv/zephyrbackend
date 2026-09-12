@@ -7,11 +7,14 @@ def executor_node(state: IncidentState) -> dict:
     STATE 9: EXECUTING
     Deterministically executes the approved action in the sandbox.
     """
-    # Call the sandbox tool directly
-    result = simulate_firewall.invoke({
-        "action": state.proposed_action, 
-        "target": state.proposed_target
-    })
+    if state.proposed_action in ["NO_ACTION", "MONITOR"]:
+        result = f"[SUCCESS] Action {state.proposed_action} on {state.proposed_target} logged cleanly (no firewall change)."
+    else:
+        # Call the sandbox tool directly
+        result = simulate_firewall.invoke({
+            "action": state.proposed_action, 
+            "target": state.proposed_target
+        })
     
     return {
         "status": "EXECUTING",

@@ -34,8 +34,12 @@ def assessment_node(state: IncidentState) -> dict:
     
     # Parse the JSON response
     try:
-        # Clean the response in case the local LLM wraps it in markdown blocks
-        clean_json = response.content.replace("```json", "").replace("```", "").strip()
+        # Clean the response in case the LLM wraps it in markdown blocks
+        if isinstance(response.content, list):
+            content_str = response.content[0].get("text", "") if isinstance(response.content[0], dict) else str(response.content[0])
+        else:
+            content_str = str(response.content)
+        clean_json = content_str.replace("```json", "").replace("```", "").strip()
         assessment_data = json.loads(clean_json)
     except json.JSONDecodeError:
         # Fallback if the local model fails strict JSON formatting

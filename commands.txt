@@ -1,0 +1,31 @@
+# 1. Find the currently running container ID
+docker ps
+
+# 2. Stop and remove the old container (Replace <CONTAINER_ID> with the ID from step 1)
+docker stop <CONTAINER_ID>
+docker rm <CONTAINER_ID>
+
+# 3. Rebuild the Docker image with the new timer updates
+docker build -t zephyr-backend .
+
+# 4. Run the new container in detached mode with the specific name "zephyr-soc"
+docker run -d --name zephyr-soc -p 10000:10000 --env-file .env -e PORT=10000 zephyr-backend
+
+# 5. Follow the live server logs (to see the [TIMER] tags)
+docker logs -f zephyr-soc
+
+# 6. Open a NEW terminal window and run the positive test
+python app/test_alert_positive.py
+
+# ==========================================
+# LOCAL DEVELOPMENT (WITHOUT DOCKER)
+# ==========================================
+# If you want to run the server locally without rebuilding Docker every time:
+
+# 1. Start the FastAPI server with hot-reloading on port 10000
+# (Ensure your virtual environment is activated and dependencies are installed)
+uvicorn app.main:app --host 127.0.0.1 --port 10000 --reload
+
+# 2. Open a NEW terminal window and run your tests
+python app/test_alert.py
+python app/test_alert_positive.py

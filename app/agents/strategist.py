@@ -13,7 +13,7 @@ def strategist_node(state: IncidentState) -> dict:
     The LLM reviews missing evidence and decides which tool to call.
     """
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an Evidence Strategist. Look at the missing evidence and call the appropriate tool to retrieve it. Only call one tool at a time."),
+        ("system", "You are an Evidence Strategist. Look at the missing evidence and call the appropriate tool to retrieve it. If multiple pieces of evidence are missing, you may issue multiple tool calls in parallel, or sequentially. Do not overthink the tool order."),
         ("user", "Target IP: {target}\nMissing Evidence: {missing}")
     ])
     

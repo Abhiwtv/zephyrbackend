@@ -22,20 +22,24 @@ class SufficiencyCheck(BaseModel):
 
 def check_evidence_sufficiency(state: IncidentState) -> str:
     """
-    STATE 5: STATE_UPDATE & ROUTING
-    Checks the whiteboard to see if we need to loop back to the Strategist (State 3) 
-    or proceed to Assessment (State 6).
+    STATE 5: STATE_UPDATE & ROUTING (With Circuit Breaker)
     """
-    # Extract tool observations
-    tool_messages = [msg.content for msg in state.messages if msg.type == "tool"]
-    evidence_text = "\n".join(tool_messages)
+    # 1. CIRCUIT BREAKER: Count how many tool calls have been made
+    tool_messages = [msg for msg in state.messages if msg.type == "tool"]
+    
+    # If the agent has tried and failed 3 times, force it forward to prevent API bans
+    if len(tool_messages) >= 3:
+        print("⚠️ Circuit Breaker Triggered: Max evidence attempts reached. Forcing Assessment.")
+        return "assessing"
+
+    # 2. STANDARD CHECK: If under the limit, ask the LLM if we have enough
+    evidence_text = "\n".join([msg.content for msg in tool_messages])
     
     prompt = ChatPromptTemplate.from_messages([
         ("system", "You are the SOC Orchestrator. Review the gathered evidence. Do we have enough conclusive evidence to prove whether the SQL injection attack succeeded or failed? Answer purely based on the evidence."),
         ("user", "Missing Evidence goals: {missing}\n\nEvidence Gathered:\n{evidence}")
     ])
     
-    # Force the LLM to output our structured JSON boolean
     chain = prompt | local_llm.with_structured_output(SufficiencyCheck)
     
     result = chain.invoke({
@@ -58,25 +62,48 @@ def route_review(state: IncidentState):
         print("❌ Reviewer REJECTED. Looping back to Adaptation/Investigation.")
         return "investigating"
     
+import time
+
+def with_timer(node_func, node_name):
+    def wrapper(state):
+        start = time.time()
+        if hasattr(node_func, "invoke"):
+            result = node_func.invoke(state)
+        else:
+            result = node_func(state)
+        end = time.time()
+        print(f"[TIMER] Node '{node_name}' took {end - start:.2f} seconds")
+        return result
+    return wrapper
+
+def check_evidence_sufficiency_with_timer(state: IncidentState):
+    start = time.time()
+    result = check_evidence_sufficiency(state)
+    end = time.time()
+    print(f"[TIMER] Edge 'check_evidence_sufficiency' took {end - start:.2f} seconds")
+    return result
+
 def build_soc_graph():
     builder = StateGraph(IncidentState)
     
     # 1. Add Nodes
-    builder.add_node("intake", intake_node)
-    builder.add_node("investigating", investigator_node)
-    builder.add_node("strategist", strategist_node)
+    builder.add_node("intake", with_timer(intake_node, "intake"))
+    builder.add_node("investigating", with_timer(investigator_node, "investigating"))
+    builder.add_node("strategist", with_timer(strategist_node, "strategist"))
     builder.add_node("tools", ToolNode(soc_tools))
-    builder.add_node("assessing", assessment_node)
-    builder.add_node("defending", defense_node)
-    builder.add_node("reviewing", reviewer_node)
+    builder.add_node("assessing", with_timer(assessment_node, "assessing"))
+    builder.add_node("defending", with_timer(defense_node, "defending"))
+    builder.add_node("reviewing", with_timer(reviewer_node, "reviewing"))
+    builder.add_node("executing", with_timer(executor_node, "executing"))
+    builder.add_node("verifying", with_timer(verifier_node, "verifying"))
+    builder.add_node("postmortem", with_timer(judge_node, "postmortem"))
+    builder.add_node("rart", with_timer(rart_node, "rart"))
+    
     # 2. Add Edges (The Flow)
     builder.add_edge(START, "intake")
     builder.add_edge("intake", "investigating")
     builder.add_edge("investigating", "strategist")
-    builder.add_node("executing", executor_node)
-    builder.add_node("verifying", verifier_node)
-    builder.add_node("postmortem", judge_node)
-    builder.add_node("rart", rart_node)
+    
     # 3. Conditional Tool Execution
     def route_tools(state: IncidentState):
         last_message = state.messages[-1]
@@ -90,15 +117,13 @@ def build_soc_graph():
         {"tools": "tools", "assessing": "assessing"}
     )
     
-    # 4. Connect Tools to Assessment
     # 4. STATE 5: State Update & Sufficiency Loop
-    # Instead of a direct line, we use a conditional edge to create the loop
     builder.add_conditional_edges(
         "tools",
-        check_evidence_sufficiency, 
+        check_evidence_sufficiency_with_timer, 
         {
-            "assessing": "assessing",    # YES -> Move to State 6
-            "strategist": "strategist"   # NO -> Loop back to State 3
+            "assessing": "assessing",    
+            "strategist": "strategist"   
         }
     )
     builder.add_edge("assessing", "defending")

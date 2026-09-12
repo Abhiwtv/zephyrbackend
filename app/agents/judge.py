@@ -21,15 +21,15 @@ def judge_node(state: IncidentState) -> dict:
     timeline = f"""
     Alert: {state.alert_signature}
     Missing Evidence Searched: {state.missing_evidence}
-    Initial Proposed Action: BLOCK_SOURCE (Rejected by Reviewer)
-    Adapted Action: {state.proposed_action} (Approved)
+    Proposed Action: {state.proposed_action}
+    Reviewer Decision: {state.reviewer_decision}
     Final Outcome: {state.assessment_outcome}
     Verification: {state.verification_result}
     """
     
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are the SOC Judge Orchestrator. Evaluate the AI agent's performance on this incident. 
-        Pay special attention to how it adapted its response after the initial rejection.
+        Strictly evaluate the actual provided timeline. Do not infer or hallucinate events (like rejections or adaptations) that did not occur.
         Provide strict 1-10 scores and a brief feedback summary."""),
         ("user", "Incident Timeline:\n{timeline}")
     ])

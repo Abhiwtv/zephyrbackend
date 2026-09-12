@@ -1,18 +1,17 @@
 import requests
 import json
+import time
 
 url = "http://127.0.0.1:10000/alert"
 
 payload = {
-  "alert_id": "ALT-1042",
-  "signature": "ET EXPLOIT Possible SQL Injection",
-  "src_ip": "10.0.4.23",
+  "alert_id": "ALT-9999",
+  "signature": "CRITICAL: Successful SQL Injection and Data Exfiltration Detected",
+  "src_ip": "192.168.1.100",
   "dst_ip": "10.0.1.15",
   "dst_port": 443,
-  "timestamp": "2026-09-12T10:21:32"
+  "timestamp": "2026-09-12T15:00:00"
 }
-
-import time
 
 print(f"Sending NIDS Alert {payload['alert_id']} to SOC API...")
 start_time = time.time()
