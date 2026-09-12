@@ -1,0 +1,39 @@
+[FILLER] SNMP [13/Sep/2026:11:30:00 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [13/Sep/2026:11:30:02 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [13/Sep/2026:11:30:03 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [13/Sep/2026:11:30:06 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [13/Sep/2026:11:30:10 +0000]: PERMIT TCP 198.51.100.55 -> 10.0.1.200:80 (Rule: Allow_Web)
+[FILLER] SNMP [13/Sep/2026:11:30:13 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [13/Sep/2026:11:30:17 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [13/Sep/2026:11:30:20 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [13/Sep/2026:11:30:23 +0000]: PERMIT TCP 198.51.100.55 -> 10.0.1.200:80 (Rule: Allow_Web)
+[FILLER] DNS Query [13/Sep/2026:11:30:27 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [13/Sep/2026:11:30:29 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [13/Sep/2026:11:30:31 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [13/Sep/2026:11:30:35 +0000]: PERMIT TCP 198.51.100.55 -> 10.0.1.200:80 (Rule: Allow_Web)
+[FILLER] SNMP [13/Sep/2026:11:30:39 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [13/Sep/2026:11:30:42 +0000]: PERMIT TCP 198.51.100.55 -> 10.0.1.200:80 (Rule: Allow_Web)
+[FILLER] NetFlow [13/Sep/2026:11:30:44 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[CORE] TLS Handshake to 198.51.100.55 - Subject: CN=Meterpreter, OU=Metasploit
+[CORE] [IDS-ALERT] Meterpreter Reverse HTTPS payload signature matched.
+[FILLER] NetFlow [13/Sep/2026:11:30:50 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [13/Sep/2026:11:30:51 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [13/Sep/2026:11:30:53 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [13/Sep/2026:11:30:54 +0000]: PERMIT TCP 198.51.100.55 -> 10.0.1.200:80 (Rule: Allow_Web)
+[FILLER] SNMP [13/Sep/2026:11:30:57 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [13/Sep/2026:11:31:00 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [13/Sep/2026:11:31:01 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [13/Sep/2026:11:31:02 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [13/Sep/2026:11:31:04 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [13/Sep/2026:11:31:07 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] DNS Query [13/Sep/2026:11:31:09 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [13/Sep/2026:11:31:10 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [13/Sep/2026:11:31:13 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [13/Sep/2026:11:31:17 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [13/Sep/2026:11:31:18 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [13/Sep/2026:11:31:21 +0000]: 198.51.100.55 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [13/Sep/2026:11:31:22 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [13/Sep/2026:11:31:24 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [13/Sep/2026:11:31:27 +0000]: PERMIT TCP 198.51.100.55 -> 10.0.1.200:80 (Rule: Allow_Web)
+[FILLER] NetFlow [13/Sep/2026:11:31:31 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [13/Sep/2026:11:31:33 +0000]: TCP 198.51.100.55:54312 -> 10.0.1.200:443 (14 packets, 2048 bytes)

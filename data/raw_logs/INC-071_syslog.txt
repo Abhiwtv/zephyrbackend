@@ -1,0 +1,43 @@
+[FILLER] CloudWatch [14/Sep/2026:01:30:00 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] CloudWatch [14/Sep/2026:01:30:04 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] CloudTrail [14/Sep/2026:01:30:07 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [14/Sep/2026:01:30:09 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [14/Sep/2026:01:30:10 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] ALB-Log [14/Sep/2026:01:30:12 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [14/Sep/2026:01:30:15 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [14/Sep/2026:01:30:18 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [14/Sep/2026:01:30:22 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:30:25 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] CloudWatch [14/Sep/2026:01:30:26 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] CloudTrail [14/Sep/2026:01:30:28 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [14/Sep/2026:01:30:30 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] VPC-Flow [14/Sep/2026:01:30:32 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] ALB-Log [14/Sep/2026:01:30:35 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [14/Sep/2026:01:30:36 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [14/Sep/2026:01:30:38 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [14/Sep/2026:01:30:39 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [14/Sep/2026:01:30:40 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [14/Sep/2026:01:30:41 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [14/Sep/2026:01:30:44 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[CORE] Mass SIGKILL commands issued across 50 production containers simultaneously.
+[CORE] [EDR-ALERT] Destructive mass service termination event (Matches scheduled Game Day).
+[FILLER] CloudWatch [14/Sep/2026:01:30:51 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] ALB-Log [14/Sep/2026:01:30:55 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [14/Sep/2026:01:30:56 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] ALB-Log [14/Sep/2026:01:30:59 +0000]: 10.10.5.55 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [14/Sep/2026:01:31:01 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] VPC-Flow [14/Sep/2026:01:31:02 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] CloudTrail [14/Sep/2026:01:31:04 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [14/Sep/2026:01:31:06 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] CloudTrail [14/Sep/2026:01:31:10 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [14/Sep/2026:01:31:11 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:31:15 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] CloudWatch [14/Sep/2026:01:31:17 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] CloudWatch [14/Sep/2026:01:31:21 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] VPC-Flow [14/Sep/2026:01:31:22 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] VPC-Flow [14/Sep/2026:01:31:25 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] CloudWatch [14/Sep/2026:01:31:27 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0
+[FILLER] VPC-Flow [14/Sep/2026:01:31:28 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] VPC-Flow [14/Sep/2026:01:31:29 +0000]: ACCEPT OK 10.10.5.55 10.10.0.0 443 tcp 20 4000
+[FILLER] CloudTrail [14/Sep/2026:01:31:33 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:31:36 +0000]: EC2 CPU Utilization normal at 45% for 10.10.0.0

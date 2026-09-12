@@ -1,0 +1,38 @@
+[FILLER] Historian [13/Sep/2026:18:45:00 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] Historian [13/Sep/2026:18:45:02 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:04 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:05 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:06 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:07 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:18:45:09 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] Modbus TCP [13/Sep/2026:18:45:11 +0000]: Function 03 (Read Holding Registers) from 10.0.99.15
+[FILLER] Historian [13/Sep/2026:18:45:12 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] Modbus TCP [13/Sep/2026:18:45:13 +0000]: Function 03 (Read Holding Registers) from 10.0.99.15
+[FILLER] Historian [13/Sep/2026:18:45:16 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:19 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:21 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:25 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Modbus TCP [13/Sep/2026:18:45:27 +0000]: Function 03 (Read Holding Registers) from 10.0.99.15
+[FILLER] Historian [13/Sep/2026:18:45:31 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] Historian [13/Sep/2026:18:45:35 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] DNP3 [13/Sep/2026:18:45:38 +0000]: Unsolicited Response from RTU 10.0.200.50 (Class 1 Data)
+[CORE] Telnet Auth Failure: admin/admin, admin/1234, root/root from 10.0.99.15
+[CORE] [BMS-ALERT] Brute force on Datacenter Thermal Controller. Risk of fail-safe idle mode.
+[FILLER] DNP3 [13/Sep/2026:18:45:42 +0000]: Unsolicited Response from RTU 10.0.200.50 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:18:45:45 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] Modbus TCP [13/Sep/2026:18:45:49 +0000]: Function 03 (Read Holding Registers) from 10.0.99.15
+[FILLER] Modbus TCP [13/Sep/2026:18:45:53 +0000]: Function 03 (Read Holding Registers) from 10.0.99.15
+[FILLER] Historian [13/Sep/2026:18:45:54 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:57 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:18:45:58 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:45:59 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] DNP3 [13/Sep/2026:18:46:02 +0000]: Unsolicited Response from RTU 10.0.200.50 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:18:46:04 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] Modbus TCP [13/Sep/2026:18:46:05 +0000]: Function 03 (Read Holding Registers) from 10.0.99.15
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:46:06 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:18:46:10 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:46:12 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Modbus TCP [13/Sep/2026:18:46:14 +0000]: Function 03 (Read Holding Registers) from 10.0.99.15
+[FILLER] Historian [13/Sep/2026:18:46:18 +0000]: Tag_Update_Success - Node_10.0.99.15 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:18:46:21 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] DNP3 [13/Sep/2026:18:46:22 +0000]: Unsolicited Response from RTU 10.0.200.50 (Class 1 Data)

@@ -1,0 +1,42 @@
+[FILLER] EDR-Log [14/Sep/2026:04:15:00 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [14/Sep/2026:04:15:03 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [14/Sep/2026:04:15:06 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [14/Sep/2026:04:15:07 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [14/Sep/2026:04:15:10 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] EDR-Log [14/Sep/2026:04:15:14 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [14/Sep/2026:04:15:15 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [14/Sep/2026:04:15:17 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [14/Sep/2026:04:15:18 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [14/Sep/2026:04:15:22 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [14/Sep/2026:04:15:25 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [14/Sep/2026:04:15:29 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [14/Sep/2026:04:15:30 +0000]: Routine definition update check completed.
+[FILLER] Kernel [14/Sep/2026:04:15:32 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] Kernel [14/Sep/2026:04:15:34 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] Sysmon [14/Sep/2026:04:15:35 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [14/Sep/2026:04:15:36 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] Splunk-UF [14/Sep/2026:04:15:37 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:15:39 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [14/Sep/2026:04:15:41 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] Sysmon [14/Sep/2026:04:15:43 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[CORE] TCP Stream: Continuous payload transfer exceeding 5,000,000 MB on port 873 (rsync).
+[CORE] [IDS-ALERT] Massive lateral data volume (Matches raw genome spooling pattern).
+[FILLER] Sysmon [14/Sep/2026:04:15:49 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [14/Sep/2026:04:15:51 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [14/Sep/2026:04:15:52 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] EDR-Log [14/Sep/2026:04:15:54 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [14/Sep/2026:04:15:55 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:15:56 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [14/Sep/2026:04:15:59 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [14/Sep/2026:04:16:03 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] EDR-Log [14/Sep/2026:04:16:07 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [14/Sep/2026:04:16:08 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [14/Sep/2026:04:16:12 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [14/Sep/2026:04:16:14 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [14/Sep/2026:04:16:15 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [14/Sep/2026:04:16:18 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] Splunk-UF [14/Sep/2026:04:16:21 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [14/Sep/2026:04:16:24 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [14/Sep/2026:04:16:26 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [14/Sep/2026:04:16:27 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.
+[FILLER] Kernel [14/Sep/2026:04:16:29 +0000]: [ 1234.56] IPv4: martian source 10.0.80.5 ignored.

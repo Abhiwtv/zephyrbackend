@@ -1,0 +1,792 @@
+{
+    "10.0.1.15": {
+        "asset_name": "Public Web App",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Public Web App"
+    },
+    "104.28.15.12": {
+        "asset_name": "Cloudflare Edge Node (US-East)",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Cloudflare Edge Node (US-East)"
+    },
+    "10.0.0.5": {
+        "asset_name": "Root IdP Signing Certificate",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Root IdP Signing Certificate"
+    },
+    "10.0.5.22": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.10.1.50": {
+        "asset_name": "DMZ Web Server",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered DMZ Web Server"
+    },
+    "8.8.8.8": {
+        "asset_name": "Google Public DNS",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Google Public DNS"
+    },
+    "10.0.4.15": {
+        "asset_name": "Biometric Smart Door Controller",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Biometric Smart Door Controller"
+    },
+    "10.0.1.0": {
+        "asset_name": "Enterprise Access Switches",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Enterprise Access Switches"
+    },
+    "10.100.0.5": {
+        "asset_name": "Internal Qualys Scanner",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Internal Qualys Scanner"
+    },
+    "10.0.0.100": {
+        "asset_name": "CEO Executive Laptop",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered CEO Executive Laptop"
+    },
+    "10.0.3.44": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.0.20": {
+        "asset_name": "Production SQL Cluster",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Production SQL Cluster"
+    },
+    "10.0.6.12": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "172.16.5.55": {
+        "asset_name": "Contractor VPN Pool",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Contractor VPN Pool"
+    },
+    "10.20.1.5": {
+        "asset_name": "Payment Gateway Server",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Payment Gateway Server"
+    },
+    "10.50.1.10": {
+        "asset_name": "MRI / Life-Support VLAN",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered MRI / Life-Support VLAN"
+    },
+    "10.0.8.22": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "140.82.113.3": {
+        "asset_name": "GitHub API (api.github.com)",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered GitHub API (api.github.com)"
+    },
+    "10.0.2.100": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.12.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "192.168.100.45": {
+        "asset_name": "Guest WiFi Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Guest WiFi Endpoint"
+    },
+    "10.100.1.50": {
+        "asset_name": "Factory Cooling Pump PLC",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Factory Cooling Pump PLC"
+    },
+    "10.0.99.5": {
+        "asset_name": "RADIUS Auth Server (Offline)",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered RADIUS Auth Server (Offline)"
+    },
+    "10.0.1.200": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "198.51.100.55": {
+        "asset_name": "Authorized Pentest Firm",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Authorized Pentest Firm"
+    },
+    "20.190.128.1": {
+        "asset_name": "Microsoft Windows Update",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Microsoft Windows Update"
+    },
+    "10.0.5.50": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.10.2.20": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.3.15": {
+        "asset_name": "Legal Hold Workstation",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Legal Hold Workstation"
+    },
+    "10.200.1.5": {
+        "asset_name": "Ephemeral Kubernetes Pod",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Ephemeral Kubernetes Pod"
+    },
+    "10.0.0.50": {
+        "asset_name": "Zephyr AI LangGraph Engine",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Zephyr AI LangGraph Engine"
+    },
+    "10.0.8.88": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.10.55": {
+        "asset_name": "AWS Auto-Scaling Instance",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered AWS Auto-Scaling Instance"
+    },
+    "10.0.100.2": {
+        "asset_name": "Building Fire Alarm / Evac Panel",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Building Fire Alarm / Evac Panel"
+    },
+    "10.0.100.10": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.99.99.5": {
+        "asset_name": "Deception Honeypot",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Deception Honeypot"
+    },
+    "203.0.113.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.200.5": {
+        "asset_name": "Legacy AS/400 Mainframe",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Legacy AS/400 Mainframe"
+    },
+    "10.0.50.10": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.1.1": {
+        "asset_name": "Stateful Edge Firewall",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Stateful Edge Firewall"
+    },
+    "198.51.100.22": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "123.123.123.123": {
+        "asset_name": "In-Flight Jet Wi-Fi",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered In-Flight Jet Wi-Fi"
+    },
+    "10.0.3.45": {
+        "asset_name": "Standard Employee Workstation",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Standard Employee Workstation"
+    },
+    "10.0.0.1": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "172.16.254.1": {
+        "asset_name": "B2B Payroll Provider VPN",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered B2B Payroll Provider VPN"
+    },
+    "10.0.1.80": {
+        "asset_name": "Marketing Blog Server",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Marketing Blog Server"
+    },
+    "10.10.10.10": {
+        "asset_name": "Quarterly Revenue Billing API",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Quarterly Revenue Billing API"
+    },
+    "203.0.113.100": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "AWS_KMS_API": {
+        "asset_name": "Production Database EBS Volumes",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Production Database EBS Volumes"
+    },
+    "10.0.8.1": {
+        "asset_name": "Hypervisor hosting IPAM/DHCP",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Hypervisor hosting IPAM/DHCP"
+    },
+    "10.200.1.50": {
+        "asset_name": "Internal Docker Registry",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Internal Docker Registry"
+    },
+    "10.100.5.20": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.254.0.1": {
+        "asset_name": "Asian Regional Edge Router",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Asian Regional Edge Router"
+    },
+    "192.0.2.1": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "198.51.100.44": {
+        "asset_name": "SEC Auditing Firm (Authorized)",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered SEC Auditing Firm (Authorized)"
+    },
+    "10.0.5.100": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "Enterprise_WLAN": {
+        "asset_name": "Lobby Wireless Network",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Lobby Wireless Network"
+    },
+    "203.0.113.10": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "0xLiquidityPoolContract": {
+        "asset_name": "Time-Locked Blockchain Pool",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Time-Locked Blockchain Pool"
+    },
+    "Corporate_Exchange": {
+        "asset_name": "Employee Mailboxes",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Employee Mailboxes"
+    },
+    "192.0.2.200": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.254.254.5": {
+        "asset_name": "Offshore Oil Rig Satellite WAN",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Offshore Oil Rig Satellite WAN"
+    },
+    "10.254.254.10": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.250.0.10": {
+        "asset_name": "Primary 5G AMF Node (Metro Area)",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Primary 5G AMF Node (Metro Area)"
+    },
+    "10.100.200.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.50.25": {
+        "asset_name": "Global Customer Service LLM Gateway",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Global Customer Service LLM Gateway"
+    },
+    "192.168.1.100": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.50.2.10": {
+        "asset_name": "Ephemeral Jenkins Build Runner",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Ephemeral Jenkins Build Runner"
+    },
+    "10.0.200.50": {
+        "asset_name": "Datacenter CRAC (Cooling) Master Unit",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Datacenter CRAC (Cooling) Master Unit"
+    },
+    "10.0.99.15": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.55.10.255": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.55.10.5": {
+        "asset_name": "Warehouse AGV Drone Fleet",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Warehouse AGV Drone Fleet"
+    },
+    "10.0.3.22": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "arn:aws:s3:::enterprise-backups": {
+        "asset_name": "S3 Versioned Backup Bucket",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered S3 Versioned Backup Bucket"
+    },
+    "192.168.5.55": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.100.5.50": {
+        "asset_name": "AGV Fleet Wireless Controller",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered AGV Fleet Wireless Controller"
+    },
+    "10.100.1.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.10.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.88.14": {
+        "asset_name": "Customer Support Rep Workstation",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Customer Support Rep Workstation"
+    },
+    "10.0.50.2": {
+        "asset_name": "Live Broadcast Transcoding Server",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Live Broadcast Transcoding Server"
+    },
+    "10.0.100.12": {
+        "asset_name": "Chemical Mixing Centrifuge PLC",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Chemical Mixing Centrifuge PLC"
+    },
+    "10.0.88.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.254.5": {
+        "asset_name": "Root ATM Network HSM",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Root ATM Network HSM"
+    },
+    "10.0.5.15": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "198.51.100.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "AWS_LAMBDA_EXECUTION_ROLE": {
+        "asset_name": "Ephemeral Serverless Function",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Ephemeral Serverless Function"
+    },
+    "10.0.80.100": {
+        "asset_name": "Active Fleet OTA Dispatcher",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Active Fleet OTA Dispatcher"
+    },
+    "10.0.10.10": {
+        "asset_name": "Enterprise Trading Gateway",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Enterprise Trading Gateway"
+    },
+    "10.0.50.0": {
+        "asset_name": "High-Frequency Trading Partners",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered High-Frequency Trading Partners"
+    },
+    "10.0.70.15": {
+        "asset_name": "Regional Grid Substation RTU",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Regional Grid Substation RTU"
+    },
+    "10.0.44.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.99.100": {
+        "asset_name": "Datacenter Master UPS Controller",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Datacenter Master UPS Controller"
+    },
+    "10.0.2.10": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.244.1.1": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.244.1.15": {
+        "asset_name": "Kubernetes Worker Node",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Kubernetes Worker Node"
+    },
+    "10.0.200.20": {
+        "asset_name": "Blood Bank Refrigeration Broker",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Blood Bank Refrigeration Broker"
+    },
+    "10.0.3.50": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "Azure_AD_IdP": {
+        "asset_name": "Azure AD / Entra ID Identity Provider",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Azure AD / Entra ID Identity Provider"
+    },
+    "203.0.113.88": {
+        "asset_name": "Authorized External Law Firm",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Authorized External Law Firm"
+    },
+    "45.33.22.11": {
+        "asset_name": "Enterprise BITS Client",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Enterprise BITS Client"
+    },
+    "10.0.8.20": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "198.51.100.99": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.50.5": {
+        "asset_name": "Public Marketing S3 Bucket",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Public Marketing S3 Bucket"
+    },
+    "10.0.100.0": {
+        "asset_name": "Enterprise WMI Infrastructure",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Enterprise WMI Infrastructure"
+    },
+    "10.0.100.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.1.50": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "66.249.66.1": {
+        "asset_name": "Googlebot Search Crawler",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Googlebot Search Crawler"
+    },
+    "203.0.113.15": {
+        "asset_name": "Corporate SD-WAN QoS Router",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Corporate SD-WAN QoS Router"
+    },
+    "10.0.33.2": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.99.1.10": {
+        "asset_name": "QA Testing Server",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered QA Testing Server"
+    },
+    "10.0.4.5": {
+        "asset_name": "Global Windows Subsystem (rundll32)",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Global Windows Subsystem (rundll32)"
+    },
+    "127.0.0.1": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.2.20": {
+        "asset_name": "Developer Workstation Browser",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Developer Workstation Browser"
+    },
+    "169.254.169.254": {
+        "asset_name": "AWS Instance Metadata Service / Payment Webhook",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered AWS Instance Metadata Service / Payment Webhook"
+    },
+    "192.168.1.15": {
+        "asset_name": "Compromised Internal Workstation",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Compromised Internal Workstation"
+    },
+    "10.10.0.0": {
+        "asset_name": "Production Microservice Cluster",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Production Microservice Cluster"
+    },
+    "10.10.5.55": {
+        "asset_name": "SRE Chaos Engineering Suite",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered SRE Chaos Engineering Suite"
+    },
+    "10.0.1.10": {
+        "asset_name": "Enterprise EDR Agent Kernel Hooks",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Enterprise EDR Agent Kernel Hooks"
+    },
+    "198.51.100.8": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.50.2.100": {
+        "asset_name": "Exposed Jupyter Notebook",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Exposed Jupyter Notebook"
+    },
+    "239.255.0.1": {
+        "asset_name": "Corporate IPTV Multicast Router",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Corporate IPTV Multicast Router"
+    },
+    "10.0.0.250": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "172.16.10.5": {
+        "asset_name": "Disaster Recovery DB (AWS EU-West)",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Disaster Recovery DB (AWS EU-West)"
+    },
+    "10.60.1.15": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "185.199.108.133": {
+        "asset_name": "HuggingFace ML Repository",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered HuggingFace ML Repository"
+    },
+    "203.0.113.99": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.40.12": {
+        "asset_name": "Conference Room Smart TV",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Conference Room Smart TV"
+    },
+    "192.168.100.5": {
+        "asset_name": "Subsidiary AD Forest Trust",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Subsidiary AD Forest Trust"
+    },
+    "10.0.1.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.50.22": {
+        "asset_name": "Developer Workstation (VSCode)",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Developer Workstation (VSCode)"
+    },
+    "10.254.254.1": {
+        "asset_name": "Enterprise BGP Edge Router",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Enterprise BGP Edge Router"
+    },
+    "192.0.2.254": {
+        "asset_name": "Tier-1 ISP Upstream Peer",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Tier-1 ISP Upstream Peer"
+    },
+    "10.100.0.10": {
+        "asset_name": "Kubernetes CNI (Cilium) Node",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Kubernetes CNI (Cilium) Node"
+    },
+    "10.0.100.55": {
+        "asset_name": "High-Performance Compute Cluster",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered High-Performance Compute Cluster"
+    },
+    "10.0.80.5": {
+        "asset_name": "Illumina NovaSeq DNA Sequencer",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Illumina NovaSeq DNA Sequencer"
+    },
+    "10.0.4.55": {
+        "asset_name": "Locked VIP Corporate Laptop",
+        "criticality_tier": 3,
+        "business_function": "Auto-Registered Locked VIP Corporate Laptop"
+    },
+    "172.16.0.20": {
+        "asset_name": "SAN Storage Controller",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered SAN Storage Controller"
+    },
+    "172.16.0.10": {
+        "asset_name": "VMware ESXi Host (Storage Interface)",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered VMware ESXi Host (Storage Interface)"
+    },
+    "10.0.60.10": {
+        "asset_name": "Media Transcoder Core",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Media Transcoder Core"
+    },
+    "10.0.99.10": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.10.5.50": {
+        "asset_name": "Enterprise pgvector Database",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Enterprise pgvector Database"
+    },
+    "10.1.1.254": {
+        "asset_name": "OOB Bare-Metal Provisioning Server",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered OOB Bare-Metal Provisioning Server"
+    },
+    "10.1.1.5": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "Office365_Graph_API": {
+        "asset_name": "Enterprise Email Tenant",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Enterprise Email Tenant"
+    },
+    "10.0.5.53": {
+        "asset_name": "Edge DNS Resolver",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Edge DNS Resolver"
+    },
+    "10.200.1.2": {
+        "asset_name": "Quantum Key Distribution Optical Node",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Quantum Key Distribution Optical Node"
+    },
+    "10.200.1.1": {
+        "asset_name": "Unclassified Internal Endpoint",
+        "criticality_tier": 3,
+        "business_function": "Standard Network Asset"
+    },
+    "10.0.0.2": {
+        "asset_name": "Secondary Domain Controller",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Secondary Domain Controller"
+    },
+    "10.50.0.5": {
+        "asset_name": "SS7 Signaling Firewall",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered SS7 Signaling Firewall"
+    },
+    "10.0.15.20": {
+        "asset_name": "Datacenter HVAC Dampers",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Datacenter HVAC Dampers"
+    },
+    "10.0.15.5": {
+        "asset_name": "FM-200 Fire Suppression Panel",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered FM-200 Fire Suppression Panel"
+    },
+    "10.10.10.0": {
+        "asset_name": "HPC Compute Fabric",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered HPC Compute Fabric"
+    },
+    "10.10.10.1": {
+        "asset_name": "HPC Master Node",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered HPC Master Node"
+    },
+    "10.0.50.15": {
+        "asset_name": "Stratum-0 Rubidium Atomic Clock",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Stratum-0 Rubidium Atomic Clock"
+    },
+    "0xEnterpriseDeFiProtocol": {
+        "asset_name": "DeFi Liquidity Contract",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered DeFi Liquidity Contract"
+    },
+    "10.0.22.100": {
+        "asset_name": "Logistics Routing Engine",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Logistics Routing Engine"
+    },
+    "10.0.22.5": {
+        "asset_name": "Aviation Transponder Receiver",
+        "criticality_tier": 2,
+        "business_function": "Auto-Registered Aviation Transponder Receiver"
+    },
+    "10.0.5.200": {
+        "asset_name": "Zephyr SOC Phase 2 RAG DB",
+        "criticality_tier": 1,
+        "business_function": "Auto-Registered Zephyr SOC Phase 2 RAG DB"
+    }
+}

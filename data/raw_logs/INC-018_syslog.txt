@@ -1,0 +1,41 @@
+[FILLER] Splunk-UF [13/Sep/2026:12:15:00 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:12:15:02 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:12:15:03 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Sysmon [13/Sep/2026:12:15:05 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:12:15:07 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:12:15:11 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:12:15:14 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Kernel [13/Sep/2026:12:15:16 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:12:15:20 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:12:15:21 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:12:15:23 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:12:15:25 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:12:15:29 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Kernel [13/Sep/2026:12:15:30 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Sysmon [13/Sep/2026:12:15:34 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [13/Sep/2026:12:15:38 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:12:15:40 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:12:15:42 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:12:15:45 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:12:15:49 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:12:15:52 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[CORE] File Creation: C:\Windows\Temp\m64.exe (Hash: a1b2c3d4e5f6...)
+[CORE] [EDR-ALERT] Credential dumping utility (Mimikatz variant) dropped to disk.
+[FILLER] Splunk-UF [13/Sep/2026:12:15:57 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:12:16:00 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:12:16:03 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:12:16:07 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [13/Sep/2026:12:16:11 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [13/Sep/2026:12:16:12 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:12:16:14 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Kernel [13/Sep/2026:12:16:18 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Kernel [13/Sep/2026:12:16:22 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Sysmon [13/Sep/2026:12:16:24 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:12:16:25 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:12:16:26 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:12:16:30 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:12:16:33 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:12:16:34 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:12:16:35 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:12:16:37 +0000]: [ 1234.56] IPv4: martian source 10.0.3.15 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:12:16:38 +0000]: Forwarding 120 events to indexer.

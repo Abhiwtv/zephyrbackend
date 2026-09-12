@@ -1,0 +1,38 @@
+[FILLER] Firewall [13/Sep/2026:16:15:00 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] NetFlow [13/Sep/2026:16:15:04 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [13/Sep/2026:16:15:06 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] SNMP [13/Sep/2026:16:15:08 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] SNMP [13/Sep/2026:16:15:12 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [13/Sep/2026:16:15:15 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] DNS Query [13/Sep/2026:16:15:16 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [13/Sep/2026:16:15:19 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] Firewall [13/Sep/2026:16:15:22 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] SNMP [13/Sep/2026:16:15:23 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [13/Sep/2026:16:15:24 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] NetFlow [13/Sep/2026:16:15:26 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [13/Sep/2026:16:15:27 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [13/Sep/2026:16:15:31 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [13/Sep/2026:16:15:35 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [13/Sep/2026:16:15:36 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] NetFlow [13/Sep/2026:16:15:39 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [13/Sep/2026:16:15:41 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] DNS Query [13/Sep/2026:16:15:42 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [13/Sep/2026:16:15:44 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[CORE] BGP Update: /24 more specific route announced by rogue ASN.
+[CORE] [BGP-ALERT] Route hijacking detected. Traffic being re-routed to untrusted ISP.
+[FILLER] DNS Query [13/Sep/2026:16:15:48 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] Firewall [13/Sep/2026:16:15:49 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] SNMP [13/Sep/2026:16:15:53 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [13/Sep/2026:16:15:54 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] SNMP [13/Sep/2026:16:15:56 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] SNMP [13/Sep/2026:16:16:00 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [13/Sep/2026:16:16:01 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [13/Sep/2026:16:16:02 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [13/Sep/2026:16:16:06 +0000]: TCP 192.0.2.1:54312 -> 10.254.0.1:443 (14 packets, 2048 bytes)
+[FILLER] DNS Query [13/Sep/2026:16:16:08 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [13/Sep/2026:16:16:10 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [13/Sep/2026:16:16:12 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] Firewall [13/Sep/2026:16:16:13 +0000]: PERMIT TCP 192.0.2.1 -> 10.254.0.1:80 (Rule: Allow_Web)
+[FILLER] DNS Query [13/Sep/2026:16:16:16 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [13/Sep/2026:16:16:19 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [13/Sep/2026:16:16:23 +0000]: 192.0.2.1 requested AAAA graph.windows.net (NOERROR)

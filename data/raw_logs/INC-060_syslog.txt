@@ -1,0 +1,43 @@
+[FILLER] Duo-MFA [13/Sep/2026:22:45:00 +0000]: Push Notification Approved by user_admin
+[FILLER] Radius [13/Sep/2026:22:45:03 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[FILLER] Duo-MFA [13/Sep/2026:22:45:04 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [13/Sep/2026:22:45:06 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:22:45:10 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:22:45:12 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:22:45:16 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Okta-Log [13/Sep/2026:22:45:20 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] VPN-Log [13/Sep/2026:22:45:24 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Duo-MFA [13/Sep/2026:22:45:28 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:22:45:29 +0000]: Push Notification Approved by user_admin
+[FILLER] Radius [13/Sep/2026:22:45:30 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[FILLER] VPN-Log [13/Sep/2026:22:45:32 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Okta-Log [13/Sep/2026:22:45:35 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] VPN-Log [13/Sep/2026:22:45:38 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Radius [13/Sep/2026:22:45:42 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[FILLER] Okta-Log [13/Sep/2026:22:45:43 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:22:45:47 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [13/Sep/2026:22:45:51 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] VPN-Log [13/Sep/2026:22:45:55 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Radius [13/Sep/2026:22:45:57 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[CORE] OAuth2 Token Refresh via unknown User-Agent (Curl/7.68.0) from Russian Geo-IP.
+[CORE] [IDP-ALERT] Session cookie replay attack detected. Mobile device token hijacked.
+[FILLER] Okta-Log [13/Sep/2026:22:46:00 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] Radius [13/Sep/2026:22:46:03 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[FILLER] Duo-MFA [13/Sep/2026:22:46:07 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:22:46:10 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] VPN-Log [13/Sep/2026:22:46:11 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] VPN-Log [13/Sep/2026:22:46:14 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Radius [13/Sep/2026:22:46:15 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[FILLER] Okta-Log [13/Sep/2026:22:46:16 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:22:46:17 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:22:46:18 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:22:46:20 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Radius [13/Sep/2026:22:46:24 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[FILLER] VPN-Log [13/Sep/2026:22:46:27 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] VPN-Log [13/Sep/2026:22:46:29 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] VPN-Log [13/Sep/2026:22:46:31 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Radius [13/Sep/2026:22:46:35 +0000]: Access-Accept for user=wifi_guest from Azure_AD_IdP
+[FILLER] VPN-Log [13/Sep/2026:22:46:38 +0000]: IKEv2 IPsec SA established with 203.0.113.88
+[FILLER] Okta-Log [13/Sep/2026:22:46:41 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] Okta-Log [13/Sep/2026:22:46:42 +0000]: SUCCESS user=jdoe@domain.com IP=203.0.113.88 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:22:46:44 +0000]: Push Notification Approved by user_admin

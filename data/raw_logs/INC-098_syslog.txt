@@ -1,0 +1,41 @@
+[FILLER] Okta-Log [14/Sep/2026:08:15:00 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] VPN-Log [14/Sep/2026:08:15:04 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Duo-MFA [14/Sep/2026:08:15:05 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [14/Sep/2026:08:15:08 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Radius [14/Sep/2026:08:15:09 +0000]: Access-Accept for user=wifi_guest from 10.0.99.5
+[FILLER] Okta-Log [14/Sep/2026:08:15:13 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] VPN-Log [14/Sep/2026:08:15:17 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Okta-Log [14/Sep/2026:08:15:21 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] Duo-MFA [14/Sep/2026:08:15:22 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [14/Sep/2026:08:15:24 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Okta-Log [14/Sep/2026:08:15:26 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] VPN-Log [14/Sep/2026:08:15:29 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Okta-Log [14/Sep/2026:08:15:33 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] Okta-Log [14/Sep/2026:08:15:36 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] Radius [14/Sep/2026:08:15:37 +0000]: Access-Accept for user=wifi_guest from 10.0.99.5
+[FILLER] Okta-Log [14/Sep/2026:08:15:40 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] VPN-Log [14/Sep/2026:08:15:43 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Duo-MFA [14/Sep/2026:08:15:46 +0000]: Push Notification Approved by user_admin
+[FILLER] Radius [14/Sep/2026:08:15:48 +0000]: Access-Accept for user=wifi_guest from 10.0.99.5
+[FILLER] Okta-Log [14/Sep/2026:08:15:51 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] Radius [14/Sep/2026:08:15:52 +0000]: Access-Accept for user=wifi_guest from 10.0.99.5
+[FILLER] Duo-MFA [14/Sep/2026:08:15:55 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [14/Sep/2026:08:15:58 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [14/Sep/2026:08:16:02 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] Duo-MFA [14/Sep/2026:08:16:05 +0000]: Push Notification Approved by user_admin
+[CORE] RADIUS Request Timeout. Client 10.0.1.x re-transmitting (50,000 total failures).
+[CORE] [IDS-ALERT] Brute force / Auth storm. (Matches downstream fail-open retry loops).
+[FILLER] Duo-MFA [14/Sep/2026:08:16:09 +0000]: Push Notification Approved by user_admin
+[FILLER] Radius [14/Sep/2026:08:16:11 +0000]: Access-Accept for user=wifi_guest from 10.0.99.5
+[FILLER] Duo-MFA [14/Sep/2026:08:16:13 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [14/Sep/2026:08:16:15 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [14/Sep/2026:08:16:16 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] VPN-Log [14/Sep/2026:08:16:18 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Duo-MFA [14/Sep/2026:08:16:21 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [14/Sep/2026:08:16:25 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [14/Sep/2026:08:16:27 +0000]: IKEv2 IPsec SA established with 10.0.1.0
+[FILLER] Okta-Log [14/Sep/2026:08:16:29 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] Radius [14/Sep/2026:08:16:31 +0000]: Access-Accept for user=wifi_guest from 10.0.99.5
+[FILLER] Duo-MFA [14/Sep/2026:08:16:32 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [14/Sep/2026:08:16:35 +0000]: SUCCESS user=jdoe@domain.com IP=10.0.1.0 App=Salesforce
+[FILLER] VPN-Log [14/Sep/2026:08:16:36 +0000]: IKEv2 IPsec SA established with 10.0.1.0

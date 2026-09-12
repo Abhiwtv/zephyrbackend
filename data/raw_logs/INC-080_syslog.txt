@@ -1,0 +1,41 @@
+[FILLER] Firewall [14/Sep/2026:03:45:00 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] NetFlow [14/Sep/2026:03:45:02 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] DNS Query [14/Sep/2026:03:45:03 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [14/Sep/2026:03:45:05 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [14/Sep/2026:03:45:07 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [14/Sep/2026:03:45:09 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [14/Sep/2026:03:45:13 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [14/Sep/2026:03:45:14 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:03:45:15 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] DNS Query [14/Sep/2026:03:45:18 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [14/Sep/2026:03:45:21 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [14/Sep/2026:03:45:23 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [14/Sep/2026:03:45:25 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [14/Sep/2026:03:45:26 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [14/Sep/2026:03:45:27 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:03:45:28 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] SNMP [14/Sep/2026:03:45:31 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [14/Sep/2026:03:45:32 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] Firewall [14/Sep/2026:03:45:35 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] DNS Query [14/Sep/2026:03:45:36 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[CORE] Rapid BGP route withdrawals and announcements (Flapping) detected over 5 minutes.
+[CORE] [BGP-ALERT] Route instability. (Correlates with upstream ISP line-card maintenance).
+[FILLER] NetFlow [14/Sep/2026:03:45:41 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:03:45:43 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] NetFlow [14/Sep/2026:03:45:47 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [14/Sep/2026:03:45:49 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [14/Sep/2026:03:45:51 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [14/Sep/2026:03:45:54 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [14/Sep/2026:03:45:56 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:03:45:57 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] Firewall [14/Sep/2026:03:46:00 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] DNS Query [14/Sep/2026:03:46:03 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[FILLER] Firewall [14/Sep/2026:03:46:07 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)
+[FILLER] SNMP [14/Sep/2026:03:46:09 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [14/Sep/2026:03:46:10 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [14/Sep/2026:03:46:12 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] DNS Query [14/Sep/2026:03:46:14 +0000]: 192.0.2.254 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [14/Sep/2026:03:46:18 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [14/Sep/2026:03:46:21 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] NetFlow [14/Sep/2026:03:46:23 +0000]: TCP 192.0.2.254:54312 -> 10.254.254.1:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:03:46:25 +0000]: PERMIT TCP 192.0.2.254 -> 10.254.254.1:80 (Rule: Allow_Web)

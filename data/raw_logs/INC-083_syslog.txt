@@ -1,0 +1,43 @@
+[FILLER] Splunk-UF [14/Sep/2026:04:30:00 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:30:01 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [14/Sep/2026:04:30:03 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Splunk-UF [14/Sep/2026:04:30:05 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [14/Sep/2026:04:30:08 +0000]: Routine definition update check completed.
+[FILLER] Kernel [14/Sep/2026:04:30:09 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Kernel [14/Sep/2026:04:30:13 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Splunk-UF [14/Sep/2026:04:30:14 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [14/Sep/2026:04:30:18 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [14/Sep/2026:04:30:19 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Kernel [14/Sep/2026:04:30:20 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Splunk-UF [14/Sep/2026:04:30:24 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:30:27 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:30:28 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:30:30 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [14/Sep/2026:04:30:34 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [14/Sep/2026:04:30:35 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [14/Sep/2026:04:30:38 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [14/Sep/2026:04:30:41 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Kernel [14/Sep/2026:04:30:43 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] EDR-Log [14/Sep/2026:04:30:45 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [14/Sep/2026:04:30:49 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [14/Sep/2026:04:30:50 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [14/Sep/2026:04:30:53 +0000]: Routine definition update check completed.
+[CORE] Thunderbolt Controller: New device enumerated (Vendor: Unknown, Class: PCIe Bridge).
+[CORE] [EDR-ALERT] Unauthorized physical DMA attempt (PCILeech / RAM Extraction).
+[FILLER] Splunk-UF [14/Sep/2026:04:31:00 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:31:02 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [14/Sep/2026:04:31:06 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Sysmon [14/Sep/2026:04:31:09 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [14/Sep/2026:04:31:11 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [14/Sep/2026:04:31:15 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [14/Sep/2026:04:31:18 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [14/Sep/2026:04:31:19 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [14/Sep/2026:04:31:20 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [14/Sep/2026:04:31:23 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.
+[FILLER] Splunk-UF [14/Sep/2026:04:31:27 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [14/Sep/2026:04:31:30 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [14/Sep/2026:04:31:31 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [14/Sep/2026:04:31:34 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [14/Sep/2026:04:31:36 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [14/Sep/2026:04:31:38 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [14/Sep/2026:04:31:42 +0000]: [ 1234.56] IPv4: martian source MAC: THUNDERBOLT_01 ignored.

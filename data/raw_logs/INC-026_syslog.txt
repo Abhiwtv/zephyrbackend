@@ -1,0 +1,36 @@
+[FILLER] Radius [13/Sep/2026:14:15:00 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] Okta-Log [13/Sep/2026:14:15:03 +0000]: SUCCESS user=jdoe@domain.com IP=123.123.123.123 App=Salesforce
+[FILLER] Radius [13/Sep/2026:14:15:04 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] Duo-MFA [13/Sep/2026:14:15:08 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:14:15:12 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] VPN-Log [13/Sep/2026:14:15:15 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] Duo-MFA [13/Sep/2026:14:15:17 +0000]: Push Notification Approved by user_admin
+[FILLER] Radius [13/Sep/2026:14:15:18 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] VPN-Log [13/Sep/2026:14:15:19 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] Radius [13/Sep/2026:14:15:23 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] VPN-Log [13/Sep/2026:14:15:26 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] Okta-Log [13/Sep/2026:14:15:30 +0000]: SUCCESS user=jdoe@domain.com IP=123.123.123.123 App=Salesforce
+[FILLER] Radius [13/Sep/2026:14:15:32 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] Duo-MFA [13/Sep/2026:14:15:34 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:14:15:35 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:14:15:36 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] Okta-Log [13/Sep/2026:14:15:40 +0000]: SUCCESS user=jdoe@domain.com IP=123.123.123.123 App=Salesforce
+[FILLER] Radius [13/Sep/2026:14:15:43 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] Radius [13/Sep/2026:14:15:45 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] Radius [13/Sep/2026:14:15:49 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] VPN-Log [13/Sep/2026:14:15:51 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] Okta-Log [13/Sep/2026:14:15:52 +0000]: SUCCESS user=jdoe@domain.com IP=123.123.123.123 App=Salesforce
+[FILLER] Radius [13/Sep/2026:14:15:54 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] VPN-Log [13/Sep/2026:14:15:56 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[CORE] Login Success: ceo@enterprise.com from 123.123.123.123 (Tokyo Geo-IP).
+[CORE] [IDP-ALERT] Impossible travel detected. Previous login: NY (45 mins ago).
+[FILLER] Radius [13/Sep/2026:14:16:02 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] Okta-Log [13/Sep/2026:14:16:05 +0000]: SUCCESS user=jdoe@domain.com IP=123.123.123.123 App=Salesforce
+[FILLER] Okta-Log [13/Sep/2026:14:16:09 +0000]: SUCCESS user=jdoe@domain.com IP=123.123.123.123 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:14:16:11 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:14:16:12 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] Duo-MFA [13/Sep/2026:14:16:16 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [13/Sep/2026:14:16:17 +0000]: SUCCESS user=jdoe@domain.com IP=123.123.123.123 App=Salesforce
+[FILLER] VPN-Log [13/Sep/2026:14:16:21 +0000]: IKEv2 IPsec SA established with 123.123.123.123
+[FILLER] Radius [13/Sep/2026:14:16:23 +0000]: Access-Accept for user=wifi_guest from 10.0.0.50
+[FILLER] VPN-Log [13/Sep/2026:14:16:26 +0000]: IKEv2 IPsec SA established with 123.123.123.123

@@ -1,0 +1,39 @@
+[FILLER] CloudWatch [14/Sep/2026:01:15:00 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] CloudTrail [14/Sep/2026:01:15:01 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [14/Sep/2026:01:15:04 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [14/Sep/2026:01:15:08 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] ALB-Log [14/Sep/2026:01:15:10 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [14/Sep/2026:01:15:14 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] ALB-Log [14/Sep/2026:01:15:16 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [14/Sep/2026:01:15:17 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [14/Sep/2026:01:15:19 +0000]: ACCEPT OK 192.168.1.15 169.254.169.254 443 tcp 20 4000
+[FILLER] CloudTrail [14/Sep/2026:01:15:22 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [14/Sep/2026:01:15:26 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [14/Sep/2026:01:15:30 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:15:32 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] ALB-Log [14/Sep/2026:01:15:33 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [14/Sep/2026:01:15:35 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] CloudTrail [14/Sep/2026:01:15:37 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [14/Sep/2026:01:15:41 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [14/Sep/2026:01:15:45 +0000]: ACCEPT OK 192.168.1.15 169.254.169.254 443 tcp 20 4000
+[FILLER] ALB-Log [14/Sep/2026:01:15:47 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [14/Sep/2026:01:15:48 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[CORE] HTTP GET /latest/meta-data/iam/security-credentials/production-role (via SSRF vulnerability)
+[CORE] [WAF-ALERT] Server-Side Request Forgery targeting Cloud Metadata IP.
+[FILLER] CloudTrail [14/Sep/2026:01:15:54 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [14/Sep/2026:01:15:58 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [14/Sep/2026:01:16:02 +0000]: ACCEPT OK 192.168.1.15 169.254.169.254 443 tcp 20 4000
+[FILLER] ALB-Log [14/Sep/2026:01:16:03 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [14/Sep/2026:01:16:05 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:16:07 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] ALB-Log [14/Sep/2026:01:16:10 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [14/Sep/2026:01:16:13 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:16:17 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] CloudTrail [14/Sep/2026:01:16:19 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [14/Sep/2026:01:16:22 +0000]: 192.168.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [14/Sep/2026:01:16:24 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:16:27 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] CloudWatch [14/Sep/2026:01:16:30 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] CloudTrail [14/Sep/2026:01:16:34 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [14/Sep/2026:01:16:36 +0000]: EC2 CPU Utilization normal at 45% for 169.254.169.254
+[FILLER] VPC-Flow [14/Sep/2026:01:16:40 +0000]: ACCEPT OK 192.168.1.15 169.254.169.254 443 tcp 20 4000

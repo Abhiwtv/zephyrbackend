@@ -1,0 +1,43 @@
+[FILLER] Historian [14/Sep/2026:07:15:00 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] Historian [14/Sep/2026:07:15:01 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] Modbus TCP [14/Sep/2026:07:15:03 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Historian [14/Sep/2026:07:15:05 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] DNP3 [14/Sep/2026:07:15:06 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] DNP3 [14/Sep/2026:07:15:10 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] DNP3 [14/Sep/2026:07:15:11 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] Modbus TCP [14/Sep/2026:07:15:14 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Modbus TCP [14/Sep/2026:07:15:17 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Modbus TCP [14/Sep/2026:07:15:21 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] DNP3 [14/Sep/2026:07:15:23 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:15:24 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:15:26 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [14/Sep/2026:07:15:29 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] Modbus TCP [14/Sep/2026:07:15:30 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Modbus TCP [14/Sep/2026:07:15:32 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Historian [14/Sep/2026:07:15:36 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] DNP3 [14/Sep/2026:07:15:38 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] DNP3 [14/Sep/2026:07:15:41 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:15:44 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Modbus TCP [14/Sep/2026:07:15:45 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Historian [14/Sep/2026:07:15:46 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] Historian [14/Sep/2026:07:15:49 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:15:50 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Modbus TCP [14/Sep/2026:07:15:51 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[CORE] BACnet/IP: WriteProperty - Fan Output=100%, Damper=CLOSED.
+[CORE] [BMS-ALERT] Unauthorized HVAC override. (Matches Emergency Smoke Purge execution).
+[FILLER] Historian [14/Sep/2026:07:15:56 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] DNP3 [14/Sep/2026:07:15:59 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:16:00 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:16:02 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [14/Sep/2026:07:16:03 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] Modbus TCP [14/Sep/2026:07:16:06 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Historian [14/Sep/2026:07:16:08 +0000]: Tag_Update_Success - Node_10.0.15.5 Sync
+[FILLER] DNP3 [14/Sep/2026:07:16:11 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] Modbus TCP [14/Sep/2026:07:16:15 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:16:17 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:16:21 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [14/Sep/2026:07:16:25 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Modbus TCP [14/Sep/2026:07:16:28 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] Modbus TCP [14/Sep/2026:07:16:29 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5
+[FILLER] DNP3 [14/Sep/2026:07:16:30 +0000]: Unsolicited Response from RTU 10.0.15.20 (Class 1 Data)
+[FILLER] Modbus TCP [14/Sep/2026:07:16:34 +0000]: Function 03 (Read Holding Registers) from 10.0.15.5

@@ -1,0 +1,43 @@
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:00 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:15:03 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:15:05 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:09 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:13 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:14 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:17 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:15:18 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:21 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:23 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:25 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:15:28 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:29 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:33 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:36 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:38 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:39 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:41 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:43 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:46 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:47 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:50 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[CORE] 5000+ TGS-REQ tickets generated in 10 minutes for foreign domain SPNs.
+[CORE] [IDP-ALERT] Suspected Kerberoasting. (Matches scheduled Domain Trust Synchronization).
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:53 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:15:57 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:15:58 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:02 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:16:05 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:16:08 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:09 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:11 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:16:15 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 192.168.100.5 - - [14/Sep/2026:03:16:17 +0000] SMBv2 READ Request: \\192.168.100.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:21 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:25 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:26 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:27 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:30 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:33 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:34 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:38 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.1.5 - - [14/Sep/2026:03:16:41 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)

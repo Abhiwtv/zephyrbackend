@@ -1,0 +1,39 @@
+[FILLER] DNP3 [13/Sep/2026:19:15:00 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:19:15:02 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] Modbus TCP [13/Sep/2026:19:15:03 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:15:07 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] DNP3 [13/Sep/2026:19:15:09 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:19:15:10 +0000]: Tag_Update_Success - Node_10.0.3.22 Sync
+[FILLER] Historian [13/Sep/2026:19:15:14 +0000]: Tag_Update_Success - Node_10.0.3.22 Sync
+[FILLER] Modbus TCP [13/Sep/2026:19:15:16 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] Modbus TCP [13/Sep/2026:19:15:19 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] DNP3 [13/Sep/2026:19:15:22 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:15:26 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] DNP3 [13/Sep/2026:19:15:27 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] DNP3 [13/Sep/2026:19:15:31 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:19:15:33 +0000]: Tag_Update_Success - Node_10.0.3.22 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:15:36 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:19:15:37 +0000]: Tag_Update_Success - Node_10.0.3.22 Sync
+[FILLER] Historian [13/Sep/2026:19:15:38 +0000]: Tag_Update_Success - Node_10.0.3.22 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:15:42 +0000]: Register 40012 Read Success (Val: 120)
+[CORE] SMBv2 WRITE Request: \\10.0.4.15\C$\Windows\Temp\enc_payload.exe (Success)
+[CORE] [EDR-ALERT] Ransomware precursor dropped on PACS server. Door fail-secure mode at risk.
+[FILLER] DNP3 [13/Sep/2026:19:15:48 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:19:15:49 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] Modbus TCP [13/Sep/2026:19:15:50 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:15:51 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Modbus TCP [13/Sep/2026:19:15:53 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] Modbus TCP [13/Sep/2026:19:15:56 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:16:00 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:19:16:02 +0000]: Tag_Update_Success - Node_10.0.3.22 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:16:06 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] DNP3 [13/Sep/2026:19:16:10 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:19:16:13 +0000]: Tag_Update_Success - Node_10.0.3.22 Sync
+[FILLER] DNP3 [13/Sep/2026:19:16:14 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:19:16:15 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] DNP3 [13/Sep/2026:19:16:17 +0000]: Unsolicited Response from RTU 10.0.4.15 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:19:16:20 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] Modbus TCP [13/Sep/2026:19:16:23 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] Modbus TCP [13/Sep/2026:19:16:24 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] Modbus TCP [13/Sep/2026:19:16:27 +0000]: Function 03 (Read Holding Registers) from 10.0.3.22
+[FILLER] SCADA-Telemetry [13/Sep/2026:19:16:29 +0000]: Register 40012 Read Success (Val: 120)

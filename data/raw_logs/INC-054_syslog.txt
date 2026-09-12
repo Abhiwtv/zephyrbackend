@@ -1,0 +1,42 @@
+[FILLER] CloudTrail [13/Sep/2026:21:15:00 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:21:15:03 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:21:15:04 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:21:15:06 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:21:15:07 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:21:15:08 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:21:15:10 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:15:14 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:21:15:16 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:21:15:18 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:15:19 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:21:15:23 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:15:24 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:21:15:26 +0000]: EC2 CPU Utilization normal at 45% for 10.0.80.100
+[FILLER] VPC-Flow [13/Sep/2026:21:15:29 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:21:15:30 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:21:15:31 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:21:15:33 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:15:34 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:21:15:35 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:21:15:36 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:21:15:40 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:21:15:42 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:21:15:46 +0000]: EC2 CPU Utilization normal at 45% for 10.0.80.100
+[CORE] Firmware payload hash mismatch detected mid-transfer to 5,000 active vehicle nodes.
+[CORE] [OTA-ALERT] Compromised firmware pushed to highway-active electric vehicles.
+[FILLER] VPC-Flow [13/Sep/2026:21:15:53 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:21:15:56 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:21:15:59 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:21:16:00 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:21:16:04 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:21:16:07 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:21:16:08 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:21:16:11 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:21:16:15 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:21:16:19 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:21:16:21 +0000]: ACCEPT OK 104.20.5.5 10.0.80.100 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:21:16:22 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:21:16:26 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:21:16:27 +0000]: 104.20.5.5 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:16:28 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:21:16:29 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier

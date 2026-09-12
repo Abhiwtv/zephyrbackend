@@ -1,0 +1,36 @@
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:00:00 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:01 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:03 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:00:07 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:09 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:11 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:15 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:17 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:20 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:21 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:22 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:24 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:27 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:00:30 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:31 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:33 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:00:36 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:40 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:00:43 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:00:45 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:47 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:50 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:00:53 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:54 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:00:55 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[CORE] SMBv2 NTLMSSP Auth: user=vendor_admin src=172.16.5.55 (Success)
+[CORE] [EDR-ALERT] Pass-the-Hash signature: NTLM authentication without prior AS-REQ.
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:01:00 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:01:01 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:01:05 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:01:07 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:01:09 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:01:12 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:01:16 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 172.16.5.55 - - [13/Sep/2026:10:01:17 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.0.5 - - [13/Sep/2026:10:01:18 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini

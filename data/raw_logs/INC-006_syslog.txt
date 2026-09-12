@@ -1,0 +1,36 @@
+[FILLER] Duo-MFA [13/Sep/2026:09:15:00 +0000]: Push Notification Approved by user_admin
+[FILLER] Radius [13/Sep/2026:09:15:03 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] Radius [13/Sep/2026:09:15:07 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] Radius [13/Sep/2026:09:15:08 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] Radius [13/Sep/2026:09:15:12 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] Okta-Log [13/Sep/2026:09:15:15 +0000]: SUCCESS user=jdoe@domain.com IP=45.33.22.11 App=Salesforce
+[FILLER] Okta-Log [13/Sep/2026:09:15:17 +0000]: SUCCESS user=jdoe@domain.com IP=45.33.22.11 App=Salesforce
+[FILLER] VPN-Log [13/Sep/2026:09:15:21 +0000]: IKEv2 IPsec SA established with 45.33.22.11
+[FILLER] VPN-Log [13/Sep/2026:09:15:25 +0000]: IKEv2 IPsec SA established with 45.33.22.11
+[FILLER] Okta-Log [13/Sep/2026:09:15:27 +0000]: SUCCESS user=jdoe@domain.com IP=45.33.22.11 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:09:15:31 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:09:15:34 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [13/Sep/2026:09:15:36 +0000]: SUCCESS user=jdoe@domain.com IP=45.33.22.11 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:09:15:39 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:09:15:43 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:09:15:45 +0000]: IKEv2 IPsec SA established with 45.33.22.11
+[FILLER] VPN-Log [13/Sep/2026:09:15:46 +0000]: IKEv2 IPsec SA established with 45.33.22.11
+[FILLER] Radius [13/Sep/2026:09:15:49 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] Duo-MFA [13/Sep/2026:09:15:52 +0000]: Push Notification Approved by user_admin
+[FILLER] Okta-Log [13/Sep/2026:09:15:55 +0000]: SUCCESS user=jdoe@domain.com IP=45.33.22.11 App=Salesforce
+[FILLER] Duo-MFA [13/Sep/2026:09:15:59 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:09:16:02 +0000]: IKEv2 IPsec SA established with 45.33.22.11
+[FILLER] Radius [13/Sep/2026:09:16:03 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] Radius [13/Sep/2026:09:16:05 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[CORE] SSO Auth Failure: user=ceo@enterprise.com src=45.33.22.11 reason=invalid_credentials
+[CORE] [IDP-ALERT] 50+ failed logins across 10 accounts from 45.33.22.11 in 60s.
+[FILLER] Duo-MFA [13/Sep/2026:09:16:12 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:09:16:15 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:09:16:17 +0000]: Push Notification Approved by user_admin
+[FILLER] Duo-MFA [13/Sep/2026:09:16:18 +0000]: Push Notification Approved by user_admin
+[FILLER] Radius [13/Sep/2026:09:16:19 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] VPN-Log [13/Sep/2026:09:16:22 +0000]: IKEv2 IPsec SA established with 45.33.22.11
+[FILLER] Duo-MFA [13/Sep/2026:09:16:23 +0000]: Push Notification Approved by user_admin
+[FILLER] VPN-Log [13/Sep/2026:09:16:25 +0000]: IKEv2 IPsec SA established with 45.33.22.11
+[FILLER] Radius [13/Sep/2026:09:16:29 +0000]: Access-Accept for user=wifi_guest from 10.0.0.100
+[FILLER] VPN-Log [13/Sep/2026:09:16:31 +0000]: IKEv2 IPsec SA established with 45.33.22.11

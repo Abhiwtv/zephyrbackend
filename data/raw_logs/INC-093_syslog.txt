@@ -1,0 +1,40 @@
+[FILLER] SIP-Proxy [14/Sep/2026:07:00:00 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] EPC-Log [14/Sep/2026:07:00:01 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] EPC-Log [14/Sep/2026:07:00:02 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] EPC-Log [14/Sep/2026:07:00:04 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] SS7-Trace [14/Sep/2026:07:00:08 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] EPC-Log [14/Sep/2026:07:00:12 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] SIP-Proxy [14/Sep/2026:07:00:15 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] 5G-Core [14/Sep/2026:07:00:17 +0000]: Nudm_SDM_Get HTTP/2 200 OK
+[FILLER] SIP-Proxy [14/Sep/2026:07:00:21 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] EPC-Log [14/Sep/2026:07:00:22 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] SIP-Proxy [14/Sep/2026:07:00:23 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] 5G-Core [14/Sep/2026:07:00:26 +0000]: Nudm_SDM_Get HTTP/2 200 OK
+[FILLER] EPC-Log [14/Sep/2026:07:00:28 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] SS7-Trace [14/Sep/2026:07:00:32 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] EPC-Log [14/Sep/2026:07:00:35 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] SS7-Trace [14/Sep/2026:07:00:36 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] SIP-Proxy [14/Sep/2026:07:00:40 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] 5G-Core [14/Sep/2026:07:00:44 +0000]: Nudm_SDM_Get HTTP/2 200 OK
+[FILLER] EPC-Log [14/Sep/2026:07:00:47 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] SS7-Trace [14/Sep/2026:07:00:51 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] SS7-Trace [14/Sep/2026:07:00:53 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] 5G-Core [14/Sep/2026:07:00:57 +0000]: Nudm_SDM_Get HTTP/2 200 OK
+[FILLER] SIP-Proxy [14/Sep/2026:07:01:01 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[CORE] SS7 MAP: AnyTimeInterrogation (ATI) request targeting VIP subscriber IMSI.
+[CORE] [TELCO-ALERT] Unauthorized location tracking / SMS 2FA intercept attempt.
+[FILLER] SIP-Proxy [14/Sep/2026:07:01:06 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] SS7-Trace [14/Sep/2026:07:01:09 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] EPC-Log [14/Sep/2026:07:01:10 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] EPC-Log [14/Sep/2026:07:01:12 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] EPC-Log [14/Sep/2026:07:01:14 +0000]: Create Session Request (SGW/PGW) from 203.0.113.10
+[FILLER] SIP-Proxy [14/Sep/2026:07:01:16 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] SS7-Trace [14/Sep/2026:07:01:18 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] 5G-Core [14/Sep/2026:07:01:22 +0000]: Nudm_SDM_Get HTTP/2 200 OK
+[FILLER] SS7-Trace [14/Sep/2026:07:01:26 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] SIP-Proxy [14/Sep/2026:07:01:28 +0000]: INVITE sip:user@telecom.com SIP/2.0 (Success)
+[FILLER] SS7-Trace [14/Sep/2026:07:01:29 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] 5G-Core [14/Sep/2026:07:01:32 +0000]: Nudm_SDM_Get HTTP/2 200 OK
+[FILLER] 5G-Core [14/Sep/2026:07:01:36 +0000]: Nudm_SDM_Get HTTP/2 200 OK
+[FILLER] SS7-Trace [14/Sep/2026:07:01:38 +0000]: UpdateLocation (UL) Request Processed
+[FILLER] SS7-Trace [14/Sep/2026:07:01:41 +0000]: UpdateLocation (UL) Request Processed

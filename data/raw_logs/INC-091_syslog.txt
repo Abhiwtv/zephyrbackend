@@ -1,0 +1,43 @@
+[FILLER] NetFlow [14/Sep/2026:06:30:00 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] DNS Query [14/Sep/2026:06:30:02 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] Firewall [14/Sep/2026:06:30:05 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] DNS Query [14/Sep/2026:06:30:09 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [14/Sep/2026:06:30:11 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] SNMP [14/Sep/2026:06:30:13 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [14/Sep/2026:06:30:15 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:06:30:16 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] SNMP [14/Sep/2026:06:30:19 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [14/Sep/2026:06:30:23 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [14/Sep/2026:06:30:25 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:06:30:27 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] Firewall [14/Sep/2026:06:30:31 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] SNMP [14/Sep/2026:06:30:35 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [14/Sep/2026:06:30:39 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] DNS Query [14/Sep/2026:06:30:43 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] DNS Query [14/Sep/2026:06:30:47 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [14/Sep/2026:06:30:51 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [14/Sep/2026:06:30:52 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] Firewall [14/Sep/2026:06:30:53 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[CORE] DPI Engine: AES-256 heuristic failed. Payload entropy below physical threshold.
+[CORE] [IDS-ALERT] Covert channel / Broken cipher. (Matches QKD photon-state link).
+[FILLER] DNS Query [14/Sep/2026:06:30:58 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [14/Sep/2026:06:31:01 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] DNS Query [14/Sep/2026:06:31:05 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] SNMP [14/Sep/2026:06:31:06 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] SNMP [14/Sep/2026:06:31:10 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [14/Sep/2026:06:31:14 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] NetFlow [14/Sep/2026:06:31:15 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:06:31:19 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] Firewall [14/Sep/2026:06:31:21 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] SNMP [14/Sep/2026:06:31:23 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] SNMP [14/Sep/2026:06:31:27 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] NetFlow [14/Sep/2026:06:31:28 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:06:31:30 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] SNMP [14/Sep/2026:06:31:32 +0000]: get-request OID .1.3.6.1.2.1.2.2.1.10.2
+[FILLER] Firewall [14/Sep/2026:06:31:34 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] Firewall [14/Sep/2026:06:31:38 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] NetFlow [14/Sep/2026:06:31:40 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] DNS Query [14/Sep/2026:06:31:44 +0000]: 10.200.1.1 requested AAAA graph.windows.net (NOERROR)
+[FILLER] NetFlow [14/Sep/2026:06:31:48 +0000]: TCP 10.200.1.1:54312 -> 10.200.1.2:443 (14 packets, 2048 bytes)
+[FILLER] Firewall [14/Sep/2026:06:31:50 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)
+[FILLER] Firewall [14/Sep/2026:06:31:52 +0000]: PERMIT TCP 10.200.1.1 -> 10.200.1.2:80 (Rule: Allow_Web)

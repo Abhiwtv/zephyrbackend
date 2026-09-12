@@ -1,0 +1,43 @@
+[FILLER] Modbus TCP [13/Sep/2026:11:15:00 +0000]: Function 03 (Read Holding Registers) from 10.0.99.5
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:15:02 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:11:15:03 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] Historian [13/Sep/2026:11:15:04 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] Historian [13/Sep/2026:11:15:08 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] Modbus TCP [13/Sep/2026:11:15:10 +0000]: Function 03 (Read Holding Registers) from 10.0.99.5
+[FILLER] Historian [13/Sep/2026:11:15:12 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:15:14 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:11:15:16 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] DNP3 [13/Sep/2026:11:15:20 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:11:15:24 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] Historian [13/Sep/2026:11:15:28 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] Historian [13/Sep/2026:11:15:30 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] Modbus TCP [13/Sep/2026:11:15:33 +0000]: Function 03 (Read Holding Registers) from 10.0.99.5
+[FILLER] Modbus TCP [13/Sep/2026:11:15:35 +0000]: Function 03 (Read Holding Registers) from 10.0.99.5
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:15:37 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:11:15:38 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] Historian [13/Sep/2026:11:15:40 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] DNP3 [13/Sep/2026:11:15:44 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:11:15:46 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] DNP3 [13/Sep/2026:11:15:49 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:11:15:50 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] DNP3 [13/Sep/2026:11:15:51 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] DNP3 [13/Sep/2026:11:15:53 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] DNP3 [13/Sep/2026:11:15:54 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[CORE] Modbus TCP: Write Single Coil (Function 05) - Address 0x00A1 (State: OFF)
+[CORE] [SCADA-ALERT] Unauthorized cooling pump override command received.
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:16:00 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:11:16:01 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] DNP3 [13/Sep/2026:11:16:03 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:11:16:06 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] DNP3 [13/Sep/2026:11:16:09 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:11:16:12 +0000]: Function 03 (Read Holding Registers) from 10.0.99.5
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:16:14 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:16:15 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:16:19 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:16:23 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:11:16:25 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:11:16:28 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:11:16:30 +0000]: Tag_Update_Success - Node_10.0.99.5 Sync
+[FILLER] DNP3 [13/Sep/2026:11:16:31 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] DNP3 [13/Sep/2026:11:16:33 +0000]: Unsolicited Response from RTU 10.100.1.50 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:11:16:36 +0000]: Function 03 (Read Holding Registers) from 10.0.99.5

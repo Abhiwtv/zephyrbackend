@@ -1,0 +1,42 @@
+[FILLER] CloudWatch [13/Sep/2026:10:45:00 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudTrail [13/Sep/2026:10:45:02 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:10:45:05 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:10:45:06 +0000]: ACCEPT OK 10.0.2.100 140.82.113.3 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:10:45:07 +0000]: 10.0.2.100 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:10:45:11 +0000]: 10.0.2.100 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:10:45:13 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:10:45:15 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:10:45:19 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:10:45:22 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudTrail [13/Sep/2026:10:45:25 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:10:45:26 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:10:45:28 +0000]: 10.0.2.100 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:10:45:30 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:10:45:31 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudWatch [13/Sep/2026:10:45:35 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudTrail [13/Sep/2026:10:45:38 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:10:45:42 +0000]: 10.0.2.100 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:10:45:44 +0000]: ACCEPT OK 10.0.2.100 140.82.113.3 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:10:45:47 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudWatch [13/Sep/2026:10:45:48 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[CORE] HTTPS GET /repos/enterprise/core-backend/zipball/main - Size: 1.2GB
+[CORE] [DLP-ALERT] Anomalous massive repo cloning via PAT from 10.0.2.100.
+[FILLER] CloudTrail [13/Sep/2026:10:45:55 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:10:45:56 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudTrail [13/Sep/2026:10:45:58 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:10:46:00 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] VPC-Flow [13/Sep/2026:10:46:01 +0000]: ACCEPT OK 10.0.2.100 140.82.113.3 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:10:46:03 +0000]: ACCEPT OK 10.0.2.100 140.82.113.3 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:10:46:07 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudWatch [13/Sep/2026:10:46:11 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudTrail [13/Sep/2026:10:46:14 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:10:46:16 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:10:46:19 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:10:46:22 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:10:46:25 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudWatch [13/Sep/2026:10:46:29 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] CloudWatch [13/Sep/2026:10:46:32 +0000]: EC2 CPU Utilization normal at 45% for 140.82.113.3
+[FILLER] ALB-Log [13/Sep/2026:10:46:33 +0000]: 10.0.2.100 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:10:46:37 +0000]: ACCEPT OK 10.0.2.100 140.82.113.3 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:10:46:38 +0000]: 10.0.2.100 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:10:46:42 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier

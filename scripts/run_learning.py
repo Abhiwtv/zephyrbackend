@@ -18,6 +18,11 @@ from rich.panel import Panel
 from rich.layout import Layout
 from rich.text import Text
 
+# LangChain & Supabase JIT Ingestion Imports
+from langchain_core.documents import Document
+from langchain_community.vectorstores import SupabaseVectorStore
+from langchain_openai import OpenAIEmbeddings
+
 # Ensure application modules can be discovered from scripts directory
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -39,6 +44,7 @@ load_dotenv()
 
 DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
 CURRICULUM_FILE = os.path.join(DATA_DIR, "curriculum.json")
+RAW_LOGS_DIR = os.path.join(DATA_DIR, "raw_logs")
 DPO_FILE = os.path.join(DATA_DIR, "dpo_dataset", "preferences.jsonl")
 RUNS_DIR = os.path.join(DATA_DIR, "training_runs")
 
@@ -51,8 +57,44 @@ COOLING_CYCLE_SECONDS = 30
 console = Console()
 
 # ==========================================
-# 2. FILE SYSTEM & CLOUD STORAGE SYNC
+# 2. PRE-FLIGHT VALIDATION & STORAGE SYNC
 # ==========================================
+
+def pre_flight_check(curriculum: List[Dict[str, Any]]) -> None:
+    """Step 0: Validates dataset integrity before allowing LangGraph to execute."""
+    console.print("\n[bold cyan]=== EXECUTING PRE-FLIGHT DATASET VALIDATION ===[/bold cyan]")
+    
+    if not os.path.exists(RAW_LOGS_DIR):
+        console.print(f"[bold red][FATAL] RAW_LOGS_DIR missing at {RAW_LOGS_DIR}[/bold red]")
+        sys.exit(1)
+        
+    log_files = [f for f in os.listdir(RAW_LOGS_DIR) if f.endswith(".txt")]
+    
+    # 1. Check structural parity (1:1 JSON to Log mapping)
+    if len(curriculum) != len(log_files):
+        console.print(f"[bold red][FATAL] Dataset Drift Detected: {len(curriculum)} JSON entries vs {len(log_files)} syslog files.[/bold red]")
+        sys.exit(1)
+        
+    # 2. Check semantic correlation and Embedding tags
+    for entry in curriculum:
+        inc_id = entry.get("incident_id")
+        if not inc_id:
+            console.print("[bold red][FATAL] Malformed curriculum JSON: Missing incident_id.[/bold red]")
+            sys.exit(1)
+            
+        log_path = os.path.join(RAW_LOGS_DIR, f"{inc_id}_syslog.txt")
+        if not os.path.exists(log_path):
+            console.print(f"[bold red][FATAL] Broken Link: curriculum.json contains {inc_id} but {inc_id}_syslog.txt is missing.[/bold red]")
+            sys.exit(1)
+            
+        with open(log_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            if "[CORE]" not in content:
+                console.print(f"[bold red][FATAL] Embedding Failure Risk: {inc_id}_syslog.txt contains no [CORE] tags for pgvector extraction.[/bold red]")
+                sys.exit(1)
+                
+    console.print("[bold green]✅ Pre-Flight Validation Passed. Dataset is structurally and semantically intact.[/bold green]\n")
+    time.sleep(1.5)
 
 def setup_directories() -> None:
     os.makedirs(os.path.dirname(DPO_FILE), exist_ok=True)
@@ -72,16 +114,10 @@ def load_curriculum() -> List[Dict[str, str]]:
         console.log(f"[bold red][!] Failed to parse curriculum JSON: {e}[/bold red]")
         sys.exit(1)
 
-def backup_to_supabase() -> None:
-    if not SUPABASE_AVAILABLE:
+def backup_to_supabase(supabase_client: Client) -> None:
+    if not supabase_client:
         return
-    supabase_url = os.environ.get("SUPABASE_URL")
-    supabase_key = os.environ.get("SUPABASE_SERVICE_KEY")
-    if not supabase_url or not supabase_key:
-        return
-
     try:
-        supabase: Client = create_client(supabase_url, supabase_key)
         timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         zip_filename = f"zephyr_logs_{timestamp}"
         archive_path = os.path.join(DATA_DIR, zip_filename)
@@ -90,7 +126,7 @@ def backup_to_supabase() -> None:
         full_zip_path = f"{archive_path}.zip"
 
         with open(full_zip_path, "rb") as f:
-            supabase.storage.from_("training_logs").upload(
+            supabase_client.storage.from_("training_logs").upload(
                 path=f"{zip_filename}.zip",
                 file=f,
                 file_options={"content-type": "application/zip"}
@@ -101,7 +137,46 @@ def backup_to_supabase() -> None:
         console.log(f"[bold yellow][!] Autonomous cloud backup skipped: {str(e)}[/bold yellow]")
 
 # ==========================================
-# 3. TELEMETRY SERIALIZATION & HARVESTING
+# 3. JUST-IN-TIME (JIT) TELEMETRY INGESTION
+# ==========================================
+
+def ingest_single_incident(incident_id: str, supabase_client: Client) -> None:
+    """Simulates live SIEM ingestion by embedding logs just before investigation."""
+    if not supabase_client:
+        return
+
+    log_path = os.path.join(RAW_LOGS_DIR, f"{incident_id}_syslog.txt")
+    
+    with open(log_path, "r", encoding="utf-8") as f:
+        full_content = f.read()
+
+    core_lines = [line.strip() for line in full_content.split("\n") if line.startswith("[CORE]")]
+    if not core_lines:
+        return
+
+    doc = Document(
+        page_content="\n".join(core_lines),
+        metadata={
+            "incident_id": incident_id,
+            "document_type": "raw_syslog",
+            "full_timeline": full_content
+        }
+    )
+
+    try:
+        embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+        SupabaseVectorStore.from_documents(
+            [doc],
+            embeddings,
+            client=supabase_client,
+            table_name="documents",
+            query_name="match_documents"
+        )
+    except Exception as e:
+        console.print(f"[bold red][!] Failed to embed telemetry for {incident_id}: {str(e)}[/bold red]")
+
+# ==========================================
+# 4. TELEMETRY SERIALIZATION & HARVESTING
 # ==========================================
 
 def clean_state_for_json(raw_state: Dict[str, Any]) -> Dict[str, Any]:
@@ -159,7 +234,7 @@ def save_run_telemetry(incident_id: str, raw_state: Dict[str, Any]) -> None:
         json.dump(cleaned_data, f, indent=4)
 
 # ==========================================
-# 4. HARDWARE MONITORING & COOLING
+# 5. HARDWARE MONITORING & COOLING
 # ==========================================
 
 def get_system_temp() -> float:
@@ -187,7 +262,7 @@ def check_hardware_limits(run_idx: int) -> bool:
     return False
 
 # ==========================================
-# 5. DASHBOARD INTERFACE
+# 6. DASHBOARD INTERFACE
 # ==========================================
 
 def generate_dashboard(run_history: List[Dict[str, Any]], dpo_total: int, status_line: str, total_runs: int) -> Layout:
@@ -218,15 +293,24 @@ def generate_dashboard(run_history: List[Dict[str, Any]], dpo_total: int, status
     return layout
 
 # ==========================================
-# 6. MAIN GYM EXECUTION ENGINE
+# 7. MAIN GYM EXECUTION ENGINE
 # ==========================================
 
 def main() -> None:
     setup_directories()
     console.clear()
     
+    # Initialize Supabase globally for JIT embedding and backup
+    supabase_url = os.environ.get("SUPABASE_URL")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_KEY")
+    supabase_client = create_client(supabase_url, supabase_key) if SUPABASE_AVAILABLE and supabase_url and supabase_key else None
+    
     curriculum = load_curriculum()
     total_runs = len(curriculum)
+    
+    # Execute Pre-Flight Hook before initializing Graph
+    pre_flight_check(curriculum)
+    
     run_history: List[Dict[str, Any]] = []
     dpo_count = 0
     last_backup_timestamp = time.time()
@@ -240,8 +324,11 @@ def main() -> None:
                 live.update(generate_dashboard(run_history, dpo_count, f"RUN {idx}: Cooling pause engaged...", total_runs))
                 time.sleep(COOLING_CYCLE_SECONDS)
 
-            live.update(generate_dashboard(run_history, dpo_count, f"RUN {idx}: Ingesting {incident_id}...", total_runs))
+            # 1. Simulate real-time log streaming (JIT Ingestion)
+            live.update(generate_dashboard(run_history, dpo_count, f"RUN {idx}: Ingesting {incident_id} telemetry to SIEM...", total_runs))
+            ingest_single_incident(incident_id, supabase_client)
 
+            # 2. Trigger the autonomous investigation
             initial_state = IncidentState(
                 incident_id=incident_id,
                 alert_signature=signature,
@@ -282,7 +369,7 @@ def main() -> None:
             current_timestamp = time.time()
             if current_timestamp - last_backup_timestamp > BACKUP_INTERVAL_SECONDS:
                 live.update(generate_dashboard(run_history, dpo_count, "Uploading intermediary backup to Supabase...", total_runs))
-                backup_to_supabase()
+                backup_to_supabase(supabase_client)
                 last_backup_timestamp = time.time()
 
             live.update(generate_dashboard(run_history, dpo_count, f"RUN {idx} COMPLETED.", total_runs))
@@ -291,7 +378,7 @@ def main() -> None:
     console.print(f"\n[bold green]Curriculum exhausted. {total_runs} runs executed.[/bold green]")
     console.print(f"[bold cyan]Total DPO preference entries logged: {dpo_count}[/bold cyan]")
     console.print("[bold yellow]Uploading final state snapshot to Supabase 'training_logs'...[/bold yellow]")
-    backup_to_supabase()
+    backup_to_supabase(supabase_client)
     console.print("[bold green]System offline and ready for evaluation.[/bold green]")
 
 if __name__ == "__main__":

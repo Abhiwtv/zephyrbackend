@@ -1,0 +1,38 @@
+[FILLER] Splunk-UF [13/Sep/2026:17:15:00 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:17:15:01 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:17:15:04 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:15:08 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:17:15:10 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] Splunk-UF [13/Sep/2026:17:15:12 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:17:15:15 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:17:15:16 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:15:17 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:17:15:20 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] EDR-Log [13/Sep/2026:17:15:23 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:15:25 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:17:15:28 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] Splunk-UF [13/Sep/2026:17:15:30 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:17:15:31 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:15:35 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [13/Sep/2026:17:15:38 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:17:15:42 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [13/Sep/2026:17:15:43 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:17:15:46 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] Kernel [13/Sep/2026:17:15:50 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] Splunk-UF [13/Sep/2026:17:15:51 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:17:15:52 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:17:15:55 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[CORE] EVM Execution: Recursive call to withdraw() before balance update.
+[CORE] [WEB3-ALERT] Reentrancy attack draining liquidity pool.
+[FILLER] Splunk-UF [13/Sep/2026:17:16:01 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:17:16:02 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] EDR-Log [13/Sep/2026:17:16:03 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:16:05 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:16:07 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:17:16:10 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] EDR-Log [13/Sep/2026:17:16:14 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:16:17 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:17:16:20 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:17:16:21 +0000]: [ 1234.56] IPv4: martian source 0xAttackerAddress ignored.
+[FILLER] EDR-Log [13/Sep/2026:17:16:22 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [13/Sep/2026:17:16:25 +0000]: Process Create: C:\Windows\System32\conhost.exe

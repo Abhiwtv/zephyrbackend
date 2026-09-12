@@ -1,0 +1,37 @@
+[FILLER] EDR-Log [13/Sep/2026:20:15:00 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:20:15:03 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:06 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:07 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:20:15:09 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:20:15:11 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:20:15:15 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:20:15:19 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:21 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:24 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:20:15:28 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [13/Sep/2026:20:15:32 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:20:15:36 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:37 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:39 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:20:15:40 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[CORE] Direct system call hooking detected in ntoskrnl.exe (Fileless execution).
+[CORE] [EDR-ALERT] Memory-resident rootkit active. Reboot traditionally required for remediation.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:45 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:49 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:20:15:52 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Sysmon [13/Sep/2026:20:15:54 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [13/Sep/2026:20:15:56 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [13/Sep/2026:20:15:58 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:20:16:01 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:20:16:04 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:20:16:07 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:20:16:10 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:20:16:12 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:20:16:15 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Kernel [13/Sep/2026:20:16:17 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] EDR-Log [13/Sep/2026:20:16:19 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:20:16:22 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Kernel [13/Sep/2026:20:16:25 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:20:16:29 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:20:16:30 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:20:16:34 +0000]: [ 1234.56] IPv4: martian source 10.0.50.2 ignored.

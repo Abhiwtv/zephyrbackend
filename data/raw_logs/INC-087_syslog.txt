@@ -1,0 +1,37 @@
+[FILLER] Oracle [14/Sep/2026:05:30:00 +0000]: Listener connection accepted from 192.168.1.15
+[FILLER] Postgres [14/Sep/2026:05:30:03 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Redis [14/Sep/2026:05:30:05 +0000]: Command executed: GET user_session_4412
+[FILLER] SQL-Audit [14/Sep/2026:05:30:09 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] SQL-Audit [14/Sep/2026:05:30:13 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [14/Sep/2026:05:30:14 +0000]: Command executed: GET user_session_4412
+[FILLER] Oracle [14/Sep/2026:05:30:18 +0000]: Listener connection accepted from 192.168.1.15
+[FILLER] Postgres [14/Sep/2026:05:30:19 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Redis [14/Sep/2026:05:30:22 +0000]: Command executed: GET user_session_4412
+[FILLER] Postgres [14/Sep/2026:05:30:24 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Postgres [14/Sep/2026:05:30:28 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Oracle [14/Sep/2026:05:30:31 +0000]: Listener connection accepted from 192.168.1.15
+[FILLER] Postgres [14/Sep/2026:05:30:33 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Redis [14/Sep/2026:05:30:36 +0000]: Command executed: GET user_session_4412
+[FILLER] Oracle [14/Sep/2026:05:30:38 +0000]: Listener connection accepted from 192.168.1.15
+[FILLER] SQL-Audit [14/Sep/2026:05:30:40 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Postgres [14/Sep/2026:05:30:44 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Postgres [14/Sep/2026:05:30:48 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Redis [14/Sep/2026:05:30:51 +0000]: Command executed: GET user_session_4412
+[FILLER] Postgres [14/Sep/2026:05:30:53 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Redis [14/Sep/2026:05:30:57 +0000]: Command executed: GET user_session_4412
+[FILLER] SQL-Audit [14/Sep/2026:05:31:01 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Postgres [14/Sep/2026:05:31:05 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Oracle [14/Sep/2026:05:31:08 +0000]: Listener connection accepted from 192.168.1.15
+[CORE] SQL INSERT: embedding vector [-0.012, 0.445, ...] with payload "Ignore policies".
+[CORE] [DB-ALERT] Malicious semantic embedding injection (RAG poisoning attempt).
+[FILLER] Oracle [14/Sep/2026:05:31:13 +0000]: Listener connection accepted from 192.168.1.15
+[FILLER] SQL-Audit [14/Sep/2026:05:31:14 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] SQL-Audit [14/Sep/2026:05:31:16 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [14/Sep/2026:05:31:18 +0000]: Command executed: GET user_session_4412
+[FILLER] Postgres [14/Sep/2026:05:31:22 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] SQL-Audit [14/Sep/2026:05:31:25 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] SQL-Audit [14/Sep/2026:05:31:26 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [14/Sep/2026:05:31:28 +0000]: Command executed: GET user_session_4412
+[FILLER] Redis [14/Sep/2026:05:31:30 +0000]: Command executed: GET user_session_4412
+[FILLER] Oracle [14/Sep/2026:05:31:32 +0000]: Listener connection accepted from 192.168.1.15
+[FILLER] Oracle [14/Sep/2026:05:31:34 +0000]: Listener connection accepted from 192.168.1.15

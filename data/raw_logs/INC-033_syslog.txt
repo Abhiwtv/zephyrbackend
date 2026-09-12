@@ -1,0 +1,39 @@
+[FILLER] VPC-Flow [13/Sep/2026:16:00:00 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:16:00:01 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:16:00:03 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:16:00:07 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:16:00:09 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:16:00:10 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:16:00:11 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:16:00:14 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:16:00:16 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:16:00:17 +0000]: EC2 CPU Utilization normal at 45% for 10.200.1.50
+[FILLER] VPC-Flow [13/Sep/2026:16:00:20 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:16:00:23 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:16:00:24 +0000]: EC2 CPU Utilization normal at 45% for 10.200.1.50
+[FILLER] ALB-Log [13/Sep/2026:16:00:26 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:16:00:28 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:16:00:29 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:16:00:30 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[CORE] Regex Match: AKIAIOSFODNN7EXAMPLE found in layer 4 of pushed image.
+[CORE] [SAST-ALERT] Production AWS Access Keys detected in artifact.
+[FILLER] VPC-Flow [13/Sep/2026:16:00:36 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:16:00:39 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:16:00:42 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:16:00:46 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:16:00:50 +0000]: EC2 CPU Utilization normal at 45% for 10.200.1.50
+[FILLER] CloudTrail [13/Sep/2026:16:00:53 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:16:00:57 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:16:01:00 +0000]: EC2 CPU Utilization normal at 45% for 10.200.1.50
+[FILLER] ALB-Log [13/Sep/2026:16:01:01 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [13/Sep/2026:16:01:05 +0000]: EC2 CPU Utilization normal at 45% for 10.200.1.50
+[FILLER] CloudTrail [13/Sep/2026:16:01:06 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:16:01:09 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:16:01:13 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:16:01:14 +0000]: ACCEPT OK 10.100.5.20 10.200.1.50 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:16:01:18 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:16:01:19 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:16:01:23 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:16:01:26 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:16:01:28 +0000]: 10.100.5.20 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [13/Sep/2026:16:01:29 +0000]: EC2 CPU Utilization normal at 45% for 10.200.1.50

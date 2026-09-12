@@ -1,0 +1,39 @@
+[FILLER] Kernel [13/Sep/2026:10:15:00 +0000]: [ 1234.56] IPv4: martian source 10.20.1.5 ignored.
+[FILLER] Kernel [13/Sep/2026:10:15:02 +0000]: [ 1234.56] IPv4: martian source 10.20.1.5 ignored.
+[FILLER] EDR-Log [13/Sep/2026:10:15:03 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [13/Sep/2026:10:15:05 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [13/Sep/2026:10:15:06 +0000]: Routine definition update check completed.
+[FILLER] Kernel [13/Sep/2026:10:15:07 +0000]: [ 1234.56] IPv4: martian source 10.20.1.5 ignored.
+[FILLER] Kernel [13/Sep/2026:10:15:10 +0000]: [ 1234.56] IPv4: martian source 10.20.1.5 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:10:15:13 +0000]: Forwarding 120 events to indexer.
+[FILLER] Kernel [13/Sep/2026:10:15:17 +0000]: [ 1234.56] IPv4: martian source 10.20.1.5 ignored.
+[FILLER] Sysmon [13/Sep/2026:10:15:18 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [13/Sep/2026:10:15:21 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [13/Sep/2026:10:15:23 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Kernel [13/Sep/2026:10:15:25 +0000]: [ 1234.56] IPv4: martian source 10.20.1.5 ignored.
+[FILLER] Splunk-UF [13/Sep/2026:10:15:29 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:10:15:30 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [13/Sep/2026:10:15:33 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:10:15:35 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:10:15:36 +0000]: Routine definition update check completed.
+[CORE] Process Execution: powershell.exe -nop -w hidden -e JABzAD0ATgBlAHcALQBPAGIAagBl...
+[CORE] [EDR-ALERT] Malicious PowerShell executing under w3wp.exe IIS worker process.
+[FILLER] EDR-Log [13/Sep/2026:10:15:43 +0000]: Routine definition update check completed.
+[FILLER] Sysmon [13/Sep/2026:10:15:47 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Sysmon [13/Sep/2026:10:15:49 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] EDR-Log [13/Sep/2026:10:15:53 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [13/Sep/2026:10:15:57 +0000]: Forwarding 120 events to indexer.
+[FILLER] EDR-Log [13/Sep/2026:10:15:58 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:10:16:02 +0000]: Routine definition update check completed.
+[FILLER] EDR-Log [13/Sep/2026:10:16:04 +0000]: Routine definition update check completed.
+[FILLER] Splunk-UF [13/Sep/2026:10:16:07 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:10:16:09 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [13/Sep/2026:10:16:12 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:10:16:13 +0000]: Forwarding 120 events to indexer.
+[FILLER] Splunk-UF [13/Sep/2026:10:16:14 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:10:16:15 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Sysmon [13/Sep/2026:10:16:17 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Sysmon [13/Sep/2026:10:16:19 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Splunk-UF [13/Sep/2026:10:16:23 +0000]: Forwarding 120 events to indexer.
+[FILLER] Sysmon [13/Sep/2026:10:16:27 +0000]: Process Create: C:\Windows\System32\conhost.exe
+[FILLER] Sysmon [13/Sep/2026:10:16:31 +0000]: Process Create: C:\Windows\System32\conhost.exe

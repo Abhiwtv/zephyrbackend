@@ -1,0 +1,39 @@
+[FILLER] SQL-Audit [13/Sep/2026:16:30:00 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] SQL-Audit [13/Sep/2026:16:30:02 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Oracle [13/Sep/2026:16:30:04 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Oracle [13/Sep/2026:16:30:07 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] SQL-Audit [13/Sep/2026:16:30:09 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [13/Sep/2026:16:30:12 +0000]: Command executed: GET user_session_4412
+[FILLER] Oracle [13/Sep/2026:16:30:14 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Oracle [13/Sep/2026:16:30:18 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Redis [13/Sep/2026:16:30:21 +0000]: Command executed: GET user_session_4412
+[FILLER] Oracle [13/Sep/2026:16:30:24 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] SQL-Audit [13/Sep/2026:16:30:28 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Oracle [13/Sep/2026:16:30:32 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Oracle [13/Sep/2026:16:30:35 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Postgres [13/Sep/2026:16:30:38 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] SQL-Audit [13/Sep/2026:16:30:40 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [13/Sep/2026:16:30:41 +0000]: Command executed: GET user_session_4412
+[FILLER] SQL-Audit [13/Sep/2026:16:30:42 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Postgres [13/Sep/2026:16:30:44 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Redis [13/Sep/2026:16:30:46 +0000]: Command executed: GET user_session_4412
+[FILLER] Postgres [13/Sep/2026:16:30:50 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[CORE] TDS Protocol: 120GB of raw table data transferred over port 1433.
+[CORE] [DLP-ALERT] Massive data exfiltration threshold exceeded.
+[FILLER] Postgres [13/Sep/2026:16:30:57 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] SQL-Audit [13/Sep/2026:16:30:58 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [13/Sep/2026:16:31:00 +0000]: Command executed: GET user_session_4412
+[FILLER] SQL-Audit [13/Sep/2026:16:31:02 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [13/Sep/2026:16:31:06 +0000]: Command executed: GET user_session_4412
+[FILLER] SQL-Audit [13/Sep/2026:16:31:09 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Redis [13/Sep/2026:16:31:13 +0000]: Command executed: GET user_session_4412
+[FILLER] Postgres [13/Sep/2026:16:31:15 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] SQL-Audit [13/Sep/2026:16:31:17 +0000]: SELECT * FROM inventory_status WHERE qty > 0
+[FILLER] Postgres [13/Sep/2026:16:31:19 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Postgres [13/Sep/2026:16:31:20 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Postgres [13/Sep/2026:16:31:22 +0000]: LOG: duration: 4.5ms statement: COMMIT
+[FILLER] Oracle [13/Sep/2026:16:31:23 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Oracle [13/Sep/2026:16:31:24 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Oracle [13/Sep/2026:16:31:25 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Oracle [13/Sep/2026:16:31:26 +0000]: Listener connection accepted from 10.0.5.100
+[FILLER] Postgres [13/Sep/2026:16:31:28 +0000]: LOG: duration: 4.5ms statement: COMMIT

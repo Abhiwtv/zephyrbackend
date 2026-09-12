@@ -1,0 +1,40 @@
+[FILLER] CloudWatch [13/Sep/2026:22:15:00 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] ALB-Log [13/Sep/2026:22:15:03 +0000]: 10.244.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:22:15:07 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] ALB-Log [13/Sep/2026:22:15:11 +0000]: 10.244.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [13/Sep/2026:22:15:14 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] ALB-Log [13/Sep/2026:22:15:18 +0000]: 10.244.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudWatch [13/Sep/2026:22:15:19 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] VPC-Flow [13/Sep/2026:22:15:22 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:22:15:23 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:22:15:25 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] VPC-Flow [13/Sep/2026:22:15:27 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:22:15:31 +0000]: 10.244.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] ALB-Log [13/Sep/2026:22:15:35 +0000]: 10.244.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] CloudTrail [13/Sep/2026:22:15:37 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:22:15:41 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:22:15:45 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudTrail [13/Sep/2026:22:15:48 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] CloudWatch [13/Sep/2026:22:15:52 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] CloudTrail [13/Sep/2026:22:15:54 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[CORE] Syscall anomaly: unshare() called to map root namespace from inside container.
+[CORE] [K8S-ALERT] Container escape to host node detected via cgroups manipulation.
+[FILLER] CloudWatch [13/Sep/2026:22:15:59 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] CloudTrail [13/Sep/2026:22:16:01 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:22:16:04 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:22:16:07 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] CloudTrail [13/Sep/2026:22:16:11 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:22:16:12 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:22:16:16 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1
+[FILLER] ALB-Log [13/Sep/2026:22:16:20 +0000]: 10.244.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:22:16:21 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:22:16:24 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:22:16:28 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:22:16:32 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:22:16:34 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] VPC-Flow [13/Sep/2026:22:16:36 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] ALB-Log [13/Sep/2026:22:16:37 +0000]: 10.244.1.15 TLSv1.2 ECDHE-RSA-AES128-GCM-SHA256 200
+[FILLER] VPC-Flow [13/Sep/2026:22:16:41 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] CloudTrail [13/Sep/2026:22:16:45 +0000]: AssumeRole API called by arn:aws:iam::123456:role/app-tier
+[FILLER] VPC-Flow [13/Sep/2026:22:16:49 +0000]: ACCEPT OK 10.244.1.15 10.244.1.1 443 tcp 20 4000
+[FILLER] CloudWatch [13/Sep/2026:22:16:51 +0000]: EC2 CPU Utilization normal at 45% for 10.244.1.1

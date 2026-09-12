@@ -1,0 +1,40 @@
+[FILLER] DNP3 [13/Sep/2026:22:30:00 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:30:02 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:22:30:03 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:30:06 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:30:08 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:22:30:12 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] Historian [13/Sep/2026:22:30:16 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] Historian [13/Sep/2026:22:30:17 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] Modbus TCP [13/Sep/2026:22:30:20 +0000]: Function 03 (Read Holding Registers) from 10.0.3.50
+[FILLER] Historian [13/Sep/2026:22:30:24 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] DNP3 [13/Sep/2026:22:30:26 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:22:30:29 +0000]: Function 03 (Read Holding Registers) from 10.0.3.50
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:30:33 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:22:30:35 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] Historian [13/Sep/2026:22:30:39 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] Modbus TCP [13/Sep/2026:22:30:42 +0000]: Function 03 (Read Holding Registers) from 10.0.3.50
+[FILLER] DNP3 [13/Sep/2026:22:30:43 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:22:30:45 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:30:47 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Modbus TCP [13/Sep/2026:22:30:49 +0000]: Function 03 (Read Holding Registers) from 10.0.3.50
+[FILLER] Historian [13/Sep/2026:22:30:52 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:30:56 +0000]: Register 40012 Read Success (Val: 120)
+[CORE] MQTT Publish: Topic=bloodbank/fridge1/setpoint Payload={"temp_c": 25.0}
+[CORE] [BMS-ALERT] Lethal temperature setpoint pushed to biological storage refrigeration.
+[FILLER] Historian [13/Sep/2026:22:31:01 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] DNP3 [13/Sep/2026:22:31:02 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:31:06 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] DNP3 [13/Sep/2026:22:31:10 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] Historian [13/Sep/2026:22:31:12 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] DNP3 [13/Sep/2026:22:31:15 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] DNP3 [13/Sep/2026:22:31:18 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] Modbus TCP [13/Sep/2026:22:31:21 +0000]: Function 03 (Read Holding Registers) from 10.0.3.50
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:31:22 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:22:31:25 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] DNP3 [13/Sep/2026:22:31:28 +0000]: Unsolicited Response from RTU 10.0.200.20 (Class 1 Data)
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:31:31 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:31:35 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] SCADA-Telemetry [13/Sep/2026:22:31:39 +0000]: Register 40012 Read Success (Val: 120)
+[FILLER] Historian [13/Sep/2026:22:31:42 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync
+[FILLER] Historian [13/Sep/2026:22:31:46 +0000]: Tag_Update_Success - Node_10.0.3.50 Sync

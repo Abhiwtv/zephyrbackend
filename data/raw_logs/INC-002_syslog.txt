@@ -1,0 +1,39 @@
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:00 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:02 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:03 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:06 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:10 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:12 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:16 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:18 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:21 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:23 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:24 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:28 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:29 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:32 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:33 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:37 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:41 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:42 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:44 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:48 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:51 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:15:53 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:54 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:15:57 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[CORE] SMBv2 RENAME Request: \\10.0.0.5\SYSVOL\policies.ini -> policies.ini.lockbit (Success)
+[CORE] [EDR-ALERT] Mass file extension modification detected on 10.0.0.5. Source: 10.0.5.22.
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:04 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:08 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:11 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:13 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:15 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:16:17 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:19 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:21 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:23 +0000] Kerberos TGS-REQ: service/krbtgt@DOMAIN.LOCAL (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:26 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:28 +0000] LDAP Search Request: Base="DC=domain,DC=local"
+[FILLER] 10.0.0.5 - - [13/Sep/2026:08:16:30 +0000] SMBv2 READ Request: \\10.0.0.5\SYSVOL\domain\policies\GPT.ini
+[FILLER] 10.0.5.22 - - [13/Sep/2026:08:16:34 +0000] RPC BIND Request: UUID 12345678-ABCD-EF00 (Success)

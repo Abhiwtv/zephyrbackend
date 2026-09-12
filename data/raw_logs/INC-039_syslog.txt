@@ -1,0 +1,38 @@
+[FILLER] Exchange [13/Sep/2026:17:30:00 +0000]: Message Delivered (Subject: "Q3 Townhall")
+[FILLER] SMTP-Relay [13/Sep/2026:17:30:03 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[FILLER] SMTP-Relay [13/Sep/2026:17:30:05 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[FILLER] O365 [13/Sep/2026:17:30:06 +0000]: MailboxSync successful for Corporate_Exchange
+[FILLER] Proofpoint [13/Sep/2026:17:30:08 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] Proofpoint [13/Sep/2026:17:30:10 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] Proofpoint [13/Sep/2026:17:30:11 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] O365 [13/Sep/2026:17:30:12 +0000]: MailboxSync successful for Corporate_Exchange
+[FILLER] Proofpoint [13/Sep/2026:17:30:13 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] O365 [13/Sep/2026:17:30:17 +0000]: MailboxSync successful for Corporate_Exchange
+[FILLER] Proofpoint [13/Sep/2026:17:30:19 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] O365 [13/Sep/2026:17:30:22 +0000]: MailboxSync successful for Corporate_Exchange
+[FILLER] Proofpoint [13/Sep/2026:17:30:26 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] SMTP-Relay [13/Sep/2026:17:30:27 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[FILLER] Proofpoint [13/Sep/2026:17:30:29 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] Exchange [13/Sep/2026:17:30:31 +0000]: Message Delivered (Subject: "Q3 Townhall")
+[FILLER] Proofpoint [13/Sep/2026:17:30:34 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] SMTP-Relay [13/Sep/2026:17:30:35 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[FILLER] O365 [13/Sep/2026:17:30:36 +0000]: MailboxSync successful for Corporate_Exchange
+[FILLER] SMTP-Relay [13/Sep/2026:17:30:37 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[CORE] SMTP DATA: Attachment "Invoice_551.docm" matches Qakbot payload hash.
+[CORE] [EMAIL-ALERT] Phishing campaign successfully bypassed gateway. 300 inboxes affected.
+[FILLER] SMTP-Relay [13/Sep/2026:17:30:41 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[FILLER] Exchange [13/Sep/2026:17:30:43 +0000]: Message Delivered (Subject: "Q3 Townhall")
+[FILLER] Exchange [13/Sep/2026:17:30:45 +0000]: Message Delivered (Subject: "Q3 Townhall")
+[FILLER] Exchange [13/Sep/2026:17:30:49 +0000]: Message Delivered (Subject: "Q3 Townhall")
+[FILLER] O365 [13/Sep/2026:17:30:53 +0000]: MailboxSync successful for Corporate_Exchange
+[FILLER] Proofpoint [13/Sep/2026:17:30:54 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] Proofpoint [13/Sep/2026:17:30:57 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] Exchange [13/Sep/2026:17:31:01 +0000]: Message Delivered (Subject: "Q3 Townhall")
+[FILLER] O365 [13/Sep/2026:17:31:04 +0000]: MailboxSync successful for Corporate_Exchange
+[FILLER] Proofpoint [13/Sep/2026:17:31:07 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] SMTP-Relay [13/Sep/2026:17:31:09 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[FILLER] SMTP-Relay [13/Sep/2026:17:31:12 +0000]: 250 2.0.0 Ok: queued as 4ABC123
+[FILLER] Exchange [13/Sep/2026:17:31:13 +0000]: Message Delivered (Subject: "Q3 Townhall")
+[FILLER] Proofpoint [13/Sep/2026:17:31:14 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] Proofpoint [13/Sep/2026:17:31:18 +0000]: Inbound email clean. SPF=Pass DKIM=Pass
+[FILLER] SMTP-Relay [13/Sep/2026:17:31:22 +0000]: 250 2.0.0 Ok: queued as 4ABC123
