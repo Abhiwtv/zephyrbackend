@@ -1,23 +1,37 @@
+import logging
+from typing import Dict, Any
 from langchain_core.messages import AIMessage
-from app.core.state import IncidentState
-from app.tools.mock_env import simulate_firewall
 
-def executor_node(state: IncidentState) -> dict:
+from app.core.state import IncidentState
+from app.tools.mock_env import execute_firewall_change
+
+logger = logging.getLogger("Zephyr-Executor")
+logger.setLevel(logging.INFO)
+
+def executor_node(state: IncidentState) -> Dict[str, Any]:
     """
-    STATE 9: EXECUTING
-    Deterministically executes the approved action in the sandbox.
+    Commits the approved defense plan to the network environment.
     """
-    if state.proposed_action in ["NO_ACTION", "MONITOR"]:
-        result = f"[SUCCESS] Action {state.proposed_action} on {state.proposed_target} logged cleanly (no firewall change)."
-    else:
-        # Call the sandbox tool directly
-        result = simulate_firewall.invoke({
+    logger.info(f"[{state.incident_id}] === PRODUCTION EXECUTION INITIATED ===")
+    logger.info(f"[{state.incident_id}] Executing: {state.proposed_action} on {state.proposed_target}")
+    
+    try:
+        result = execute_firewall_change.invoke({
             "action": state.proposed_action, 
             "target": state.proposed_target
         })
-    
-    return {
-        "status": "EXECUTING",
-        "execution_result": result,
-        "messages": [AIMessage(content=f"Executor: {result}")]
-    }
+        
+        logger.info(f"[{state.incident_id}] Execution Output: {result}")
+        
+        return {
+            "status": "EXECUTING",
+            "execution_result": result,
+            "messages": [AIMessage(content=f"Executor: {result}")]
+        }
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Execution Failure: {str(e)}")
+        return {
+            "status": "EXECUTING",
+            "execution_result": f"SYSTEM FAILURE: {str(e)}",
+            "messages": [AIMessage(content=f"Executor System Failure: {str(e)}")]
+        }

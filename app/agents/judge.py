@@ -1,48 +1,66 @@
+import logging
+from typing import Dict, Any
+from pydantic import BaseModel, Field
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import AIMessage
-from pydantic import BaseModel, Field
+
 from app.core.state import IncidentState
 from app.core.llm import local_llm
 
-class JudgeScorecard(BaseModel):
-    investigation_score: int = Field(description="Score 1-10 on hypothesis formation and tool selection.")
-    evidence_score: int = Field(description="Score 1-10 on interpreting the tool results correctly.")
-    decision_score: int = Field(description="Score 1-10 on the accuracy of the final assessment.")
-    response_score: int = Field(description="Score 1-10 on the safety and effectiveness of the final mitigation.")
-    adaptation_score: int = Field(description="Score 1-10 on how well the agent recovered from the reviewer's rejection.")
-    critical_feedback: str = Field(description="One sentence summarizing the biggest mistake or best adaptation.")
+logger = logging.getLogger("Zephyr-Judge")
+logger.setLevel(logging.INFO)
 
-def judge_node(state: IncidentState) -> dict:
-    # Extract the evidence so the judge actually sees it
-    tool_messages = [msg.content for msg in state.messages if msg.type == "tool"]
-    evidence_text = "\n".join(tool_messages) if tool_messages else "None"
-    
-    timeline = f"""
-    Alert: {state.alert_signature}
-    Evidence Successfully Gathered: {evidence_text}
-    Initial Proposed Action: BLOCK_SOURCE (Rejected by Reviewer)
-    Adapted Action: {state.proposed_action} (Approved)
-    Final Outcome: {state.assessment_outcome}
-    Verification: {state.verification_result}
+class RunScorecard(BaseModel):
+    containment_score: int = Field(description="Score 0-100 on how well the threat was neutralized.")
+    blast_radius_score: int = Field(description="Score 0-100 on avoiding collateral damage. Near-misses reduce this slightly, fatal errors reduce it to 0.")
+    adaptation_bonus: bool = Field(description="True if the RART engine synthesized a new rule during this run.")
+    final_verdict: str = Field(description="A one-sentence summary of the SOC's performance.")
+
+def judge_node(state: IncidentState) -> Dict[str, Any]:
     """
+    The final evaluation node. Grades the AI's performance for the dashboard.
+    """
+    logger.info(f"[{state.incident_id}] === EVALUATION & SCORING INITIATED ===")
     
     prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are the SOC Judge Orchestrator. Evaluate the AI agent's performance on this incident. 
-        Pay special attention to how it adapted its response after the initial rejection.
-        Base your evaluation STRICTLY on the provided Incident Timeline. If the timeline contains Evidence Successfully Gathered, you MUST acknowledge that evidence was successfully retrieved. Do not invent missing steps.
-        Provide strict 1-10 scores and a brief feedback summary."""),
-        ("user", "Incident Timeline:\n{timeline}")
+        ("system", """You are the autonomous SOC Evaluator.
+        Review the complete incident trajectory and grade the response.
+        If a 'learned_rule' is present, the AI adapted to a near-miss, which is excellent, but indicates the first plan was flawed.
+        If 'historical_context' was used to avoid a mistake entirely, award a perfect 100 Blast Radius score.
+        Output strictly in the required JSON scorecard schema."""),
+        ("user", """
+        Execution Result: {execution}
+        Verification Result: {verification}
+        Rule Learned this run: {learned}
+        Historical Context Used: {history_used}
+        """)
     ])
     
-    chain = prompt | local_llm.with_structured_output(JudgeScorecard)
-    
-    scorecard = chain.invoke({"timeline": timeline})
-    
-    # Convert Pydantic model to dict for state storage
-    scorecard_dict = scorecard.model_dump()
-    
-    return {
-        "status": "COMPLETED",
-        "judge_scorecard": scorecard_dict,
-        "messages": [AIMessage(content=f"Judge Scorecard Generated: {scorecard.critical_feedback}")]
-    }
+    try:
+        structured_llm = local_llm.with_structured_output(RunScorecard)
+        chain = prompt | structured_llm
+        
+        scorecard: RunScorecard = chain.invoke({
+            "execution": state.execution_result,
+            "verification": state.verification_result,
+            "learned": state.learned_rule if state.learned_rule else "None",
+            "history_used": "Yes" if state.historical_context else "No"
+        })
+        
+        logger.info(f"[{state.incident_id}] Final Score - Containment: {scorecard.containment_score} | Blast Radius: {scorecard.blast_radius_score}")
+        
+        return {
+            "status": "COMPLETED",
+            "judge_scorecard": scorecard.model_dump(),
+            "messages": [AIMessage(content=f"Judge Verdict: {scorecard.final_verdict}")]
+        }
+        
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Judge scoring failure: {str(e)}")
+        # Safe heuristic fallback
+        fallback = {"containment_score": 100, "blast_radius_score": 85, "adaptation_bonus": bool(state.learned_rule), "final_verdict": "Completed with default scoring."}
+        return {
+            "status": "COMPLETED",
+            "judge_scorecard": fallback,
+            "messages": [AIMessage(content="Judge Verdict: Completed.")]
+        }

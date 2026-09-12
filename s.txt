@@ -3,38 +3,87 @@ Volume serial number is 64EB-A5A8
 C:.
 ¦   .env
 ¦   .gitignore
+¦   commands.txt
 ¦   Dockerfile
 ¦   requirements.txt
 ¦   s.txt
 ¦   server.py
 ¦   
++---.github
+¦   +---workflows
+¦           training_loop.yml
+¦           
 +---app
 ¦   ¦   main.py
-¦   ¦   test_alert.py
 ¦   ¦   
 ¦   +---agents
-¦   ¦       assessment.py
-¦   ¦       defense.py
-¦   ¦       executor.py
-¦   ¦       intake.py
-¦   ¦       investigator.py
-¦   ¦       judge.py
-¦   ¦       rart.py
-¦   ¦       reviewer.py
-¦   ¦       strategist.py
-¦   ¦       verifier.py
-¦   ¦       
+¦   ¦   ¦   assessment.py
+¦   ¦   ¦   defense.py
+¦   ¦   ¦   executor.py
+¦   ¦   ¦   intake.py
+¦   ¦   ¦   investigator.py
+¦   ¦   ¦   judge.py
+¦   ¦   ¦   rart.py
+¦   ¦   ¦   reviewer.py
+¦   ¦   ¦   strategist.py
+¦   ¦   ¦   verifier.py
+¦   ¦   ¦   
+¦   ¦   +---__pycache__
+¦   ¦           assessment.cpython-312.pyc
+¦   ¦           defense.cpython-312.pyc
+¦   ¦           executor.cpython-312.pyc
+¦   ¦           intake.cpython-312.pyc
+¦   ¦           investigator.cpython-312.pyc
+¦   ¦           judge.cpython-312.pyc
+¦   ¦           rart.cpython-312.pyc
+¦   ¦           reviewer.cpython-312.pyc
+¦   ¦           strategist.cpython-312.pyc
+¦   ¦           verifier.cpython-312.pyc
+¦   ¦           
 ¦   +---core
-¦   ¦       llm.py
-¦   ¦       memory_store.py
-¦   ¦       state.py
-¦   ¦       
+¦   ¦   ¦   llm.py
+¦   ¦   ¦   memory_store.py
+¦   ¦   ¦   rag.py
+¦   ¦   ¦   state.py
+¦   ¦   ¦   
+¦   ¦   +---__pycache__
+¦   ¦           llm.cpython-312.pyc
+¦   ¦           memory_store.cpython-312.pyc
+¦   ¦           state.cpython-312.pyc
+¦   ¦           
 ¦   +---graph
-¦   ¦       orchestrator.py
+¦   ¦   ¦   orchestrator.py
+¦   ¦   ¦   
+¦   ¦   +---__pycache__
+¦   ¦           orchestrator.cpython-312.pyc
+¦   ¦           
+¦   +---tests
+¦   ¦       test_alert.py
+¦   ¦       test_alert_positive.py
+¦   ¦       test_prompt.py
+¦   ¦       test_supabase.py
 ¦   ¦       
 ¦   +---tools
-¦           mock_env.py
+¦   ¦   ¦   mock_env.py
+¦   ¦   ¦   
+¦   ¦   +---__pycache__
+¦   ¦           mock_env.cpython-312.pyc
+¦   ¦           
+¦   +---__pycache__
+¦           main.cpython-312.pyc
 ¦           
++---data
+¦   +---checkpoints
+¦   +---dpo_dataset
+¦   ¦       preferences.jsonl
+¦   ¦       
+¦   +---logs
+¦   +---training_runs
++---scripts
+¦       run_learning.py
+¦       seed_database.py
+¦       setup_database.sql
+¦       
 +---__pycache__
         main.cpython-312.pyc
         server.cpython-312.pyc

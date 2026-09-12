@@ -1,38 +1,56 @@
-from langchain_core.prompts import ChatPromptTemplate
+import logging
+from typing import Dict, Any
 from langchain_core.messages import AIMessage
-from pydantic import BaseModel, Field
-from typing import Literal
+
 from app.core.state import IncidentState
-from app.core.llm import local_llm
+from app.tools.mock_env import simulate_blast_radius
 
-class ReviewDecision(BaseModel):
-    decision: Literal["APPROVE", "REJECT"] = Field(description="APPROVE if safe, REJECT if unsafe or disproportionate.")
-    feedback: str = Field(description="Explanation of the decision or required changes if rejected.")
+logger = logging.getLogger("Zephyr-Reviewer")
+logger.setLevel(logging.INFO)
 
-def reviewer_node(state: IncidentState) -> dict:
+def reviewer_node(state: IncidentState) -> Dict[str, Any]:
     """
-    STATE 8: REVIEWING
-    Evaluates the proposed defense against organizational constraints.
+    The Near-Miss Simulation Gate.
+    Calculates the exact infrastructure impact of the proposed defense plan before it executes.
+    Routes to EXECUTION if safe, or RART if catastrophic.
     """
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are the SOC Response Reviewer. Evaluate the proposed action. 
-        CRITICAL ORGANIZATIONAL CONSTRAINT: The 10.0.4.0/24 subnet is a shared internal NAT gateway. 
-        Blocking any IP in this range will cause massive collateral damage. 
-        If the proposed action is BLOCK_SOURCE on a 10.0.4.x IP, you MUST REJECT it and demand a TARGETED_RULE (like an application-level WAF block)."""),
-        ("user", "Proposed Action: {action}\nTarget: {target}\nJustification: {justification}")
-    ])
+    logger.info(f"[{state.incident_id}] === REVIEWER & MCTS SIMULATION PHASE INITIATED ===")
+    logger.info(f"[{state.incident_id}] Simulating action: {state.proposed_action} on {state.proposed_target}")
     
-    chain = prompt | local_llm.with_structured_output(ReviewDecision)
-    
-    review = chain.invoke({
-        "action": state.proposed_action,
-        "target": state.proposed_target,
-        "justification": state.action_justification
-    })
-    
-    return {
-        "status": "REVIEWING",
-        "reviewer_decision": review.decision,
-        "reviewer_feedback": review.feedback,
-        "messages": [AIMessage(content=f"Reviewer {review.decision}: {review.feedback}")]
-    }
+    try:
+        # Organically invoke the blast radius simulator (mocking a BGP/ASN lookup)
+        simulated_impact = simulate_blast_radius.invoke({
+            "action": state.proposed_action, 
+            "target": state.proposed_target
+        })
+        
+        logger.info(f"[{state.incident_id}] Blast Radius Result: {simulated_impact}")
+        
+        # Heuristic Evaluation
+        if "[FATAL]" in simulated_impact:
+            decision = "REJECT"
+            feedback = f"Simulation Blocked: Action triggers unacceptable collateral damage. {simulated_impact}"
+            logger.warning(f"[{state.incident_id}] REVIEWER REJECTED PLAN. Routing to RART adaptation loop.")
+        else:
+            decision = "APPROVE"
+            feedback = f"Simulation Passed: Action safe for production execution. {simulated_impact}"
+            logger.info(f"[{state.incident_id}] REVIEWER APPROVED PLAN. Routing to Executor.")
+            
+        return {
+            "status": "REVIEWING",
+            "simulated_blast_radius": simulated_impact,
+            "reviewer_decision": decision,
+            "reviewer_feedback": feedback,
+            "messages": [AIMessage(content=f"Reviewer {decision}: {feedback}")]
+        }
+        
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Reviewer Simulation Failure: {str(e)}")
+        # If the simulator crashes, fail secure (Reject)
+        return {
+            "status": "REVIEWING",
+            "simulated_blast_radius": "SIMULATOR_CRASH",
+            "reviewer_decision": "REJECT",
+            "reviewer_feedback": "Reviewer subsystem failure. Plan rejected as a safety precaution.",
+            "messages": [AIMessage(content="Reviewer REJECT: Simulator crash. Fail secure activated.")]
+        }

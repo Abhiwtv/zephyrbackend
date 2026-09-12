@@ -1,29 +1,54 @@
+import logging
+from typing import Dict, Any
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import AIMessage
 from app.core.state import IncidentState
 from app.core.llm import local_llm
 
-def investigator_node(state: IncidentState) -> dict:
+logger = logging.getLogger("Zephyr-Investigator")
+logger.setLevel(logging.INFO)
+
+def investigator_node(state: IncidentState) -> Dict[str, Any]:
     """
-    STATE 2: INVESTIGATING
-    The LLM analyzes the intake context and sets the investigation direction.
+    LLM-driven investigative node. Analyzes the hypotheses and explicitly defines
+    the forensic queries required for the Strategist to execute.
     """
+    logger.info(f"[{state.incident_id}] === INVESTIGATION PHASE INITIATED ===")
+    
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are an autonomous SOC Investigator. Your job is to analyze the initial alert and state what missing evidence is required to prove if the attack succeeded. Be brief and output only the logical next steps."),
-        ("user", "Alert: {signature}\nSource: {source}\nTarget: {target}\nCurrent Hypotheses: {hypotheses}")
+        ("system", """You are a Tier 3 SOC Investigator.
+        Review the inbound alert and the current hypotheses. 
+        Your ONLY job is to explicitly state what telemetry or evidence is missing to prove if the attack succeeded.
+        Be extremely concise and technical. Do not propose mitigations."""),
+        ("user", """Alert Signature: {signature}
+        Source IP: {source}
+        Target IP: {target}
+        Current Hypotheses: {hypotheses}
+        Initial Missing Evidence: {missing}""")
     ])
     
-    chain = prompt | local_llm
+    logger.debug(f"[{state.incident_id}] Invoking local LLM for evidence refinement...")
     
-    response = chain.invoke({
-        "signature": state.alert_signature,
-        "source": state.source_ip,
-        "target": state.target_ip,
-        "hypotheses": ", ".join(state.hypotheses)
-    })
-    
-    # Update state and append the LLM's reasoning to the message history
-    return {
-        "status": "INVESTIGATING",
-        "messages": [AIMessage(content=f"Investigator Reasoning: {response.content}")]
-    }
+    try:
+        chain = prompt | local_llm
+        response = chain.invoke({
+            "signature": state.alert_signature, 
+            "source": state.source_ip, 
+            "target": state.target_ip, 
+            "hypotheses": " | ".join(state.hypotheses),
+            "missing": " | ".join(state.missing_evidence)
+        })
+        
+        logger.info(f"[{state.incident_id}] Investigator Output: {response.content.strip()}")
+        
+        return {
+            "status": "INVESTIGATING",
+            "messages": [AIMessage(content=f"Investigator Requirement: {response.content}")]
+        }
+        
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Investigator LLM failure: {str(e)}")
+        return {
+            "status": "INVESTIGATING",
+            "messages": [AIMessage(content="Investigator Requirement: SYSTEM FAILURE. Proceed with default evidence gathering.")]
+        }

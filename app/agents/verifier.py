@@ -1,19 +1,32 @@
+import logging
+from typing import Dict, Any
 from langchain_core.messages import AIMessage
+
 from app.core.state import IncidentState
 from app.tools.mock_env import verify_network_traffic
 
-def verifier_node(state: IncidentState) -> dict:
+logger = logging.getLogger("Zephyr-Verifier")
+logger.setLevel(logging.INFO)
+
+def verifier_node(state: IncidentState) -> Dict[str, Any]:
     """
-    STATE 10: VERIFYING
-    Checks the sandbox environment to confirm the mitigation worked.
+    Post-execution validation. Checks if the mitigation actually stopped the threat activity.
     """
-    # Call the verification tool
-    result = verify_network_traffic.invoke({"target": state.proposed_target})
+    logger.info(f"[{state.incident_id}] === VERIFICATION PHASE INITIATED ===")
     
-    # In a fully expanded version, an LLM would evaluate this string to return a boolean.
-    # For now, we update the state directly to COMPLETE.
-    return {
-        "status": "COMPLETED",
-        "verification_result": result,
-        "messages": [AIMessage(content=f"Verification: {result}")]
-    }
+    try:
+        result = verify_network_traffic.invoke({"target": state.proposed_target})
+        logger.info(f"[{state.incident_id}] Verification Output: {result}")
+        
+        return {
+            "status": "VERIFYING",
+            "verification_result": result,
+            "messages": [AIMessage(content=f"Verifier: {result}")]
+        }
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Verification Failure: {str(e)}")
+        return {
+            "status": "VERIFYING",
+            "verification_result": "UNABLE TO VERIFY TRAFFIC",
+            "messages": [AIMessage(content="Verifier: Telemetry unavailable.")]
+        }
