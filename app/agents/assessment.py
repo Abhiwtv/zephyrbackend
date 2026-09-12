@@ -5,10 +5,6 @@ from app.core.llm import local_llm
 import json
 
 def assessment_node(state: IncidentState) -> dict:
-    """
-    STATE 6: ASSESSING
-    The LLM reviews the gathered evidence and makes a final determination on the attack outcome.
-    """
     # Extract just the tool responses from the message history
     tool_messages = [msg.content for msg in state.messages if msg.type == "tool"]
     evidence_text = "\n".join(tool_messages)
@@ -16,7 +12,7 @@ def assessment_node(state: IncidentState) -> dict:
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are the SOC Incident Assessment Agent. 
         Review the evidence and determine the outcome. 
-        You must output ONLY a valid JSON object with the following schema, and no other text:
+        Output ONLY the requested raw JSON data structure. Do not include conversational filler, pleasantries, explanations, or apologies. Do not wrap the output in markdown blocks.
         {{
             "outcome": "ATTACK_SUCCEEDED" | "ATTACK_FAILED" | "FALSE_POSITIVE",
             "confidence": float (0.0 to 1.0),

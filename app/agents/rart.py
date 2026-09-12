@@ -12,6 +12,20 @@ def rart_node(state: IncidentState) -> dict:
     """
     STATE 13: RART LEARNING LOOP
     """
+    # 1. Scan the message history for any Reviewer Rejections
+    rejection_messages = [
+        msg.content for msg in state.messages 
+        if "Reviewer REJECT" in msg.content
+    ]
+    
+    # 2. If no rejections happened, RART idles
+    if not rejection_messages:
+        return {
+            "status": "COMPLETED",
+            "messages": [AIMessage(content="RART Learned Strategy: No critical mistakes made. Standard operational flow maintained.")]
+        }
+
+    # 3. If there was a rejection, extract a rule based on the first rejection
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are the RART Learning Engine. Your job is to extract strict operational policies from SOC mistakes.
         Look specifically at the Reviewer's REJECTION feedback. 
@@ -22,18 +36,14 @@ def rart_node(state: IncidentState) -> dict:
     
     chain = prompt | local_llm.with_structured_output(LearnedStrategy)
     
-    # Only run RART extraction if there was actually a rejection to learn from
-    if state.reviewer_decision == "APPROVE" and not state.reviewer_feedback.startswith("The proposed action of BLOCK_SOURCE"):
-        policy_text = "No critical mistakes made. Standard operational flow maintained."
-    else:
-        strategy = chain.invoke({
-            "rejection": state.reviewer_feedback,
-            "action": state.proposed_action
-        })
-        policy_text = strategy.policy
-        learned_policy_db.append(policy_text)
+    strategy = chain.invoke({
+        "rejection": rejection_messages[0], # Feed it the exact rejection from history
+        "action": state.proposed_action
+    })
+    
+    learned_policy_db.append(strategy.policy)
     
     return {
         "status": "COMPLETED",
-        "messages": [AIMessage(content=f"RART Learned Strategy: {policy_text}")]
+        "messages": [AIMessage(content=f"RART Learned Strategy: {strategy.policy}")]
     }

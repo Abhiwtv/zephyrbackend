@@ -21,14 +21,8 @@ class DefensePlan(BaseModel):
     justification: str = Field(description="Why this action is proportional and justified.")
 
 def defense_node(state: IncidentState) -> dict:
-    """
-    STATE 7: DEFENDING
-    Proposes a mitigation strategy based on the final incident assessment.
-    """
-    # 1. Format the learned rules as a string
     active_policies = "\n".join([f"- {rule}" for rule in learned_policy_db]) if learned_policy_db else "None yet."
     
-    # 2. Single, unified prompt containing both RART policies and Rejection Feedback
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are the SOC Defense Generator. Based on the incident assessment, propose a response action. 
         Ensure the action is proportional.
@@ -36,7 +30,10 @@ def defense_node(state: IncidentState) -> dict:
         CRITICAL ORGANIZATIONAL POLICIES (LEARNED FROM PAST INCIDENTS):
         {policies}
         
-        CRITICAL: If you receive Previous Reviewer Feedback, you MUST propose a DIFFERENT action (e.g., TARGETED_RULE) that satisfies the constraints."""),
+        CRITICAL RULES:
+        1. If you receive Previous Reviewer Feedback, you MUST propose a DIFFERENT action (e.g., TARGETED_RULE) that satisfies the constraints.
+        2. The proposed_target MUST be a valid IP address. Never use descriptive text, attack names, or summaries.
+        3. NEVER apply mitigation rules to the Target/Victim IP. Mitigation MUST be applied to the malicious Source IP."""),
         ("user", "Alert: {signature}\nSource IP: {source}\nTarget IP: {target}\nAssessment Outcome: {outcome}\nAssessment Justification: {justification}\n\nPrevious Reviewer Feedback: {feedback}")
     ])
     

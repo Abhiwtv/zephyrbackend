@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://127.0.0.1:10000/alert"
+url = "http://127.0.0.1:8000/alert"
 
 payload = {
   "alert_id": "ALT-1042",

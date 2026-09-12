@@ -22,7 +22,8 @@ soc_tools = [check_vulnerability, check_server_logs]
 @tool
 def simulate_firewall(action: str, target: str) -> str:
     """Execute the approved mitigation action in the sandbox."""
-    if action == "TARGETED_RULE" and target == "10.0.4.23":
+    # Generalize it to succeed for any TARGETED_RULE on any IP
+    if action == "TARGETED_RULE":
         return f"[SUCCESS] Applied WAF rule dropping SQLi payloads from {target}."
     return f"[FAILED] Action {action} on {target} was blocked or unrecognized."
 
@@ -30,4 +31,3 @@ def simulate_firewall(action: str, target: str) -> str:
 def verify_network_traffic(target: str) -> str:
     """Check if malicious traffic is still reaching the target after mitigation."""
     return f"[VERIFIED] No further malicious SQLi traffic observed from {target}. Application is stable."
-
