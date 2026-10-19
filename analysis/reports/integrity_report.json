@@ -1,0 +1,1194 @@
+{
+  "timestamp_utc": "2026-10-19T13:58:23.947052+00:00",
+  "total_checks": 12,
+  "failed_checks_count": 0,
+  "warn_checks_count": 0,
+  "pass_checks_count": 12,
+  "verdict": "INTEGRITY: PASS",
+  "checks": [
+    {
+      "check_num": 1,
+      "name": "File Formatting & Encoding",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. File conforms strictly to UTF-8, 100 non-empty lines, valid JSON."
+    },
+    {
+      "check_num": 2,
+      "name": "Strict Schema Validation (Contract A)",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. All 100 alerts adhere strictly to Contract A schema with extra='forbid'."
+    },
+    {
+      "check_num": 3,
+      "name": "Key Integrity & 1:1 Sidecar Join",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. All alert_ids are unique, valid UUID4s with perfect 1:1 join."
+    },
+    {
+      "check_num": 4,
+      "name": "Semantic Invariants & Boundary Constraints",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. All semantic rules and physical boundaries are honored."
+    },
+    {
+      "check_num": 5,
+      "name": "Raw Telemetry Summary Consistency",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. Summary metrics and narrative protocol state match structured fields exactly."
+    },
+    {
+      "check_num": 6,
+      "name": "Class Realism & Domain Profile Verification",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. All class realism constraints satisfied across all attack signatures."
+    },
+    {
+      "check_num": 7,
+      "name": "Ground-Truth Label & Metadata Consistency",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. Exact label consistency, equivalence invariants, and hard negative count verified."
+    },
+    {
+      "check_num": 8,
+      "name": "Label & Original Topology Leakage",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. Clean separation between Contract A telemetry and sidecar labels."
+    },
+    {
+      "check_num": 9,
+      "name": "Exact & Near-Duplicate Detection",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. Zero exact or near-duplicate records identified."
+    },
+    {
+      "check_num": 10,
+      "name": "Statistical Distribution & Outlier Analysis",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. Statistical distribution conforms to all specified tolerances."
+    },
+    {
+      "check_num": 11,
+      "name": "Deterministic Generator Reproducibility",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. Generator reproduced identical SHA-256 hashes via detected CLI mode '--out-dir'."
+    },
+    {
+      "check_num": 12,
+      "name": "Dataframe Ingestion & Missing Value Load Test",
+      "status": "PASS",
+      "count": 0,
+      "offending_alert_ids": [],
+      "findings": [],
+      "remediation": "None required. Dataframe flattens with zero NaNs across all 30 structured attributes."
+    }
+  ],
+  "statistics": {
+    "class_counts": {
+      "SYN_FLOOD": 33,
+      "SSH_BRUTE_FORCE": 17,
+      "RCE_ATTEMPT": 16,
+      "BENIGN": 15,
+      "SQL_INJECTION": 10,
+      "PORT_SCAN": 9
+    },
+    "severity_counts": {
+      "HIGH": 37,
+      "CRITICAL": 31,
+      "MEDIUM": 17,
+      "LOW": 15
+    },
+    "protocol_counts": {
+      "TCP": 49,
+      "HTTP": 43,
+      "UDP": 7,
+      "ICMP": 1
+    },
+    "node_pair_counts": {
+      "pc-2 -> pc-4": 45,
+      "pc-2 -> pc-3": 15,
+      "pc-1 -> pc-4": 10,
+      "pc-1 -> pc-3": 6,
+      "pc-2 -> pc-1": 6,
+      "pc-1 -> pc-2": 5,
+      "pc-3 -> pc-4": 4,
+      "pc-1 -> pc-5": 4,
+      "pc-2 -> pc-5": 2,
+      "pc-3 -> pc-5": 1,
+      "pc-5 -> pc-4": 1,
+      "pc-4 -> pc-3": 1
+    },
+    "dataset_counts": {
+      "CIC-IDS2017": 53,
+      "CSE-CIC-IDS2018": 32,
+      "SYNTHETIC_BENIGN": 15
+    },
+    "per_class_stats": {
+      "BENIGN": {
+        "packet_count_2s": {
+          "min": 7.0,
+          "median": 33.0,
+          "max": 2762.0
+        },
+        "byte_count_2s": {
+          "min": 511.0,
+          "median": 14427.0,
+          "max": 2344866.0
+        },
+        "syn_ratio": {
+          "min": 0.0,
+          "median": 0.04,
+          "max": 0.06
+        }
+      },
+      "PORT_SCAN": {
+        "packet_count_2s": {
+          "min": 196.0,
+          "median": 422.0,
+          "max": 631.0
+        },
+        "byte_count_2s": {
+          "min": 12544.0,
+          "median": 25680.0,
+          "max": 34705.0
+        },
+        "syn_ratio": {
+          "min": 0.0,
+          "median": 0.4,
+          "max": 0.99
+        }
+      },
+      "RCE_ATTEMPT": {
+        "packet_count_2s": {
+          "min": 57.0,
+          "median": 113.5,
+          "max": 203.0
+        },
+        "byte_count_2s": {
+          "min": 22230.0,
+          "median": 34093.0,
+          "max": 74095.0
+        },
+        "syn_ratio": {
+          "min": 0.05,
+          "median": 0.07500000000000001,
+          "max": 0.15
+        }
+      },
+      "SQL_INJECTION": {
+        "packet_count_2s": {
+          "min": 35.0,
+          "median": 54.0,
+          "max": 95.0
+        },
+        "byte_count_2s": {
+          "min": 15890.0,
+          "median": 24888.5,
+          "max": 45600.0
+        },
+        "syn_ratio": {
+          "min": 0.04,
+          "median": 0.08,
+          "max": 0.09
+        }
+      },
+      "SSH_BRUTE_FORCE": {
+        "packet_count_2s": {
+          "min": 48.0,
+          "median": 87.0,
+          "max": 151.0
+        },
+        "byte_count_2s": {
+          "min": 4080.0,
+          "median": 8930.0,
+          "max": 48018.0
+        },
+        "syn_ratio": {
+          "min": 0.13,
+          "median": 0.19,
+          "max": 0.25
+        }
+      },
+      "SYN_FLOOD": {
+        "packet_count_2s": {
+          "min": 170.0,
+          "median": 2500.0,
+          "max": 7289.0
+        },
+        "byte_count_2s": {
+          "min": 11033.0,
+          "median": 752458.0,
+          "max": 2855475.0
+        },
+        "syn_ratio": {
+          "min": 0.0,
+          "median": 0.04,
+          "max": 0.97
+        }
+      }
+    },
+    "outliers": [
+      {
+        "class": "BENIGN",
+        "metric": "packet_count_2s",
+        "alert_id": "d9d80b8d-7e8a-4ee7-8758-e201561e16d1",
+        "value": 2762.0,
+        "iqr_lower": -38.5,
+        "iqr_upper": 113.5
+      },
+      {
+        "class": "BENIGN",
+        "metric": "packet_count_2s",
+        "alert_id": "76f72255-c01f-46bf-be6d-d58b7367c28d",
+        "value": 1407.0,
+        "iqr_lower": -38.5,
+        "iqr_upper": 113.5
+      },
+      {
+        "class": "BENIGN",
+        "metric": "packet_count_2s",
+        "alert_id": "89c5b31a-eb6c-4016-8ee6-24d09dac6e83",
+        "value": 1842.0,
+        "iqr_lower": -38.5,
+        "iqr_upper": 113.5
+      },
+      {
+        "class": "BENIGN",
+        "metric": "byte_count_2s",
+        "alert_id": "d9d80b8d-7e8a-4ee7-8758-e201561e16d1",
+        "value": 1861588.0,
+        "iqr_lower": -50933.75,
+        "iqr_upper": 92428.25
+      },
+      {
+        "class": "BENIGN",
+        "metric": "byte_count_2s",
+        "alert_id": "76f72255-c01f-46bf-be6d-d58b7367c28d",
+        "value": 1743273.0,
+        "iqr_lower": -50933.75,
+        "iqr_upper": 92428.25
+      },
+      {
+        "class": "BENIGN",
+        "metric": "byte_count_2s",
+        "alert_id": "89c5b31a-eb6c-4016-8ee6-24d09dac6e83",
+        "value": 2344866.0,
+        "iqr_lower": -50933.75,
+        "iqr_upper": 92428.25
+      },
+      {
+        "class": "SYN_FLOOD",
+        "metric": "syn_ratio",
+        "alert_id": "6f92f25e-45df-46b6-b82c-043f7cfc9b79",
+        "value": 0.97,
+        "iqr_lower": -0.015,
+        "iqr_upper": 0.105
+      },
+      {
+        "class": "SYN_FLOOD",
+        "metric": "syn_ratio",
+        "alert_id": "3875394c-e5d6-46e6-9a6e-c2f5ccc42903",
+        "value": 0.92,
+        "iqr_lower": -0.015,
+        "iqr_upper": 0.105
+      },
+      {
+        "class": "SYN_FLOOD",
+        "metric": "syn_ratio",
+        "alert_id": "560c95ee-638c-454c-876e-2bba7c5308bf",
+        "value": 0.95,
+        "iqr_lower": -0.015,
+        "iqr_upper": 0.105
+      },
+      {
+        "class": "SYN_FLOOD",
+        "metric": "syn_ratio",
+        "alert_id": "67814c1f-cc53-4e36-addc-3e13ab3b4d37",
+        "value": 0.9,
+        "iqr_lower": -0.015,
+        "iqr_upper": 0.105
+      },
+      {
+        "class": "RCE_ATTEMPT",
+        "metric": "byte_count_2s",
+        "alert_id": "a07295e9-7c0e-4cd8-8573-e793c715b2b9",
+        "value": 74095.0,
+        "iqr_lower": 1797.75,
+        "iqr_upper": 67681.75
+      },
+      {
+        "class": "SSH_BRUTE_FORCE",
+        "metric": "byte_count_2s",
+        "alert_id": "986f9025-8f15-4a58-bce6-850487f8424d",
+        "value": 37605.0,
+        "iqr_lower": -6172.5,
+        "iqr_upper": 28503.5
+      },
+      {
+        "class": "SSH_BRUTE_FORCE",
+        "metric": "byte_count_2s",
+        "alert_id": "aae65fc1-76f2-4bfe-8d29-a36f222282e1",
+        "value": 48018.0,
+        "iqr_lower": -6172.5,
+        "iqr_upper": 28503.5
+      },
+      {
+        "class": "SQL_INJECTION",
+        "metric": "packet_count_2s",
+        "alert_id": "79844388-dc8a-4e30-be60-33f728be9288",
+        "value": 95.0,
+        "iqr_lower": 18.25,
+        "iqr_upper": 94.25
+      },
+      {
+        "class": "SQL_INJECTION",
+        "metric": "byte_count_2s",
+        "alert_id": "79844388-dc8a-4e30-be60-33f728be9288",
+        "value": 45600.0,
+        "iqr_lower": 5825.25,
+        "iqr_upper": 40675.25
+      },
+      {
+        "class": "PORT_SCAN",
+        "metric": "packet_count_2s",
+        "alert_id": "da7b9095-63d6-4a39-80e3-befd4c71e0fe",
+        "value": 228.0,
+        "iqr_lower": 278.0,
+        "iqr_upper": 566.0
+      },
+      {
+        "class": "PORT_SCAN",
+        "metric": "packet_count_2s",
+        "alert_id": "3b33f3d8-269c-4696-a36c-7b8714a0bccb",
+        "value": 631.0,
+        "iqr_lower": 278.0,
+        "iqr_upper": 566.0
+      },
+      {
+        "class": "PORT_SCAN",
+        "metric": "packet_count_2s",
+        "alert_id": "db52ca58-0500-4bc6-b20d-cb6ef2311f17",
+        "value": 196.0,
+        "iqr_lower": 278.0,
+        "iqr_upper": 566.0
+      },
+      {
+        "class": "PORT_SCAN",
+        "metric": "byte_count_2s",
+        "alert_id": "da7b9095-63d6-4a39-80e3-befd4c71e0fe",
+        "value": 12996.0,
+        "iqr_lower": 17766.5,
+        "iqr_upper": 31842.5
+      },
+      {
+        "class": "PORT_SCAN",
+        "metric": "byte_count_2s",
+        "alert_id": "3b33f3d8-269c-4696-a36c-7b8714a0bccb",
+        "value": 34705.0,
+        "iqr_lower": 17766.5,
+        "iqr_upper": 31842.5
+      },
+      {
+        "class": "PORT_SCAN",
+        "metric": "byte_count_2s",
+        "alert_id": "db52ca58-0500-4bc6-b20d-cb6ef2311f17",
+        "value": 12544.0,
+        "iqr_lower": 17766.5,
+        "iqr_upper": 31842.5
+      }
+    ],
+    "ambiguous_attacks_share": 10.588235294117647,
+    "ambiguous_attacks_count": 9,
+    "total_attacks_count": 85,
+    "benign_share": 15.0
+  },
+  "changes": {
+    "hashes": {
+      "dataset_before": "282620e8bedfa90071845a2b5a88ed07f20b3addfe622786865c71ac1dfb77b1",
+      "dataset_after": "200947270d288738d6b768092ea8e86213de22e348b23901997d86739ee83d07",
+      "labels_before": "671a25bd5b7ab0a00b1b3613213c3f1b998615f83276f407038ddcc90fb239f3",
+      "labels_after": "671a25bd5b7ab0a00b1b3613213c3f1b998615f83276f407038ddcc90fb239f3"
+    },
+    "class_counts": {
+      "BENIGN": 15,
+      "SYN_FLOOD": 33,
+      "RCE_ATTEMPT": 16,
+      "SSH_BRUTE_FORCE": 17,
+      "SQL_INJECTION": 10,
+      "PORT_SCAN": 9
+    },
+    "total_records": 100,
+    "benign_records": 15,
+    "changed_records_count": 13,
+    "changed_records": [
+      {
+        "alert_id": "d1843324-17e8-492a-95ce-e5db9e87e04c",
+        "attack_signature": "NIDS: DoS Slowloris Incomplete HTTP Header Exhaustion",
+        "true_class": "SYN_FLOOD",
+        "diffs": [
+          {
+            "field": "protocol",
+            "before": "TCP",
+            "after": "HTTP"
+          }
+        ]
+      },
+      {
+        "alert_id": "a2086977-a9f2-4336-83f4-a9a948a639d0",
+        "attack_signature": "NIDS: DoS Slowloris Incomplete HTTP Header Exhaustion",
+        "true_class": "SYN_FLOOD",
+        "diffs": [
+          {
+            "field": "protocol",
+            "before": "TCP",
+            "after": "HTTP"
+          }
+        ]
+      },
+      {
+        "alert_id": "b4d7e28e-271e-4ee2-b1a6-b1f1620e99d3",
+        "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 458,
+              "byte_count_2s": 26564,
+              "syn_ratio": 0.97,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                139,
+                445,
+                3389
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 458,
+              "byte_count_2s": 26564,
+              "syn_ratio": 0.97,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                8080
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.9328,
+              "severity": "HIGH",
+              "raw_telemetry_summary": "Observed 458 packets (26564 bytes) over 2s with syn_ratio 0.97 targeting ports [21, 22, 80, 139, 445, 3389]: Compromised internal workstation probing core subnet infrastructure ports."
+            },
+            "after": {
+              "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.9328,
+              "severity": "HIGH",
+              "raw_telemetry_summary": "Observed 458 packets (26564 bytes) over 2s with syn_ratio 0.97 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 8080]: Compromised internal workstation probing core subnet infrastructure ports."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "8bcf53a1-bc10-4a52-bf5d-2fdf89c8d2ab",
+        "attack_signature": "NIDS: Nmap UDP Service Discovery Scan (sU)",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 386,
+              "byte_count_2s": 24704,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                53,
+                67,
+                123,
+                161,
+                500
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 386,
+              "byte_count_2s": 24704,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                53,
+                67,
+                68,
+                69,
+                123,
+                135,
+                137,
+                138,
+                139,
+                161,
+                162,
+                445,
+                500,
+                514,
+                520,
+                631,
+                1434,
+                1900,
+                4500,
+                5353
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Nmap UDP Service Discovery Scan (sU)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8718,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 386 packets (24704 bytes) over 2s with syn_ratio 0.00 targeting ports [53, 67, 123, 161, 500]: Nmap scanner profiling destination ports using sU signature."
+            },
+            "after": {
+              "attack_signature": "NIDS: Nmap UDP Service Discovery Scan (sU)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8718,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 386 packets (24704 bytes) over 2s with syn_ratio 0.00 targeting ports [53, 67, 68, 69, 123, 135, 137, 138, 139, 161, 162, 445, 500, 514, 520, 631, 1434, 1900, 4500, 5353]: Nmap scanner profiling destination ports using sU signature."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "da7b9095-63d6-4a39-80e3-befd4c71e0fe",
+        "attack_signature": "NIDS: Nmap TCP Xmas Tree Probe (sX - FIN/PSH/URG)",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 228,
+              "byte_count_2s": 12996,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                443,
+                8080
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 228,
+              "byte_count_2s": 12996,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                5432,
+                5900,
+                8080,
+                8443,
+                8888
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Nmap TCP Xmas Tree Probe (sX - FIN/PSH/URG)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.9088,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 228 packets (12996 bytes) over 2s with syn_ratio 0.00 targeting ports [21, 22, 80, 443, 8080]: Nmap scanner profiling destination ports using sX signature."
+            },
+            "after": {
+              "attack_signature": "NIDS: Nmap TCP Xmas Tree Probe (sX - FIN/PSH/URG)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.9088,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 228 packets (12996 bytes) over 2s with syn_ratio 0.00 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 5432, 5900, 8080, 8443, 8888]: Nmap scanner profiling destination ports using sX signature."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "6160a6b4-9360-415f-83fe-0183e172b725",
+        "attack_signature": "NIDS: Nmap Full TCP Connect Scan (sT)",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 428,
+              "byte_count_2s": 25680,
+              "syn_ratio": 0.4,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                443,
+                8080
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 428,
+              "byte_count_2s": 25680,
+              "syn_ratio": 0.4,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                5432,
+                5900,
+                8080,
+                8443,
+                8888
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Nmap Full TCP Connect Scan (sT)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8934,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 428 packets (25680 bytes) over 2s with syn_ratio 0.40 targeting ports [21, 22, 80, 443, 8080]: Nmap scanner profiling destination ports using sT signature."
+            },
+            "after": {
+              "attack_signature": "NIDS: Nmap Full TCP Connect Scan (sT)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8934,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 428 packets (25680 bytes) over 2s with syn_ratio 0.40 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 5432, 5900, 8080, 8443, 8888]: Nmap scanner profiling destination ports using sT signature."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "6b44fa8d-d5f2-4073-b414-02b1e4429ebb",
+        "attack_signature": "NIDS: Nmap TCP Null Probe (sN - No Flags)",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 419,
+              "byte_count_2s": 23045,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                443,
+                8080
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 419,
+              "byte_count_2s": 23045,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                5432,
+                5900,
+                8080,
+                8443,
+                8888
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Nmap TCP Null Probe (sN - No Flags)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.6478,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 419 packets (23045 bytes) over 2s with syn_ratio 0.00 targeting ports [21, 22, 80, 443, 8080]: Nmap scanner profiling destination ports using sN signature."
+            },
+            "after": {
+              "attack_signature": "NIDS: Nmap TCP Null Probe (sN - No Flags)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.6478,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 419 packets (23045 bytes) over 2s with syn_ratio 0.00 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 5432, 5900, 8080, 8443, 8888]: Nmap scanner profiling destination ports using sN signature."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "68586eba-6a34-4854-9071-4d5136c59dac",
+        "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 509,
+              "byte_count_2s": 29013,
+              "syn_ratio": 0.99,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                139,
+                445,
+                3389
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 509,
+              "byte_count_2s": 29013,
+              "syn_ratio": 0.99,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                8080
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8841,
+              "severity": "HIGH",
+              "raw_telemetry_summary": "Observed 509 packets (29013 bytes) over 2s with syn_ratio 0.99 targeting ports [21, 22, 80, 139, 445, 3389]: Compromised internal workstation probing core subnet infrastructure ports."
+            },
+            "after": {
+              "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8841,
+              "severity": "HIGH",
+              "raw_telemetry_summary": "Observed 509 packets (29013 bytes) over 2s with syn_ratio 0.99 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 8080]: Compromised internal workstation probing core subnet infrastructure ports."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "560c95ee-638c-454c-876e-2bba7c5308bf",
+        "attack_signature": "NIDS: Distributed SYN Flood Attack (LOIT)",
+        "true_class": "SYN_FLOOD",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 8008,
+              "byte_count_2s": 440440,
+              "syn_ratio": 0.89,
+              "unique_dest_ports": [
+                80
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 4302,
+              "byte_count_2s": 232308,
+              "syn_ratio": 0.95,
+              "unique_dest_ports": [
+                80
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Distributed SYN Flood Attack (LOIT)",
+              "mitre_tactic": "Impact",
+              "mitre_technique_id": "T1498.001",
+              "confidence_score": 0.9132,
+              "severity": "CRITICAL",
+              "raw_telemetry_summary": "Observed 8008 packets (440440 bytes) over 2s with syn_ratio 0.89 targeting dest_port 80: Massive synchronized TCP SYN packet flood overwhelming network backlog."
+            },
+            "after": {
+              "attack_signature": "NIDS: Distributed SYN Flood Attack (LOIT)",
+              "mitre_tactic": "Impact",
+              "mitre_technique_id": "T1498.001",
+              "confidence_score": 0.9132,
+              "severity": "CRITICAL",
+              "raw_telemetry_summary": "Observed 4302 packets (232308 bytes) over 2s with syn_ratio 0.95 targeting dest_port 80: Massive synchronized TCP SYN packet flood overwhelming network backlog."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "3b33f3d8-269c-4696-a36c-7b8714a0bccb",
+        "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 631,
+              "byte_count_2s": 34705,
+              "syn_ratio": 0.94,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                139,
+                445,
+                3389
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 631,
+              "byte_count_2s": 34705,
+              "syn_ratio": 0.94,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                8080
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.917,
+              "severity": "HIGH",
+              "raw_telemetry_summary": "Observed 631 packets (34705 bytes) over 2s with syn_ratio 0.94 targeting ports [21, 22, 80, 139, 445, 3389]: Compromised internal workstation probing core subnet infrastructure ports."
+            },
+            "after": {
+              "attack_signature": "NIDS: Internal Reconnaissance Port Scan from Compromised Host",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.917,
+              "severity": "HIGH",
+              "raw_telemetry_summary": "Observed 631 packets (34705 bytes) over 2s with syn_ratio 0.94 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 8080]: Compromised internal workstation probing core subnet infrastructure ports."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "ac3c5640-3c20-492f-804a-96c4f3b63fe1",
+        "attack_signature": "NIDS: DoS Slowloris Incomplete HTTP Header Exhaustion",
+        "true_class": "SYN_FLOOD",
+        "diffs": [
+          {
+            "field": "protocol",
+            "before": "TCP",
+            "after": "HTTP"
+          }
+        ]
+      },
+      {
+        "alert_id": "db52ca58-0500-4bc6-b20d-cb6ef2311f17",
+        "attack_signature": "NIDS: Nmap TCP SYN Stealth Scan (sS)",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 196,
+              "byte_count_2s": 12544,
+              "syn_ratio": 0.92,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                443,
+                8080
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 196,
+              "byte_count_2s": 12544,
+              "syn_ratio": 0.92,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                5432,
+                5900,
+                8080,
+                8443,
+                8888
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Nmap TCP SYN Stealth Scan (sS)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8681,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 196 packets (12544 bytes) over 2s with syn_ratio 0.92 targeting ports [21, 22, 80, 443, 8080]: Nmap scanner profiling destination ports using sS signature."
+            },
+            "after": {
+              "attack_signature": "NIDS: Nmap TCP SYN Stealth Scan (sS)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.8681,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 196 packets (12544 bytes) over 2s with syn_ratio 0.92 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 5432, 5900, 8080, 8443, 8888]: Nmap scanner profiling destination ports using sS signature."
+            }
+          }
+        ]
+      },
+      {
+        "alert_id": "5a0cdd7c-f157-4470-8182-67c47a1b5806",
+        "attack_signature": "NIDS: Nmap TCP FIN Stealth Probe (sF)",
+        "true_class": "PORT_SCAN",
+        "diffs": [
+          {
+            "field": "flow_metrics",
+            "before": {
+              "packet_count_2s": 422,
+              "byte_count_2s": 25742,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                21,
+                22,
+                80,
+                443,
+                8080
+              ],
+              "payload_sample": ""
+            },
+            "after": {
+              "packet_count_2s": 422,
+              "byte_count_2s": 25742,
+              "syn_ratio": 0.0,
+              "unique_dest_ports": [
+                21,
+                22,
+                23,
+                25,
+                53,
+                80,
+                110,
+                111,
+                135,
+                139,
+                143,
+                443,
+                445,
+                993,
+                995,
+                1433,
+                1521,
+                3306,
+                3389,
+                5432,
+                5900,
+                8080,
+                8443,
+                8888
+              ],
+              "payload_sample": ""
+            }
+          },
+          {
+            "field": "nids_llm_assessment",
+            "before": {
+              "attack_signature": "NIDS: Nmap TCP FIN Stealth Probe (sF)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.9723,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 422 packets (25742 bytes) over 2s with syn_ratio 0.00 targeting ports [21, 22, 80, 443, 8080]: Nmap scanner profiling destination ports using sF signature."
+            },
+            "after": {
+              "attack_signature": "NIDS: Nmap TCP FIN Stealth Probe (sF)",
+              "mitre_tactic": "Discovery",
+              "mitre_technique_id": "T1046",
+              "confidence_score": 0.9723,
+              "severity": "MEDIUM",
+              "raw_telemetry_summary": "Observed 422 packets (25742 bytes) over 2s with syn_ratio 0.00 targeting ports [21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1433, 1521, 3306, 3389, 5432, 5900, 8080, 8443, 8888]: Nmap scanner profiling destination ports using sF signature."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
