@@ -19,7 +19,9 @@ logger.setLevel(logging.INFO)
 # ==========================================
 # MASTER ASSET INVENTORY (DYNAMIC LOAD)
 # ==========================================
-DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
+DATA_DIR = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "data")
+)
 INVENTORY_FILE = os.path.join(DATA_DIR, "asset_inventory.json")
 
 def load_inventory() -> dict:

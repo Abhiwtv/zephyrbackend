@@ -1,0 +1,83 @@
+{
+    "incident_id": "INC-006",
+    "status": "COMPLETED",
+    "alert_signature": "ET SCAN Distributed Password Spray / Brute Force Attempt (Okta/SSO)",
+    "source_ip": "45.33.22.11",
+    "target_ip": "10.0.0.100",
+    "hypotheses": [
+        "H1 (Critical): The exploit payload executed successfully, granting the attacker initial access.",
+        "H2 (Moderate): The payload was blocked by local host defenses or the application is patched.",
+        "H3 (Low): This is a false positive triggered by an automated benign scanner."
+    ],
+    "evidence_gathered": [],
+    "missing_evidence": [
+        "Vulnerability status of target host 10.0.0.100",
+        "Server access logs and process execution logs for 10.0.0.100"
+    ],
+    "assessment_outcome": "INCONCLUSIVE",
+    "confidence": 50.0,
+    "assessment_justification": "The alert signature indicates a potential Distributed Password Spray / Brute Force Attempt, but the compiled evidence does not provide sufficient information to determine the outcome of the attack. The SIEM query failed due to missing credentials, and no critical vulnerabilities were found on the target system.",
+    "textbook_playbook": "STANDARD SOP: Reset the targeted SPN service account password immediately to break the offline cracking attempt.",
+    "historical_context": "",
+    "proposed_action": "Reset the targeted SPN service account password immediately to break the offline cracking attempt",
+    "proposed_target": "Target IP (Victim): 10.0.0.100",
+    "action_justification": "PHASE 1 (STANDARD PLAYBOOK) dictates that we reset the targeted SPN service account password to prevent further unauthorized access.",
+    "reviewer_decision": "APPROVE",
+    "reviewer_feedback": "Simulation Passed: Action safe for production execution. [APPROVED] Action 'Reset the targeted SPN service account password immediately to break the offline cracking attempt' safely executed against Tier 4 entity (Non-Standard/MAC Identifier). Zero critical blast radius.",
+    "simulated_blast_radius": "[APPROVED] Action 'Reset the targeted SPN service account password immediately to break the offline cracking attempt' safely executed against Tier 4 entity (Non-Standard/MAC Identifier). Zero critical blast radius.",
+    "learned_rule": "",
+    "execution_result": "[SUCCESS] Applied Reset the targeted SPN service account password immediately to break the offline cracking attempt to Target IP (Victim): 10.0.0.100. Network fabric routing updated successfully.",
+    "verification_result": "[VERIFIED] No further malicious egress or lateral movement traffic observed on Target IP (Victim): 10.0.0.100. Connections reset.",
+    "judge_scorecard": {
+        "containment_score": 90,
+        "blast_radius_score": 80,
+        "adaptation_bonus": false,
+        "final_verdict": "Good Response, but room for improvement"
+    },
+    "messages": [
+        {
+            "type": "ai",
+            "content": "Intake complete. Alert ET SCAN Distributed Password Spray / Brute Force Attempt (Okta/SSO) normalized. Awaiting investigation."
+        },
+        {
+            "type": "ai",
+            "content": "Investigator Requirement: To prove or disprove the hypotheses, the following telemetry or evidence is missing:\n\n* Process creation and execution logs on 10.0.0.100 to confirm if a malicious process was spawned.\n* Network traffic capture (PCAP) from the target host's network interface to verify if any suspicious communication occurred between the source IP and the target host.\n* System call logs on 10.0.0.100 to determine if any unauthorized system calls were made, indicating potential exploitation of a vulnerability."
+        },
+        {
+            "type": "ai",
+            "content": ""
+        },
+        {
+            "type": "tool",
+            "content": "[ERROR] SIEM query failed: Missing credentials. Please pass an `api_key`, `workload_identity`, `admin_api_key`, or set the `OPENAI_API_KEY` or `OPENAI_ADMIN_KEY` environment variable."
+        },
+        {
+            "type": "tool",
+            "content": "[10.0.0.100] No known critical vulnerabilities found."
+        },
+        {
+            "type": "ai",
+            "content": "Verdict: INCONCLUSIVE - The alert signature indicates a potential Distributed Password Spray / Brute Force Attempt, but the compiled evidence does not provide sufficient information to determine the outcome of the attack. The SIEM query failed due to missing credentials, and no critical vulnerabilities were found on the target system."
+        },
+        {
+            "type": "ai",
+            "content": "Defense Strategy: Execute Reset the targeted SPN service account password immediately to break the offline cracking attempt on Target IP (Victim): 10.0.0.100. Justification: PHASE 1 (STANDARD PLAYBOOK) dictates that we reset the targeted SPN service account password to prevent further unauthorized access."
+        },
+        {
+            "type": "ai",
+            "content": "Reviewer APPROVE: Simulation Passed: Action safe for production execution. [APPROVED] Action 'Reset the targeted SPN service account password immediately to break the offline cracking attempt' safely executed against Tier 4 entity (Non-Standard/MAC Identifier). Zero critical blast radius."
+        },
+        {
+            "type": "ai",
+            "content": "Executor: [SUCCESS] Applied Reset the targeted SPN service account password immediately to break the offline cracking attempt to Target IP (Victim): 10.0.0.100. Network fabric routing updated successfully."
+        },
+        {
+            "type": "ai",
+            "content": "Verifier: [VERIFIED] No further malicious egress or lateral movement traffic observed on Target IP (Victim): 10.0.0.100. Connections reset."
+        },
+        {
+            "type": "ai",
+            "content": "Judge Verdict: Good Response, but room for improvement"
+        }
+    ]
+}

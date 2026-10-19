@@ -1,0 +1,1213 @@
+=========================================
+FILE: requirements.txt
+=========================================
+fastapi
+uvicorn
+pydantic
+langchain-core
+langchain-openai
+langchain-community
+langchain-huggingface[full]
+langgraph
+supabase
+python-dotenv
+rich
+psutil
+pytest
+requests
+
+
+=========================================
+FILE: app/core/state.py
+=========================================
+import operator
+from typing import List, Annotated, Sequence, Literal, Dict, Any
+from pydantic import BaseModel, Field
+from langchain_core.messages import BaseMessage
+
+class IncidentState(BaseModel):
+    """
+    The unified state object that is passed between all LangGraph nodes.
+    Acts as the complete contextual memory for a single attack simulation.
+    """
+    # --- Core Identifiers ---
+    incident_id: str = Field(description="Unique tracking ID for the alert")
+    status: Literal[
+        "ALERT_RECEIVED", 
+        "INTAKE", 
+        "INVESTIGATING", 
+        "EVIDENCE_PLANNING",
+        "ASSESSING",
+        "DEFENDING",
+        "REVIEWING",
+        "EXECUTING",
+        "VERIFYING",
+        "ADAPTING",
+        "COMPLETED",
+        "FAILED"
+    ] = Field(default="ALERT_RECEIVED", description="Current node phase")
+    
+    # --- Alert Context ---
+    alert_signature: str = Field(default="", description="e.g., CVE-2021-44228 JNDI RCE")
+    source_ip: str = Field(default="", description="Attacker IP")
+    target_ip: str = Field(default="", description="Victim IP or internal asset")
+    
+    # --- Investigator & Strategist Artifacts ---
+    hypotheses: List[str] = Field(default_factory=list, description="Theories about the attack success")
+    evidence_gathered: List[str] = Field(default_factory=list, description="Raw logs or tool outputs")
+    missing_evidence: List[str] = Field(default_factory=list, description="Forensic gaps identified")
+    
+    # --- Assessor Artifacts ---
+    assessment_outcome: str = Field(default="", description="ATTACK_SUCCEEDED or ATTACK_FAILED")
+    confidence: float = Field(default=0.0, description="Mathematical certainty of the assessment")
+    assessment_justification: str = Field(default="", description="Reasoning for the outcome")
+    
+    # --- Two-Phase Retrieval (RAG) Memory ---
+    textbook_playbook: str = Field(default="", description="Phase 1: Baseline textbook SOC SOP")
+    historical_context: str = Field(default="", description="Phase 2: RART-generated past mistakes (Overrides Phase 1)")
+    
+    # --- Defense Node Proposals ---
+    proposed_action: str = Field(default="", description="The exact mitigation (e.g., BLOCK_SOURCE, ISOLATE_ASSET)")
+    proposed_target: str = Field(default="", description="The infrastructure target of the action")
+    action_justification: str = Field(default="", description="LLM reasoning for choosing this action")
+    
+    # --- Reviewer Simulation (The Guardrail) ---
+    reviewer_decision: Literal["APPROVE", "REJECT", "PENDING"] = Field(default="PENDING")
+    reviewer_feedback: str = Field(default="", description="Feedback passed back to Defense if rejected")
+    simulated_blast_radius: str = Field(default="", description="Calculated infrastructure damage if executed")
+    
+    # --- RART (Policy Mutation) ---
+    learned_rule: str = Field(default="", description="The compressed semantic rule generated from a near-miss")
+    
+    # --- Final Execution ---
+    execution_result: str = Field(default="", description="Result from pushing the action to the network fabric")
+    verification_result: str = Field(default="", description="Validation that traffic stabilized")
+    judge_scorecard: Dict[str, Any] = Field(default_factory=dict, description="Hackathon evaluation metrics")
+
+    # --- LangChain Message History ---
+    # The Annotated operator.add ensures that returning new messages in a node APPENDS to this list
+    # rather than overwriting it, preserving the full conversational graph.
+    messages: Annotated[Sequence[BaseMessage], operator.add] = Field(default_factory=list)
+
+
+=========================================
+FILE: app/core/llm.py
+=========================================
+import logging
+from langchain_openai import ChatOpenAI
+from langchain_core.exceptions import OutputParserException
+
+logger = logging.getLogger("Zephyr-LLM")
+
+def get_llm(temperature: float = 0.2) -> ChatOpenAI:
+    """
+    Initializes the local LLM.
+    Uses the ChatOpenAI class routed to the local Ollama v1 API endpoint.
+    This provides superior native tool-calling (function binding) support for Llama 3.1 8B.
+    """
+    try:
+        llm = ChatOpenAI(
+            api_key="ollama", # Placeholder required by the OpenAI client
+            base_url="http://127.0.0.1:11434/v1",
+            model="llama3.1",
+            temperature=temperature,
+            max_retries=3,          # Critical for agentic loops to survive temporary hallucination crashes
+            request_timeout=120.0   # Generous timeout for local inference on an RTX 4050
+        )
+        return llm
+    except Exception as e:
+        logger.error(f"Failed to initialize local LLM: {str(e)}")
+        raise e
+
+# Instantiate a default singleton instance for general nodes
+local_llm = get_llm(temperature=0.2)
+
+# Instantiate a high-creativity instance specifically for the Strategist and RART nodes
+# to allow better semantic abstraction and out-of-the-box thinking.
+creative_llm = get_llm(temperature=0.6)
+
+
+=========================================
+FILE: app/agents/strategist.py
+=========================================
+import logging
+from typing import Dict, Any
+from langchain_core.prompts import ChatPromptTemplate
+from app.core.state import IncidentState
+from app.core.llm import creative_llm
+from app.tools.mock_env import soc_tools
+
+logger = logging.getLogger("Zephyr-Strategist")
+logger.setLevel(logging.INFO)
+
+def strategist_node(state: IncidentState) -> Dict[str, Any]:
+    """
+    Tool-binding node. Interprets the missing evidence requirements and invokes 
+    the environment's sandbox tools (e.g., check_server_logs, check_vulnerability).
+    """
+    logger.info(f"[{state.incident_id}] === EVIDENCE PLANNING PHASE INITIATED ===")
+    
+    # Bind the available tools to the LLM so it knows what it can execute
+    llm_with_tools = creative_llm.bind_tools(soc_tools)
+    
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", """You are an Evidence Strategist. 
+        Read the investigator's requirements and call the exact tools needed to satisfy them.
+        If no tools match the requirements, return a plain text response stating you cannot proceed."""),
+        ("user", "Target IP: {target}\nMissing Evidence Context:\n{messages}")
+    ])
+    
+    # Extract only the textual content from previous messages for clean prompting
+    context = "\n".join([msg.content for msg in state.messages if isinstance(msg.content, str)])
+    
+    logger.debug(f"[{state.incident_id}] Binding tools and invoking LLM...")
+    
+    try:
+        chain = prompt | llm_with_tools
+        response = chain.invoke({
+            "target": state.target_ip, 
+            "messages": context
+        })
+        
+        if response.tool_calls:
+            logger.info(f"[{state.incident_id}] Strategist generated {len(response.tool_calls)} tool call(s): {[tc['name'] for tc in response.tool_calls]}")
+        else:
+            logger.warning(f"[{state.incident_id}] Strategist failed to map requirements to tools. Fallback response generated.")
+            
+        return {
+            "status": "EVIDENCE_PLANNING",
+            # We append the AIMessage containing the tool_calls; the graph will automatically route this to the ToolNode
+            "messages": [response]
+        }
+        
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Strategist tool-binding failure: {str(e)}")
+        raise e
+
+
+=========================================
+FILE: app/agents/defense.py
+=========================================
+import logging
+from typing import Dict, Any
+from pydantic import BaseModel, Field
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import AIMessage
+
+from app.core.state import IncidentState
+from app.core.llm import local_llm
+from app.core.rag import get_playbook_retriever, get_postmortem_retriever
+
+logger = logging.getLogger("Zephyr-Defense")
+logger.setLevel(logging.INFO)
+
+class DefensePlan(BaseModel):
+    """
+    Strict schema ensuring the LLM outputs actionable, deterministic mitigation commands.
+    """
+    action: str = Field(description="Exact response action (e.g., BLOCK_SOURCE, ISOLATE_ASSET, TARGETED_RULE).")
+    target: str = Field(description="ONLY the raw target IP address or asset identifier.")
+    justification: str = Field(description="Brief explanation of why this action is chosen, explicitly citing RAG context.")
+
+def defense_node(state: IncidentState) -> Dict[str, Any]:
+    """
+    The Two-Phase Retrieval Node. 
+    Constructs a defense plan by pitting baseline SOC playbooks against historical episodic memory.
+    """
+    logger.info(f"[{state.incident_id}] === DEFENSE PLANNING PHASE INITIATED ===")
+    
+    # --- PHASE 1: Baseline Textbook Retrieval ---
+    logger.debug(f"[{state.incident_id}] Phase 1: Querying soc_playbooks...")
+    try:
+        playbook_retriever = get_playbook_retriever(k=1)
+        playbook_docs = playbook_retriever.invoke(f"{state.alert_signature} {state.assessment_outcome}")
+        playbook_context = playbook_docs[0].page_content if playbook_docs else "No standard playbook found. Proceed with general containment."
+        logger.info(f"[{state.incident_id}] Baseline Playbook Loaded: {playbook_context[:60]}...")
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Phase 1 Retrieval Failed: {str(e)}")
+        playbook_context = "SYSTEM ERROR: Playbook unavailable."
+
+    # --- PHASE 2: Episodic Memory Retrieval ---
+    logger.debug(f"[{state.incident_id}] Phase 2: Querying incident_postmortems for past mistakes...")
+    try:
+        history_retriever = get_postmortem_retriever(k=2)
+        history_query = f"Mistakes handling {state.source_ip} or {state.target_ip} or {state.alert_signature}"
+        history_docs = history_retriever.invoke(history_query)
+        history_context = "\n".join([d.page_content for d in history_docs]) if history_docs else ""
+        
+        if history_context:
+            logger.warning(f"[{state.incident_id}] CRITICAL: Historical overrides found! Injecting into prompt.")
+        else:
+            logger.info(f"[{state.incident_id}] No historical mistakes found for this vector.")
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Phase 2 Retrieval Failed: {str(e)}")
+        history_context = ""
+
+    # --- Synthesis & Prompt Resolution ---
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", """You are the Lead SOC Defense Architect.
+        Formulate a mitigation plan based strictly on the provided intelligence.
+        
+        PHASE 1 (STANDARD PLAYBOOK):
+        {playbook}
+        
+        PHASE 2 (PAST MISTAKES - CRITICAL OVERRIDE):
+        {history}
+        
+        ABSOLUTE GOVERNING RULES:
+        1. If PHASE 2 (PAST MISTAKES) contains a rule that contradicts PHASE 1, you MUST prioritize Phase 2. To ignore a past mistake is a critical failure.
+        2. If you receive 'Previous Reviewer Feedback' rejecting your last plan, you MUST propose a DIFFERENT action to avoid an infinite loop.
+        3. Never target a benign or unknown entity. Target the attacker or isolate the victim."""),
+        ("user", """
+        Source IP (Attacker): {source}
+        Target IP (Victim): {target}
+        Assessment Outcome: {outcome}
+        Previous Reviewer Feedback: {feedback}
+        """)
+    ])
+    
+    # Inject feedback if this is a second-pass after a Reviewer rejection
+    feedback_context = state.reviewer_feedback if state.reviewer_decision == "REJECT" else "None. First attempt."
+    
+    logger.debug(f"[{state.incident_id}] Invoking LLM with structured DefensePlan constraints...")
+    
+    try:
+        # Enforce output via LangChain's native function calling Pydantic binder
+        structured_llm = local_llm.with_structured_output(DefensePlan)
+        chain = prompt | structured_llm
+        
+        plan: DefensePlan = chain.invoke({
+            "playbook": playbook_context, 
+            "history": history_context if history_context else "None.", 
+            "source": state.source_ip, 
+            "target": state.target_ip, 
+            "outcome": state.assessment_outcome, 
+            "feedback": feedback_context
+        })
+        
+        logger.info(f"[{state.incident_id}] Defense Plan Formulated -> Action: {plan.action} | Target: {plan.target}")
+        logger.info(f"[{state.incident_id}] Plan Justification: {plan.justification}")
+        
+        return {
+            "status": "DEFENDING",
+            "textbook_playbook": playbook_context,
+            "historical_context": history_context,
+            "proposed_action": plan.action,
+            "proposed_target": plan.target,
+            "action_justification": plan.justification,
+            "messages": [AIMessage(content=f"Defense Strategy: Execute {plan.action} on {plan.target}. Justification: {plan.justification}")]
+        }
+        
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Defense node failure: {str(e)}")
+        # Safe fallback to prevent system crash
+        return {
+            "status": "DEFENDING",
+            "proposed_action": "ISOLATE_ASSET",
+            "proposed_target": state.target_ip,
+            "action_justification": "Fallback strategy activated due to inference failure.",
+            "messages": [AIMessage(content="Defense Strategy: SYSTEM FAILURE. Defaulting to victim isolation.")]
+        }
+
+
+=========================================
+FILE: app/agents/reviewer.py
+=========================================
+import logging
+from typing import Dict, Any
+from langchain_core.messages import AIMessage
+
+from app.core.state import IncidentState
+from app.tools.mock_env import simulate_blast_radius
+
+logger = logging.getLogger("Zephyr-Reviewer")
+logger.setLevel(logging.INFO)
+
+def reviewer_node(state: IncidentState) -> Dict[str, Any]:
+    """
+    The Near-Miss Simulation Gate.
+    Calculates the exact infrastructure impact of the proposed defense plan before it executes.
+    Routes to EXECUTION if safe, or RART if catastrophic.
+    """
+    logger.info(f"[{state.incident_id}] === REVIEWER & MCTS SIMULATION PHASE INITIATED ===")
+    logger.info(f"[{state.incident_id}] Simulating action: {state.proposed_action} on {state.proposed_target}")
+    
+    try:
+        # Organically invoke the blast radius simulator (mocking a BGP/ASN lookup)
+        simulated_impact = simulate_blast_radius.invoke({
+            "action": state.proposed_action, 
+            "target": state.proposed_target
+        })
+        
+        logger.info(f"[{state.incident_id}] Blast Radius Result: {simulated_impact}")
+        
+        # Heuristic Evaluation
+        if "[FATAL]" in simulated_impact:
+            decision = "REJECT"
+            feedback = f"Simulation Blocked: Action triggers unacceptable collateral damage. {simulated_impact}"
+            logger.warning(f"[{state.incident_id}] REVIEWER REJECTED PLAN. Routing to RART adaptation loop.")
+        else:
+            decision = "APPROVE"
+            feedback = f"Simulation Passed: Action safe for production execution. {simulated_impact}"
+            logger.info(f"[{state.incident_id}] REVIEWER APPROVED PLAN. Routing to Executor.")
+            
+        return {
+            "status": "REVIEWING",
+            "simulated_blast_radius": simulated_impact,
+            "reviewer_decision": decision,
+            "reviewer_feedback": feedback,
+            "messages": [AIMessage(content=f"Reviewer {decision}: {feedback}")]
+        }
+        
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Reviewer Simulation Failure: {str(e)}")
+        # If the simulator crashes, fail secure (Reject)
+        return {
+            "status": "REVIEWING",
+            "simulated_blast_radius": "SIMULATOR_CRASH",
+            "reviewer_decision": "REJECT",
+            "reviewer_feedback": "Reviewer subsystem failure. Plan rejected as a safety precaution.",
+            "messages": [AIMessage(content="Reviewer REJECT: Simulator crash. Fail secure activated.")]
+        }
+
+
+=========================================
+FILE: app/agents/judge.py
+=========================================
+import logging
+from typing import Dict, Any
+from pydantic import BaseModel, Field
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import AIMessage
+
+from app.core.state import IncidentState
+from app.core.llm import local_llm
+
+logger = logging.getLogger("Zephyr-Judge")
+logger.setLevel(logging.INFO)
+
+class RunScorecard(BaseModel):
+    containment_score: int = Field(description="Score 0-100 on how well the threat was neutralized.")
+    blast_radius_score: int = Field(description="Score 0-100 on avoiding collateral damage. Near-misses reduce this slightly, fatal errors reduce it to 0.")
+    adaptation_bonus: bool = Field(description="True if the RART engine synthesized a new rule during this run.")
+    final_verdict: str = Field(description="A one-sentence summary of the SOC's performance.")
+
+def judge_node(state: IncidentState) -> Dict[str, Any]:
+    """
+    The final evaluation node. Grades the AI's performance for the dashboard.
+    """
+    logger.info(f"[{state.incident_id}] === EVALUATION & SCORING INITIATED ===")
+    
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", """You are the autonomous SOC Evaluator.
+        Review the complete incident trajectory and grade the response.
+        If a 'learned_rule' is present, the AI adapted to a near-miss, which is excellent, but indicates the first plan was flawed.
+        If 'historical_context' was used to avoid a mistake entirely, award a perfect 100 Blast Radius score.
+        Output strictly in the required JSON scorecard schema."""),
+        ("user", """
+        Execution Result: {execution}
+        Verification Result: {verification}
+        Rule Learned this run: {learned}
+        Historical Context Used: {history_used}
+        """)
+    ])
+    
+    try:
+        structured_llm = local_llm.with_structured_output(RunScorecard)
+        chain = prompt | structured_llm
+        
+        scorecard: RunScorecard = chain.invoke({
+            "execution": state.execution_result,
+            "verification": state.verification_result,
+            "learned": state.learned_rule if state.learned_rule else "None",
+            "history_used": "Yes" if state.historical_context else "No"
+        })
+        
+        logger.info(f"[{state.incident_id}] Final Score - Containment: {scorecard.containment_score} | Blast Radius: {scorecard.blast_radius_score}")
+        
+        return {
+            "status": "COMPLETED",
+            "judge_scorecard": scorecard.model_dump(),
+            "messages": [AIMessage(content=f"Judge Verdict: {scorecard.final_verdict}")]
+        }
+        
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Judge scoring failure: {str(e)}")
+        # Safe heuristic fallback
+        fallback = {"containment_score": 100, "blast_radius_score": 85, "adaptation_bonus": bool(state.learned_rule), "final_verdict": "Completed with default scoring."}
+        return {
+            "status": "COMPLETED",
+            "judge_scorecard": fallback,
+            "messages": [AIMessage(content="Judge Verdict: Completed.")]
+        }
+
+
+=========================================
+FILE: app/agents/verifier.py
+=========================================
+import logging
+from typing import Dict, Any
+from langchain_core.messages import AIMessage
+
+from app.core.state import IncidentState
+from app.tools.mock_env import verify_network_traffic
+
+logger = logging.getLogger("Zephyr-Verifier")
+logger.setLevel(logging.INFO)
+
+def verifier_node(state: IncidentState) -> Dict[str, Any]:
+    """
+    Post-execution validation. Checks if the mitigation actually stopped the threat activity.
+    """
+    logger.info(f"[{state.incident_id}] === VERIFICATION PHASE INITIATED ===")
+    
+    try:
+        result = verify_network_traffic.invoke({"target": state.proposed_target})
+        logger.info(f"[{state.incident_id}] Verification Output: {result}")
+        
+        return {
+            "status": "VERIFYING",
+            "verification_result": result,
+            "messages": [AIMessage(content=f"Verifier: {result}")]
+        }
+    except Exception as e:
+        logger.error(f"[{state.incident_id}] Verification Failure: {str(e)}")
+        return {
+            "status": "VERIFYING",
+            "verification_result": "UNABLE TO VERIFY TRAFFIC",
+            "messages": [AIMessage(content="Verifier: Telemetry unavailable.")]
+        }
+
+
+=========================================
+FILE: app/graph/orchestrator.py
+=========================================
+import logging
+from typing import Literal
+
+from langgraph.graph import StateGraph, START, END
+from langgraph.prebuilt import ToolNode
+
+from app.core.state import IncidentState
+from app.tools.mock_env import soc_tools
+
+# Import all agent nodes
+from app.agents.intake import intake_node
+from app.agents.investigator import investigator_node
+from app.agents.strategist import strategist_node
+from app.agents.assessment import assessment_node
+from app.agents.defense import defense_node
+from app.agents.reviewer import reviewer_node
+from app.agents.rart import rart_node
+from app.agents.executor import executor_node
+from app.agents.verifier import verifier_node
+from app.agents.judge import judge_node
+
+logger = logging.getLogger("Zephyr-Orchestrator")
+logger.setLevel(logging.INFO)
+
+# --- Conditional Routing Logic ---
+
+def route_strategist(state: IncidentState) -> Literal["tools", "assessor"]:
+    """
+    Checks if the Strategist generated tool calls. 
+    If yes, route to the execution sandbox (tools). 
+    If no (or if fallback occurred), proceed straight to assessment.
+    """
+    last_message = state.messages[-1]
+    if hasattr(last_message, "tool_calls") and last_message.tool_calls:
+        logger.debug(f"[{state.incident_id}] Graph Routing: Strategist -> Tools")
+        return "tools"
+    
+    logger.debug(f"[{state.incident_id}] Graph Routing: Strategist -> Assessor (No tools called)")
+    return "assessor"
+
+
+def route_reviewer(state: IncidentState) -> Literal["executor", "rart"]:
+    """
+    The Near-Miss Gatekeeper.
+    Evaluates the Reviewer's simulation decision.
+    APPROVE -> Route to Production Execution.
+    REJECT -> Route to RART for Policy Mutation.
+    """
+    if state.reviewer_decision == "APPROVE":
+        logger.info(f"[{state.incident_id}] Graph Routing: Reviewer -> Executor (Plan Approved)")
+        return "executor"
+    else:
+        logger.warning(f"[{state.incident_id}] Graph Routing: Reviewer -> RART (Plan Rejected - Triggering Evolution Loop)")
+        return "rart"
+
+# --- Graph Construction ---
+
+def build_soc_graph():
+    """
+    Constructs and compiles the LangGraph state machine.
+    """
+    logger.info("Building Zephyr LangGraph State Machine...")
+    
+    builder = StateGraph(IncidentState)
+    
+    # 1. Register all nodes
+    builder.add_node("intake", intake_node)
+    builder.add_node("investigator", investigator_node)
+    builder.add_node("strategist", strategist_node)
+    builder.add_node("tools", ToolNode(soc_tools))
+    builder.add_node("assessor", assessment_node)
+    builder.add_node("defense", defense_node)
+    builder.add_node("reviewer", reviewer_node)
+    builder.add_node("rart", rart_node)
+    builder.add_node("executor", executor_node)
+    builder.add_node("verifier", verifier_node)
+    builder.add_node("judge", judge_node)
+    
+    # 2. Define the exact flow of execution (Edges)
+    builder.add_edge(START, "intake")
+    builder.add_edge("intake", "investigator")
+    builder.add_edge("investigator", "strategist")
+    
+    # Conditional edge for tool execution
+    builder.add_conditional_edges(
+        "strategist", 
+        route_strategist, 
+        {"tools": "tools", "assessor": "assessor"}
+    )
+    
+    # Tools feed directly into the Assessor for a final verdict
+    builder.add_edge("tools", "assessor")
+    builder.add_edge("assessor", "defense")
+    builder.add_edge("defense", "reviewer")
+    
+    # The crucial evolutionary fork
+    builder.add_conditional_edges(
+        "reviewer", 
+        route_reviewer, 
+        {"executor": "executor", "rart": "rart"}
+    )
+    
+    # If routed to RART, loop BACK to Defense to formulate a new plan
+    builder.add_edge("rart", "defense")
+    
+    # Final execution and grading path
+    builder.add_edge("executor", "verifier")
+    builder.add_edge("verifier", "judge")
+    builder.add_edge("judge", END)
+    
+    # Compile the graph
+    compiled_graph = builder.compile()
+    logger.info("Zephyr LangGraph compiled successfully.")
+    
+    return compiled_graph
+
+# Instantiate the singleton graph used by FastAPI and training scripts
+soc_graph = build_soc_graph()
+
+
+=========================================
+FILE: app/main.py
+=========================================
+import os
+import json
+import asyncio
+import logging
+from fastapi import FastAPI, Request
+from fastapi.responses import StreamingResponse
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+
+# Note: This import will resolve fully once we generate Batch 6 (orchestrator.py)
+from app.graph.orchestrator import soc_graph
+from app.core.state import IncidentState
+
+# Configure robust console logging for backend visibility
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s - %(message)s"
+)
+logger = logging.getLogger("Zephyr-API")
+
+app = FastAPI(
+    title="Zephyr Autonomous SOC Backend",
+    description="Live inference API with SSE streaming for frontend telemetry visualization.",
+    version="1.0.0"
+)
+
+# Standard CORS for Next.js / React frontend integration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Restrict this in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+class AttackSimulationRequest(BaseModel):
+    incident_id: str = Field(default="INC-LIVE-DEMO", description="Unique ID for this run")
+    signature: str = Field(default="CVE-2021-44228 JNDI RCE", description="The IDS alert signature")
+    source_ip: str = Field(default="104.28.15.12", description="The attacker's origin IP")
+    target_ip: str = Field(default="10.0.1.15", description="The victim internal IP")
+
+@app.get("/")
+async def health_check():
+    """Simple health check endpoint for deployment probes."""
+    return {"status": "Zephyr SOC Backend is Online", "version": "1.0.0"}
+
+@app.post("/api/simulate-attack/stream")
+async def stream_incident_response(request: AttackSimulationRequest):
+    """
+    Server-Sent Events (SSE) Endpoint.
+    Streams real-time LangGraph node execution states to the frontend.
+    """
+    logger.info(f"Incoming attack simulation request: {request.incident_id} from {request.source_ip}")
+    
+    # Initialize the rich state model
+    initial_state = IncidentState(
+        incident_id=request.incident_id,
+        alert_signature=request.signature,
+        source_ip=request.source_ip,
+        target_ip=request.target_ip
+    )
+
+    async def event_generator():
+        # 1. Connection Event
+        init_payload = {
+            "node": "system",
+            "status": "connected",
+            "message": "Initializing Zephyr Defense Matrix..."
+        }
+        yield f"data: {json.dumps(init_payload)}\n\n"
+        await asyncio.sleep(0.5)
+
+        try:
+            # 2. Asynchronous Graph Execution Stream (LangChain v2 API)
+            async for event in soc_graph.astream_events(initial_state, version="v2"):
+                kind = event["event"]
+                node_name = event.get("name", "unknown")
+                
+                # We filter specifically for node completions to provide clean UI updates
+                if kind == "on_chain_end" and node_name not in ["LangGraph", "system"]:
+                    
+                    # Extract the dictionary of state mutations emitted by this node
+                    output_data = event.get("data", {}).get("output", {})
+                    if not isinstance(output_data, dict):
+                        continue
+                        
+                    # Build a highly verbose payload for the UI
+                    payload = {
+                        "node": node_name,
+                        "status": "completed",
+                        "internal_status_flag": output_data.get("status", "PROCESSING"),
+                        "action_proposed": output_data.get("proposed_action", None),
+                        "target": output_data.get("proposed_target", None),
+                        "justification": output_data.get("action_justification", None),
+                        "reviewer_decision": output_data.get("reviewer_decision", None),
+                        "simulated_blast_radius": output_data.get("simulated_blast_radius", None),
+                        "historical_context_used": bool(output_data.get("historical_context")),
+                        "learned_rule": output_data.get("learned_rule", None),
+                        "execution_result": output_data.get("execution_result", None)
+                    }
+                    
+                    logger.info(f"Streaming Node Completion: {node_name} | Status: {payload['internal_status_flag']}")
+                    yield f"data: {json.dumps(payload)}\n\n"
+                    
+                    # Small artificial delay to allow UI animations to breathe
+                    await asyncio.sleep(0.8)
+
+            # 3. Successful Termination Event
+            term_payload = {
+                "node": "system", 
+                "status": "terminated", 
+                "message": "Simulation and adaptation cycle complete."
+            }
+            yield f"data: {json.dumps(term_payload)}\n\n"
+
+        except Exception as e:
+            logger.error(f"Graph execution failed: {str(e)}")
+            error_payload = {
+                "node": "system",
+                "status": "error",
+                "message": f"Critical Failure: {str(e)}"
+            }
+            yield f"data: {json.dumps(error_payload)}\n\n"
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")
+
+if __name__ == "__main__":
+    import uvicorn
+    # Optimized for local development. In production, remove reload=True.
+    uvicorn.run("app.main:app", host="0.0.0.0", port=10000, reload=True)
+
+
+=========================================
+FILE: server.py
+=========================================
+import os
+import json
+import asyncio
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+from google import genai
+from google.genai import types, errors
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.environ.get("GEMINI_API_KEY")
+if not API_KEY:
+    raise ValueError("CRITICAL: GEMINI_API_KEY missing from environment.")
+
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[FRONTEND_URL, "http://localhost:3000", "https://your-soc-frontend.vercel.app"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+client = genai.Client(api_key=API_KEY)
+
+class IncidentState(BaseModel):
+    hypotheses: list[str]
+    nids_alerts: list[dict]
+    evidence: list[dict]
+
+@app.get("/health")
+def health_check():
+    return {"status": "awake"}
+
+async def generate_chat_stream(state: IncidentState):
+    try:
+        yield f"data: {json.dumps({'state': 'investigating'})}\n\n"
+        
+        prompt = f"""
+        You are an expert SOC Analyst Agent. Analyze the current incident state and provide a brief, 
+        2-sentence hypothesis of what is happening.
+        
+        Current State:
+        {state.model_dump_json()}
+        """
+        
+        # Thinking budget explicitly set to 0 to disable reasoning and drop latency
+        # Thinking level explicitly set to MINIMAL to disable reasoning and drop latency
+        response = await client.aio.models.generate_content_stream(
+            model="gemini-3.6-flash",
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                thinking_config=types.ThinkingConfig(thinking_level="MINIMAL")
+            )
+        )
+        
+        async for chunk in response:
+            if chunk.text:
+                yield f"data: {json.dumps({'state': 'reasoning', 'text': chunk.text})}\n\n"
+                
+        yield f"data: {json.dumps({'state': 'complete', 'resolution': 'Analysis complete.'})}\n\n"
+
+    except errors.APIError as e:
+        if e.code == 429:
+             yield f"data: {json.dumps({'state': 'paused', 'error': 'Rate limit hit, applying backoff...'})}\n\n"
+        else:
+             yield f"data: {json.dumps({'state': 'error', 'error': str(e)})}\n\n"
+    except Exception as e:
+        yield f"data: {json.dumps({'state': 'error', 'error': 'Internal Server Error: ' + str(e)})}\n\n"
+
+@app.post("/api/chat")
+async def chat_endpoint(state: IncidentState):
+    return StreamingResponse(generate_chat_stream(state), media_type="text/event-stream")
+
+
+=========================================
+FILE: scripts/run_learning.py
+=========================================
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import time
+import uuid
+import shutil
+import psutil
+from datetime import datetime
+from typing import Optional, Dict, Any, List
+from dotenv import load_dotenv
+
+from pydantic import BaseModel, Field
+from rich.console import Console
+from rich.live import Live
+from rich.table import Table
+from rich.panel import Panel
+from rich.layout import Layout
+from rich.text import Text
+
+# LangChain & Supabase JIT Ingestion Imports
+from langchain_core.documents import Document
+from langchain_community.vectorstores import SupabaseVectorStore
+from langchain_openai import OpenAIEmbeddings
+
+# Ensure application modules can be discovered from scripts directory
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from app.graph.orchestrator import soc_graph
+from app.core.state import IncidentState
+
+# Optional cloud storage client
+try:
+    from supabase import create_client, Client
+    SUPABASE_AVAILABLE = True
+except ImportError:
+    SUPABASE_AVAILABLE = False
+
+load_dotenv()
+
+# ==========================================
+# 1. CONSTANTS & PATHS
+# ==========================================
+
+DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
+CURRICULUM_FILE = os.path.join(DATA_DIR, "curriculum.json")
+RAW_LOGS_DIR = os.path.join(DATA_DIR, "raw_logs")
+DPO_FILE = os.path.join(DATA_DIR, "dpo_dataset", "preferences.jsonl")
+RUNS_DIR = os.path.join(DATA_DIR, "training_runs")
+
+BACKUP_INTERVAL_SECONDS = 3600  # Trigger Supabase backup every 60 minutes
+THROTTLE_CPU_PERCENT = 85.0
+THROTTLE_RAM_PERCENT = 90.0
+THROTTLE_TEMP_C = 80.0
+COOLING_CYCLE_SECONDS = 30
+
+console = Console()
+
+# ==========================================
+# 2. PRE-FLIGHT VALIDATION & STORAGE SYNC
+# ==========================================
+
+def pre_flight_check(curriculum: List[Dict[str, Any]]) -> None:
+    """Step 0: Validates dataset integrity before allowing LangGraph to execute."""
+    console.print("\n[bold cyan]=== EXECUTING PRE-FLIGHT DATASET VALIDATION ===[/bold cyan]")
+    
+    if not os.path.exists(RAW_LOGS_DIR):
+        console.print(f"[bold red][FATAL] RAW_LOGS_DIR missing at {RAW_LOGS_DIR}[/bold red]")
+        sys.exit(1)
+        
+    log_files = [f for f in os.listdir(RAW_LOGS_DIR) if f.endswith(".txt")]
+    
+    # 1. Check structural parity (1:1 JSON to Log mapping)
+    if len(curriculum) != len(log_files):
+        console.print(f"[bold red][FATAL] Dataset Drift Detected: {len(curriculum)} JSON entries vs {len(log_files)} syslog files.[/bold red]")
+        sys.exit(1)
+        
+    # 2. Check semantic correlation and Embedding tags
+    for entry in curriculum:
+        inc_id = entry.get("incident_id")
+        if not inc_id:
+            console.print("[bold red][FATAL] Malformed curriculum JSON: Missing incident_id.[/bold red]")
+            sys.exit(1)
+            
+        log_path = os.path.join(RAW_LOGS_DIR, f"{inc_id}_syslog.txt")
+        if not os.path.exists(log_path):
+            console.print(f"[bold red][FATAL] Broken Link: curriculum.json contains {inc_id} but {inc_id}_syslog.txt is missing.[/bold red]")
+            sys.exit(1)
+            
+        with open(log_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            if "[CORE]" not in content:
+                console.print(f"[bold red][FATAL] Embedding Failure Risk: {inc_id}_syslog.txt contains no [CORE] tags for pgvector extraction.[/bold red]")
+                sys.exit(1)
+                
+    console.print("[bold green]✅ Pre-Flight Validation Passed. Dataset is structurally and semantically intact.[/bold green]\n")
+    time.sleep(1.5)
+
+def setup_directories() -> None:
+    os.makedirs(os.path.dirname(DPO_FILE), exist_ok=True)
+    os.makedirs(RUNS_DIR, exist_ok=True)
+
+def load_curriculum() -> List[Dict[str, str]]:
+    if not os.path.exists(CURRICULUM_FILE):
+        console.log(f"[bold red][!] Critical Error: Curriculum file not found at {CURRICULUM_FILE}[/bold red]")
+        sys.exit(1)
+    try:
+        with open(CURRICULUM_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            if not isinstance(data, list):
+                raise ValueError("Curriculum must be a JSON array of objects.")
+            return data
+    except Exception as e:
+        console.log(f"[bold red][!] Failed to parse curriculum JSON: {e}[/bold red]")
+        sys.exit(1)
+
+def backup_to_supabase(supabase_client: Client) -> None:
+    if not supabase_client:
+        return
+    try:
+        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        zip_filename = f"zephyr_logs_{timestamp}"
+        archive_path = os.path.join(DATA_DIR, zip_filename)
+
+        shutil.make_archive(archive_path, 'zip', DATA_DIR)
+        full_zip_path = f"{archive_path}.zip"
+
+        with open(full_zip_path, "rb") as f:
+            supabase_client.storage.from_("training_logs").upload(
+                path=f"{zip_filename}.zip",
+                file=f,
+                file_options={"content-type": "application/zip"}
+            )
+        if os.path.exists(full_zip_path):
+            os.remove(full_zip_path)
+    except Exception as e:
+        console.log(f"[bold yellow][!] Autonomous cloud backup skipped: {str(e)}[/bold yellow]")
+
+# ==========================================
+# 3. JUST-IN-TIME (JIT) TELEMETRY INGESTION
+# ==========================================
+
+def ingest_single_incident(incident_id: str, supabase_client: Client) -> None:
+    """Simulates live SIEM ingestion by embedding logs just before investigation."""
+    if not supabase_client:
+        return
+
+    log_path = os.path.join(RAW_LOGS_DIR, f"{incident_id}_syslog.txt")
+    
+    with open(log_path, "r", encoding="utf-8") as f:
+        full_content = f.read()
+
+    core_lines = [line.strip() for line in full_content.split("\n") if line.startswith("[CORE]")]
+    if not core_lines:
+        return
+
+    doc = Document(
+        page_content="\n".join(core_lines),
+        metadata={
+            "incident_id": incident_id,
+            "document_type": "raw_syslog",
+            "full_timeline": full_content
+        }
+    )
+
+    try:
+        embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+        SupabaseVectorStore.from_documents(
+            [doc],
+            embeddings,
+            client=supabase_client,
+            table_name="documents",
+            query_name="match_documents"
+        )
+    except Exception as e:
+        console.print(f"[bold red][!] Failed to embed telemetry for {incident_id}: {str(e)}[/bold red]")
+
+# ==========================================
+# 4. TELEMETRY SERIALIZATION & HARVESTING
+# ==========================================
+
+def clean_state_for_json(raw_state: Dict[str, Any]) -> Dict[str, Any]:
+    serialized = {}
+    for key, value in raw_state.items():
+        if key == "messages" and isinstance(value, list):
+            serialized[key] = [
+                {"type": getattr(msg, "type", "message"), "content": getattr(msg, "content", str(msg))}
+                for msg in value
+            ]
+        elif isinstance(value, (str, int, float, bool, list, dict)) or value is None:
+            serialized[key] = value
+        else:
+            serialized[key] = str(value)
+    return serialized
+
+def log_dpo_preference(final_state: Dict[str, Any]) -> None:
+    prompt_str = (
+        f"Alert Signature: {final_state.get('alert_signature', '')}\n"
+        f"Source IP: {final_state.get('source_ip', '')}\n"
+        f"Target IP: {final_state.get('target_ip', '')}\n"
+        f"Assessment Outcome: {final_state.get('assessment_outcome', '')}"
+    )
+    rejected_str = (
+        f"Action: BLOCK_SOURCE\n"
+        f"Target: {final_state.get('source_ip', '')}\n"
+        f"Failure Context: {final_state.get('reviewer_feedback', 'Failed blast-radius simulation')}"
+    )
+    chosen_str = (
+        f"Action: {final_state.get('proposed_action', 'ISOLATE_ASSET')}\n"
+        f"Target: {final_state.get('proposed_target', '')}\n"
+        f"Evolved Rule: {final_state.get('learned_rule', '')}\n"
+        f"Justification: {final_state.get('action_justification', '')}"
+    )
+    dpo_entry = {
+        "prompt": prompt_str,
+        "rejected": rejected_str,
+        "chosen": chosen_str,
+        "metadata": {
+            "incident_id": final_state.get("incident_id"),
+            "timestamp": datetime.utcnow().isoformat(),
+            "simulated_blast_radius": final_state.get("simulated_blast_radius", "")
+        }
+    }
+    with open(DPO_FILE, "a", encoding="utf-8") as f:
+        f.write(json.dumps(dpo_entry) + "\n")
+
+def save_run_telemetry(incident_id: str, raw_state: Dict[str, Any]) -> None:
+    incident_folder = os.path.join(RUNS_DIR, incident_id)
+    os.makedirs(incident_folder, exist_ok=True)
+    telemetry_file = os.path.join(incident_folder, "telemetry.json")
+
+    cleaned_data = clean_state_for_json(raw_state)
+    with open(telemetry_file, "w", encoding="utf-8") as f:
+        json.dump(cleaned_data, f, indent=4)
+
+# ==========================================
+# 5. HARDWARE MONITORING & COOLING
+# ==========================================
+
+def get_system_temp() -> float:
+    try:
+        temps = psutil.sensors_temperatures()
+        if not temps:
+            return 0.0
+        core_readings = [entry.current for entry in list(temps.values())[0]]
+        return sum(core_readings) / len(core_readings) if core_readings else 0.0
+    except (AttributeError, KeyError, IndexError):
+        return 0.0
+
+def check_hardware_limits(run_idx: int) -> bool:
+    cpu_usage = psutil.cpu_percent(interval=0.2)
+    ram_usage = psutil.virtual_memory().percent
+    temp_c = get_system_temp()
+
+    is_overheated = temp_c > THROTTLE_TEMP_C and temp_c != 0.0
+    is_overloaded = cpu_usage > THROTTLE_CPU_PERCENT or ram_usage > THROTTLE_RAM_PERCENT
+
+    if is_overheated or is_overloaded:
+        console.log(f"[bold red][!] RUN {run_idx}: THROTTLE ACTIVATED.[/bold red] CPU: {cpu_usage}% | RAM: {ram_usage}% | Temp: {temp_c}°C")
+        time.sleep(COOLING_CYCLE_SECONDS)
+        return True
+    return False
+
+# ==========================================
+# 6. DASHBOARD INTERFACE
+# ==========================================
+
+def generate_dashboard(run_history: List[Dict[str, Any]], dpo_total: int, status_line: str, total_runs: int) -> Layout:
+    layout = Layout()
+    layout.split_column(Layout(name="header", size=3), Layout(name="body"), Layout(name="footer", size=3))
+
+    cpu_usage = psutil.cpu_percent()
+    ram_usage = psutil.virtual_memory().percent
+    temp_c = get_system_temp()
+    
+    header_str = f"ZEPHYR GYM | CPU: {cpu_usage}% | RAM: {ram_usage}% | TEMP: {temp_c}°C | DPO RECORDS: {dpo_total} | COMPLETED: {len(run_history)}/{total_runs}"
+    layout["header"].update(Panel(Text(header_str, style="bold green"), title="COMPUTE TELEMETRY"))
+
+    table = Table(show_header=True, header_style="bold cyan", expand=True)
+    table.add_column("Incident ID", width=16)
+    table.add_column("Alert Signature", ratio=3)
+    table.add_column("Reviewer Gate", width=14)
+    table.add_column("RART Mutated", width=14)
+    table.add_column("Action Committed", ratio=2)
+
+    for item in run_history[-12:]:
+        rev_style = "bold green" if item["reviewer"] == "APPROVE" else "bold red"
+        rart_style = "[bold yellow]TRUE[/bold yellow]" if item["rart"] else "[dim]FALSE[/dim]"
+        table.add_row(item["id"], item["signature"][:38], f"[{rev_style}]{item['reviewer']}[/]", rart_style, item["action"])
+
+    layout["body"].update(Panel(table, title="CURRICULUM MCTS ROLLOUT PIPELINE"))
+    layout["footer"].update(Panel(f"[bold magenta]{status_line}[/bold magenta]", title="ACTIVE STATE"))
+    return layout
+
+# ==========================================
+# 7. MAIN GYM EXECUTION ENGINE
+# ==========================================
+
+def main() -> None:
+    setup_directories()
+    console.clear()
+    
+    # Initialize Supabase globally for JIT embedding and backup
+    supabase_url = os.environ.get("SUPABASE_URL")
+    supabase_key = os.environ.get("SUPABASE_SERVICE_KEY")
+    supabase_client = create_client(supabase_url, supabase_key) if SUPABASE_AVAILABLE and supabase_url and supabase_key else None
+    
+    curriculum = load_curriculum()
+    total_runs = len(curriculum)
+    
+    # Execute Pre-Flight Hook before initializing Graph
+    pre_flight_check(curriculum)
+    
+    run_history: List[Dict[str, Any]] = []
+    dpo_count = 0
+    last_backup_timestamp = time.time()
+
+    with Live(generate_dashboard([], 0, "Initializing Curriculum Engine...", total_runs), refresh_per_second=4, screen=True) as live:
+        for idx, scenario in enumerate(curriculum, start=1):
+            incident_id = scenario.get("incident_id", f"INC-GYM-{uuid.uuid4().hex[:6].upper()}")
+            signature = scenario.get("alert_signature", "UNKNOWN_ALERT")
+            
+            if check_hardware_limits(idx):
+                live.update(generate_dashboard(run_history, dpo_count, f"RUN {idx}: Cooling pause engaged...", total_runs))
+                time.sleep(COOLING_CYCLE_SECONDS)
+
+            # 1. Simulate real-time log streaming (JIT Ingestion)
+            live.update(generate_dashboard(run_history, dpo_count, f"RUN {idx}: Ingesting {incident_id} telemetry to SIEM...", total_runs))
+            ingest_single_incident(incident_id, supabase_client)
+
+            # 2. Trigger the autonomous investigation
+            initial_state = IncidentState(
+                incident_id=incident_id,
+                alert_signature=signature,
+                source_ip=scenario.get("source_ip", "0.0.0.0"),
+                target_ip=scenario.get("target_ip", "0.0.0.0")
+            )
+
+            try:
+                raw_output = soc_graph.invoke(initial_state)
+                final_state = raw_output if isinstance(raw_output, dict) else raw_output.model_dump()
+
+                save_run_telemetry(incident_id, final_state)
+
+                learned_rule = final_state.get("learned_rule")
+                rart_active = bool(learned_rule and str(learned_rule).strip() != "")
+
+                if rart_active:
+                    log_dpo_preference(final_state)
+                    dpo_count += 1
+
+                run_history.append({
+                    "id": incident_id,
+                    "signature": signature,
+                    "reviewer": final_state.get("reviewer_decision", "UNKNOWN"),
+                    "rart": rart_active,
+                    "action": f"{final_state.get('proposed_action', 'NONE')} -> {final_state.get('proposed_target', '')}"
+                })
+
+            except Exception as ex:
+                run_history.append({
+                    "id": incident_id,
+                    "signature": signature,
+                    "reviewer": "ERROR",
+                    "rart": False,
+                    "action": f"FAILED: {str(ex)[:20]}"
+                })
+
+            current_timestamp = time.time()
+            if current_timestamp - last_backup_timestamp > BACKUP_INTERVAL_SECONDS:
+                live.update(generate_dashboard(run_history, dpo_count, "Uploading intermediary backup to Supabase...", total_runs))
+                backup_to_supabase(supabase_client)
+                last_backup_timestamp = time.time()
+
+            live.update(generate_dashboard(run_history, dpo_count, f"RUN {idx} COMPLETED.", total_runs))
+            time.sleep(0.2)
+
+    console.print(f"\n[bold green]Curriculum exhausted. {total_runs} runs executed.[/bold green]")
+    console.print(f"[bold cyan]Total DPO preference entries logged: {dpo_count}[/bold cyan]")
+    console.print("[bold yellow]Uploading final state snapshot to Supabase 'training_logs'...[/bold yellow]")
+    backup_to_supabase(supabase_client)
+    console.print("[bold green]System offline and ready for evaluation.[/bold green]")
+
+if __name__ == "__main__":
+    main()
+
+
