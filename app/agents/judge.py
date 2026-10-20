@@ -199,7 +199,13 @@ def validate_iptables_syntax_and_semantics(
             errors.append(
                 f"{label_prefix}.iptables_cmd must include a valid jump target ('-j DROP', '-j REJECT', or '-j ACCEPT')."
             )
-
+    # 7b. Validate protocol flag (-p) against alert.protocol
+    expected_proto_flag = "tcp" if expected_protocol in ("TCP", "HTTP") else expected_protocol.lower()
+    if cmd_proto is not None and cmd_proto != expected_proto_flag:
+        errors.append(
+            f"{label_prefix}.iptables_cmd specifies '-p {cmd_proto}' which does not match alert protocol '{expected_protocol}' (expected '-p {expected_proto_flag}')."
+        )
+    
     # 8. Validate Action-to-Command Semantic Consistency (Fixes Finding 1)
     if action.action_type == "BLOCK_SOURCE_IP":
         if cmd_src_ip != expected_src_ip:
@@ -261,49 +267,145 @@ def validate_iptables_syntax_and_semantics(
 # =====================================================================
 
 def _infer_expected_threat_class(alert: NIDSAlert) -> str:
-    """Infers canonical threat class from NIDSAlert assessment & telemetry."""
+    """
+    Deterministically infers the canonical Contract B threat_classification
+    from NIDSAlert MITRE fields, attack_signature, flow_metrics, and payload.
+    """
     sig = alert.nids_llm_assessment.attack_signature.upper()
     summary = alert.nids_llm_assessment.raw_telemetry_summary.upper()
     payload = alert.flow_metrics.payload_sample.upper()
-    combined = f"{sig} {summary} {payload}"
+    tactic = alert.nids_llm_assessment.mitre_tactic.upper()
+    mitre_id = alert.nids_llm_assessment.mitre_technique_id.upper()
 
-    if "BENIGN" in combined or "NORMAL" in combined or "HEALTH" in combined:
+    # 1. BENIGN: Check MITRE T0000 / tactic None / benign signature keywords first
+    if (
+        mitre_id == "T0000"
+        or tactic == "NONE"
+        or any(
+            k in sig
+            for k in (
+                "BENIGN",
+                "NORMAL",
+                "HEALTH",
+                "LEGITIMATE",
+                "ROUTINE",
+                "AUTHORIZED",
+                "STANDARD",
+                "SCHEDULED",
+            )
+        )
+    ):
         return "BENIGN"
-    if "SYN" in combined or alert.flow_metrics.syn_ratio >= 0.8:
-        return "SYN_FLOOD"
-    if any(k in combined for k in ("SQL", "UNION SELECT", "OR 1=1", "SQLI")) or alert.dest_port == 3306:
-        return "SQL_INJECTION"
-    if any(k in combined for k in ("JNDI", "LOG4J", "RCE", "REMOTE CODE")):
-        return "RCE_ATTEMPT"
-    if any(k in combined for k in ("SCAN", "NMAP", "MASSCAN")) or len(alert.flow_metrics.unique_dest_ports) > 3:
+
+    # 2. PORT_SCAN: Must be checked BEFORE SYN_FLOOD because Nmap SYN scans have syn_ratio > 0.9
+    if (
+        mitre_id == "T1046"
+        or tactic == "DISCOVERY"
+        or len(alert.flow_metrics.unique_dest_ports) > 3
+        or any(k in sig for k in ("PORT SCAN", "PORTSCAN", "NMAP", "MASSCAN", "RECONNAISSANCE"))
+    ):
         return "PORT_SCAN"
-    if any(k in combined for k in ("SSH", "BRUTE", "HYDRA")) or alert.dest_port == 22:
+
+    # 3. SQL_INJECTION (Includes SQLi and XSS injection vectors per dataset schema mapping)
+    if (
+        mitre_id == "T1059.007"
+        or alert.dest_port == 3306
+        or any(k in sig for k in ("SQL", "SQLI", "XSS", "CROSS-SITE SCRIPTING"))
+        or any(k in payload for k in ("UNION SELECT", "OR 1=1", "INFORMATION_SCHEMA", "<SCRIPT>", "ONERROR="))
+    ):
+        return "SQL_INJECTION"
+
+    # 4. SSH_BRUTE_FORCE (Includes SSH, FTP, and Web Auth Brute-Force / T1110*)
+    if (
+        mitre_id.startswith("T1110")
+        or any(
+            k in sig
+            for k in (
+                "BRUTE-FORCE",
+                "BRUTE FORCE",
+                "PASSWORD GUESSING",
+                "CREDENTIAL GUESSING",
+                "PATATOR",
+                "HYDRA",
+                "SSH",
+            )
+        )
+        or (alert.dest_port in (21, 22) and "CREDENTIAL" in tactic)
+    ):
         return "SSH_BRUTE_FORCE"
+
+    # 5. SYN_FLOOD (Includes L4 SYN/UDP floods and L7 DoS/DDoS floods under Impact T1498/T1499)
+    if (
+        tactic == "IMPACT"
+        or mitre_id.startswith(("T1498", "T1499"))
+        or alert.flow_metrics.syn_ratio >= 0.8
+        or any(
+            k in sig
+            for k in (
+                "SYN FLOOD",
+                "SYN_FLOOD",
+                "DOS ",
+                "DDOS",
+                "FLOOD",
+                "SLOWLORIS",
+                "SLOWHTTPTEST",
+                "HULK",
+                "GOLDENEYE",
+                "HOIC",
+                "LOIC",
+            )
+        )
+    ):
+        return "SYN_FLOOD"
+
+    # 6. RCE_ATTEMPT (Exploits, Heartbleed, SMB PsExec/PowerShell, Kerberos Lateral Movement, Botnet C2)
     return "RCE_ATTEMPT"
+
+
+LABEL_ACTION_TO_CONTRACT_B = {
+    "noop": "NO_OP",
+    "block_ip": "BLOCK_SOURCE_IP",
+    "rate_limit": "RATE_LIMIT_SYN",
+    "isolate_host": "ISOLATE_NODE",
+}
 
 
 def evaluate_surgical_precision(
     alert: NIDSAlert,
     envelope: MitigationEnvelope,
+    ground_truth: Optional[Dict[str, Any]] = None,
 ) -> Tuple[float, List[str], List[str]]:
     """
     Computes surgical_precision_score in [-3.0, +3.0] and collects semantic errors/warnings.
-    Enforces:
-      - Benign traffic -> NO_OP with ZERO impact (+3.0) vs blocking benign traffic (-3.0)
-      - Attack traffic -> Surgical least-privilege action (+2.0)
-      - Collateral impact label accuracy (Fixes Finding 1) (+0.5)
-      - Distinct & grounded rejected_alternative comparison (Fixes Finding 2) (+0.5)
     """
     errors: List[str] = []
     warnings: List[str] = []
     chosen = envelope.chosen_mitigation
     rejected = envelope.rejected_alternative
-    expected_class = _infer_expected_threat_class(alert)
-    is_benign = expected_class == "BENIGN" or envelope.threat_classification == "BENIGN"
+
+    # Use ground_truth['true_class'] if provided in offline evaluation/GRPO, else deterministic heuristic
+    expected_class = (
+        str(ground_truth["true_class"]).upper()
+        if ground_truth and "true_class" in ground_truth
+        else _infer_expected_threat_class(alert)
+    )
+    is_benign = (
+        bool(ground_truth["expected_noop"])
+        if ground_truth and "expected_noop" in ground_truth
+        else (expected_class == "BENIGN")
+    )
+    is_hard_negative = bool(ground_truth.get("hard_negative", False)) if ground_truth else False
 
     precision_score = 0.0
 
-    # --- A. Benign vs Malicious Proportionality ---
+    # --- A0. Threat Classification Accuracy Check ---
+    if envelope.threat_classification != expected_class:
+        errors.append(
+            f"threat_classification ('{envelope.threat_classification}') does not match expected threat class ('{expected_class}')."
+        )
+        precision_score -= 1.0
+
+    # --- A1. Benign vs Malicious Proportionality ---
     if is_benign:
         if chosen.action_type == "NO_OP":
             precision_score += 2.0
@@ -313,10 +415,11 @@ def evaluate_surgical_precision(
                 errors.append("NO_OP on benign traffic must have estimated_collateral_impact='ZERO'.")
                 precision_score -= 0.5
         else:
+            penalty = -3.0 if is_hard_negative else -2.5
             errors.append(
                 f"Alert is BENIGN, but chosen_mitigation executed '{chosen.action_type}' instead of 'NO_OP'."
             )
-            precision_score -= 3.0
+            precision_score += penalty
     else:
         # Malicious traffic
         if chosen.action_type == "NO_OP":
@@ -325,14 +428,25 @@ def evaluate_surgical_precision(
             )
             precision_score -= 3.0
         elif expected_class == "SYN_FLOOD":
-            if chosen.action_type in ("RATE_LIMIT_SYN", "BLOCK_SOURCE_IP"):
+            is_high_syn_tcp = (
+                alert.protocol in ("TCP", "HTTP") and alert.flow_metrics.syn_ratio >= 0.5
+            )
+            if chosen.action_type == "RATE_LIMIT_SYN":
+                if is_high_syn_tcp:
+                    precision_score += 2.0
+                else:
+                    errors.append(
+                        f"RATE_LIMIT_SYN requires TCP traffic with high syn_ratio (got protocol={alert.protocol}, syn_ratio={alert.flow_metrics.syn_ratio}); use BLOCK_SOURCE_IP."
+                    )
+                    precision_score -= 1.5
+            elif chosen.action_type == "BLOCK_SOURCE_IP":
                 precision_score += 2.0
             elif chosen.action_type == "DROP_PORT_TRAFFIC":
-                warnings.append("DROP_PORT_TRAFFIC blocks all legitimate users on the port during a single-source SYN flood.")
+                warnings.append("DROP_PORT_TRAFFIC blocks all legitimate users on the port during a single-source flood.")
                 precision_score -= 1.5
                 errors.append("Over-broad mitigation: use RATE_LIMIT_SYN or BLOCK_SOURCE_IP instead of DROP_PORT_TRAFFIC.")
             elif chosen.action_type == "ISOLATE_NODE":
-                errors.append("Over-broad mitigation: ISOLATE_NODE severs the entire container during a single-source SYN flood.")
+                errors.append("Over-broad mitigation: ISOLATE_NODE severs the entire container during a single-source flood.")
                 precision_score -= 2.5
         else:
             # RCE_ATTEMPT, SQL_INJECTION, SSH_BRUTE_FORCE, PORT_SCAN
@@ -340,7 +454,7 @@ def evaluate_surgical_precision(
                 precision_score += 2.0
             elif chosen.action_type == "RATE_LIMIT_SYN":
                 errors.append(
-                    f"RATE_LIMIT_SYN is inappropriate for payload/auth attack '{expected_class}'; use BLOCK_SOURCE_IP."
+                    f"RATE_LIMIT_SYN is inappropriate for payload/auth/scan attack '{expected_class}'; use BLOCK_SOURCE_IP."
                 )
                 precision_score -= 1.5
             elif chosen.action_type in ("DROP_PORT_TRAFFIC", "ISOLATE_NODE"):
@@ -349,7 +463,7 @@ def evaluate_surgical_precision(
                 )
                 precision_score -= 2.0
 
-        # --- B. Collateral Impact Label Accuracy (Fixes Finding 1) ---
+        # --- B. Collateral Impact Label Accuracy ---
         if chosen.action_type in ("BLOCK_SOURCE_IP", "RATE_LIMIT_SYN"):
             if chosen.estimated_collateral_impact in ("ZERO", "LOW"):
                 precision_score += 0.5
@@ -368,7 +482,7 @@ def evaluate_surgical_precision(
                 errors.append("ISOLATE_NODE severs all container traffic and must have estimated_collateral_impact='HIGH'.")
                 precision_score -= 0.5
 
-    # --- C. Rejected Alternative Contrast Quality (Fixes Finding 2) ---
+    # --- C. Rejected Alternative Contrast Quality ---
     if rejected.action_type == chosen.action_type:
         errors.append(
             f"rejected_alternative.action_type ('{rejected.action_type}') must differ from chosen_mitigation.action_type."
@@ -390,6 +504,7 @@ def evaluate_surgical_precision(
 def validate_and_score_mitigation(
     nids_alert: Union[NIDSAlert, Dict[str, Any]],
     raw_or_parsed_response: Union[str, Dict[str, Any], MitigationEnvelope],
+    ground_truth: Optional[Dict[str, Any]] = None,
 ) -> MitigationValidationReport:
     """
     Master deterministic validator and GRPO reward calculator.
@@ -478,7 +593,10 @@ def validate_and_score_mitigation(
     entity_grounding_score = max(-3.0, min(3.0, round(raw_grounding, 2)))
 
     # --- STAGE 3: Surgical Precision Score [-3.0 to +3.0] ---
-    surgical_precision_score, prec_errs, prec_warns = evaluate_surgical_precision(alert, envelope)
+    # --- STAGE 3: Surgical Precision Score [-3.0 to +3.0] ---
+    surgical_precision_score, prec_errs, prec_warns = evaluate_surgical_precision(
+        alert, envelope, ground_truth=ground_truth
+    )
     errors.extend(prec_errs)
     warnings.extend(prec_warns)
 
@@ -512,9 +630,12 @@ def validate_and_score_mitigation(
 def score_mitigation(
     nids_alert: Union[NIDSAlert, Dict[str, Any]],
     raw_or_parsed_response: Union[str, Dict[str, Any], MitigationEnvelope],
+    ground_truth: Optional[Dict[str, Any]] = None,
 ) -> GRPORewardBreakdown:
     """Convenience function returning only the Contract B GRPORewardBreakdown."""
-    return validate_and_score_mitigation(nids_alert, raw_or_parsed_response).reward_breakdown
+    return validate_and_score_mitigation(
+        nids_alert, raw_or_parsed_response, ground_truth=ground_truth
+    ).reward_breakdown
 
 
 # =====================================================================
@@ -536,21 +657,23 @@ def grpo_total_reward_func(
     prompts: List[Any],
     completions: List[Any],
     nids_alerts: List[Union[Dict[str, Any], str]],
+    ground_truths: Optional[List[Union[Dict[str, Any], str]]] = None,
     **kwargs: Any,
 ) -> List[float]:
     """
     Unsloth / TRL GRPOTrainer compatible reward function.
-    Expects dataset rows to include a `nids_alerts` column (dict or JSON string).
+    Expects dataset rows to include `nids_alerts` and optionally `ground_truths`.
     Returns `total_reward` in [-8.0, +8.0] for each rollout completion.
     """
     rewards: List[float] = []
-    for comp, alert_item in zip(completions, nids_alerts):
+    gt_list = ground_truths if ground_truths is not None else [None] * len(completions)
+    for comp, alert_item, gt_item in zip(completions, nids_alerts, gt_list):
         alert_obj = json.loads(alert_item) if isinstance(alert_item, str) else alert_item
+        gt_obj = json.loads(gt_item) if isinstance(gt_item, str) else gt_item
         comp_text = _extract_completion_text(comp)
-        breakdown = score_mitigation(alert_obj, comp_text)
+        breakdown = score_mitigation(alert_obj, comp_text, ground_truth=gt_obj)
         rewards.append(breakdown.total_reward)
     return rewards
-
 
 # =====================================================================
 # 5. LEGACY LANGGRAPH NODE (Preserved for Backward Compatibility)

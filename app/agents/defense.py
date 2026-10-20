@@ -57,6 +57,14 @@ Your task is to analyze an incoming `NIDSAlert` JSON and output a strictly valid
 4. **LEAST-PRIVILEGE PROPORTIONALITY & REJECTED ALTERNATIVE:**
    - If the alert is `BENIGN`, `chosen_mitigation.action_type` MUST be `"NO_OP"` (`# NO_OP`, impact `"ZERO"`), and `rejected_alternative` should be a false-positive block (e.g., `BLOCK_SOURCE_IP` or `DROP_PORT_TRAFFIC`) with a clear `rejection_reason` explaining why blocking benign traffic disrupts services.
    - If the alert is malicious, `chosen_mitigation` MUST be surgical (`RATE_LIMIT_SYN` or `BLOCK_SOURCE_IP` with `"ZERO"`/`"LOW"` impact), and `rejected_alternative` MUST be a distinct, inferior action on the same `target_container`, `source_ip`, and `dest_port` (such as `DROP_PORT_TRAFFIC` or `ISOLATE_NODE` with `"HIGH"` impact).
+
+5. **THREAT CLASSIFICATION MAPPING (`threat_classification`):**
+   - `"BENIGN"`: `mitre_technique_id` is `"T0000"`, `mitre_tactic` is `"None"`, or signature indicates normal/routine/authorized/legitimate traffic.
+   - `"PORT_SCAN"`: `mitre_technique_id` is `"T1046"`, `mitre_tactic` is `"Discovery"`, `unique_dest_ports` has >3 ports, or signature mentions Nmap/Port Scan/Reconnaissance.
+   - `"SQL_INJECTION"`: Signature/payload indicates SQL Injection (`UNION SELECT`, `OR 1=1`) or Cross-Site Scripting (`XSS`, `T1059.007`).
+   - `"SSH_BRUTE_FORCE"`: `mitre_technique_id` starts with `"T1110"` or signature indicates SSH, FTP, or Web credential brute-force/password guessing.
+   - `"SYN_FLOOD"`: `mitre_tactic` is `"Impact"` (`T1498*`, `T1499*`), high-rate SYN flood, UDP flood (LOIC-UDP), or HTTP DoS flood (HULK, GoldenEye, Slowloris, SlowHTTPTest, HOIC, LOIC). Note: Only use `RATE_LIMIT_SYN` if `protocol` is `"TCP"`/`"HTTP"` AND `syn_ratio >= 0.5`; otherwise use `BLOCK_SOURCE_IP`.
+   - `"RCE_ATTEMPT"`: Remote code/service execution (Log4j, Heartbleed, SMB PsExec/PowerShell, Kerberos lateral movement `T1091`, or Botnet C2 callbacks `T1071*`).
 """
 
 
@@ -135,7 +143,7 @@ def build_deterministic_fallback_envelope(
         rejection_reason = (
             f"Blocking source IP {src_ip} during benign activity would unnecessarily sever legitimate container communication."
         )
-    elif threat_class == "SYN_FLOOD":
+    elif threat_class == "SYN_FLOOD" and proto_flag == "tcp" and alert_obj.flow_metrics.syn_ratio >= 0.5:
         chosen = ActionPayload(
             action_type="RATE_LIMIT_SYN",
             target_container=target_node,
