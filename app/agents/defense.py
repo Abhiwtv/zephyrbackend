@@ -65,6 +65,10 @@ Your task is to analyze an incoming `NIDSAlert` JSON and output a strictly valid
    - `"SSH_BRUTE_FORCE"`: `mitre_technique_id` starts with `"T1110"` or signature indicates SSH, FTP, or Web credential brute-force/password guessing.
    - `"SYN_FLOOD"`: `mitre_tactic` is `"Impact"` (`T1498*`, `T1499*`), high-rate SYN flood, UDP flood (LOIC-UDP), or HTTP DoS flood (HULK, GoldenEye, Slowloris, SlowHTTPTest, HOIC, LOIC). Note: Only use `RATE_LIMIT_SYN` if `protocol` is `"TCP"`/`"HTTP"` AND `syn_ratio >= 0.5`; otherwise use `BLOCK_SOURCE_IP`.
    - `"RCE_ATTEMPT"`: Remote code/service execution (Log4j, Heartbleed, SMB PsExec/PowerShell, Kerberos lateral movement `T1091`, or Botnet C2 callbacks `T1071*`).
+
+6. **JSON OUTPUT & CONCISENESS:**
+   - Output ONLY a single valid JSON object strictly conforming to the `MitigationEnvelope` schema. Do not include markdown code block backticks if sampling raw text.
+   - Keep `reasoning_trace` and `rejection_reason` concise (1–2 sentences, under 40 words each).
 """
 
 

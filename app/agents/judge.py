@@ -522,8 +522,10 @@ def validate_and_score_mitigation(
     errors: List[str] = []
     warnings: List[str] = []
 
-    # --- STAGE 1: Schema Compliance Score [-2.0 to +2.0] ---
+    # --- STAGE 1: Schema Compliance Score [-2.0 to +2.0] (with Partial Credit Shaping) ---
     envelope: Optional[MitigationEnvelope] = None
+    schema_score = 0.0
+
     if isinstance(raw_or_parsed_response, MitigationEnvelope):
         envelope = raw_or_parsed_response
         schema_score = 2.0
@@ -545,19 +547,24 @@ def validate_and_score_mitigation(
                 errors.append(f"JSON parsed, but MitigationEnvelope validation failed: {val_err}")
                 schema_score = -1.0
         except Exception as parse_err:
+            # Partial-credit heuristic for raw un-parsed text completions during early GRPO steps
             errors.append(f"Malformed JSON output: {parse_err}")
-            schema_score = -2.0
+            text_lower = raw_or_parsed_response.lower()
+            key_matches = sum(1 for k in ("threat_classification", "severity", "reasoning_trace", "chosen_mitigation", "rejected_alternative", "iptables_cmd") if k in text_lower)
+            # Awards between -1.5 and -0.5 based on how close the model got to emitting the schema keys
+            schema_score = -2.0 + (key_matches / 6.0) * 1.5
     else:
         errors.append(f"Unsupported response type: {type(raw_or_parsed_response)}")
         schema_score = -2.0
 
     # Early return if schema failed completely
     if envelope is None:
+        # Scale remaining components gracefully based on partial schema score
         breakdown = GRPORewardBreakdown(
-            schema_compliance_score=schema_score,
-            entity_grounding_score=-3.0,
-            surgical_precision_score=-3.0,
-            total_reward=max(-8.0, schema_score - 6.0),
+            schema_compliance_score=round(schema_score, 2),
+            entity_grounding_score=-1.5,
+            surgical_precision_score=-1.5,
+            total_reward=max(-8.0, round(schema_score - 3.0, 2)),
         )
         return MitigationValidationReport(
             is_valid=False,
