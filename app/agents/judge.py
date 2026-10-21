@@ -428,15 +428,13 @@ def evaluate_surgical_precision(
             )
             precision_score -= 3.0
         elif expected_class == "SYN_FLOOD":
-            is_high_syn_tcp = (
-                alert.protocol in ("TCP", "HTTP") and alert.flow_metrics.syn_ratio >= 0.5
-            )
+            is_tcp_or_http = alert.protocol in ("TCP", "HTTP")
             if chosen.action_type == "RATE_LIMIT_SYN":
-                if is_high_syn_tcp:
+                if is_tcp_or_http:
                     precision_score += 2.0
                 else:
                     errors.append(
-                        f"RATE_LIMIT_SYN requires TCP traffic with high syn_ratio (got protocol={alert.protocol}, syn_ratio={alert.flow_metrics.syn_ratio}); use BLOCK_SOURCE_IP."
+                        f"RATE_LIMIT_SYN requires TCP/HTTP traffic (got protocol={alert.protocol}); use BLOCK_SOURCE_IP for UDP floods."
                     )
                     precision_score -= 1.5
             elif chosen.action_type == "BLOCK_SOURCE_IP":

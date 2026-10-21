@@ -38,10 +38,10 @@ Your task is to analyze an incoming `NIDSAlert` JSON and output a strictly valid
    - If `alert.protocol` is `"HTTP"` or `"TCP"`, use `-p tcp`. If `"UDP"`, use `-p udp`. If `"ICMP"`, use `-p icmp`.
 
 3. **ACTION TYPE SEMANTICS & CANONICAL IPTABLES TEMPLATES:**
-   - `BLOCK_SOURCE_IP` (Surgical single-attacker block; use for `RCE_ATTEMPT`, `SQL_INJECTION`, `SSH_BRUTE_FORCE`, `PORT_SCAN`, or `SYN_FLOOD`):
+   - `BLOCK_SOURCE_IP` (Default surgical mitigation for ALL malicious attacks: `RCE_ATTEMPT`, `SQL_INJECTION`, `SSH_BRUTE_FORCE`, `PORT_SCAN`, and low-SYN `SYN_FLOOD` where `syn_ratio < 0.5` or `protocol == "UDP"`):
      * Template: `iptables -A INPUT -s <source_ip> -p <proto> --dport <dest_port> -j DROP`
      * `estimated_collateral_impact`: MUST be `"ZERO"` or `"LOW"`.
-   - `RATE_LIMIT_SYN` (Surgical TCP SYN flood throttle; preferred for `SYN_FLOOD`):
+   - `RATE_LIMIT_SYN` (USE ONLY when `threat_classification == "SYN_FLOOD"` AND `alert.flow_metrics.syn_ratio >= 0.5`; NEVER use when `syn_ratio < 0.5`):
      * Template: `iptables -A INPUT -s <source_ip> -p tcp --syn --dport <dest_port> -m limit --limit 15/s --limit-burst 30 -j ACCEPT`
      * `estimated_collateral_impact`: MUST be `"ZERO"` or `"LOW"`.
    - `DROP_PORT_TRAFFIC` (Over-broad global port block; drops the port for ALL containers—use ONLY in `rejected_alternative`):
@@ -82,15 +82,26 @@ def build_responder_user_prompt(
     """
     alert_obj = alert if isinstance(alert, NIDSAlert) else NIDSAlert.model_validate(alert)
     alert_json_str = json.dumps(alert_obj.model_dump(), indent=2)
+    expected_class = _infer_expected_threat_class(alert_obj)
+    proto_flag = "tcp" if alert_obj.protocol in ("TCP", "HTTP") else alert_obj.protocol.lower()
+
+    if expected_class == "BENIGN":
+        allowed_action_hint = '"NO_OP" (with iptables_cmd="# NO_OP" and estimated_collateral_impact="ZERO")'
+    elif expected_class == "SYN_FLOOD" and proto_flag == "tcp":
+        allowed_action_hint = '"RATE_LIMIT_SYN" or "BLOCK_SOURCE_IP" (with estimated_collateral_impact="ZERO" or "LOW")'
+    else:
+        allowed_action_hint = '"BLOCK_SOURCE_IP" (with estimated_collateral_impact="ZERO" or "LOW"; DO NOT use RATE_LIMIT_SYN)'
 
     prompt = (
         "### INCOMING NIDS ALERT (CONTRACT A):\n"
         f"{alert_json_str}\n\n"
         "### REQUIRED ENTITY BINDINGS:\n"
+        f"- threat_classification: \"{expected_class}\"\n"
+        f"- required chosen_mitigation.action_type: {allowed_action_hint}\n"
         f"- target_container: \"{alert_obj.target_node}\"\n"
         f"- source_ip: \"{alert_obj.source_ip}\"\n"
         f"- dest_port: {alert_obj.dest_port}\n"
-        f"- iptables protocol flag: \"{'tcp' if alert_obj.protocol in ('TCP', 'HTTP') else alert_obj.protocol.lower()}\"\n"
+        f"- iptables protocol flag: \"{proto_flag}\"\n"
     )
 
     if critic_feedback:
