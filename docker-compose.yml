@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  pc-1:
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: pc-1
+    cap_add:
+      - NET_ADMIN
+    networks:
+      br-zephyr:
+        ipv4_address: 172.28.0.12
+
+  pc-2:
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: pc-2
+    cap_add:
+      - NET_ADMIN
+    networks:
+      br-zephyr:
+        ipv4_address: 172.28.0.13
+
+  pc-3:
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: pc-3
+    cap_add:
+      - NET_ADMIN
+    networks:
+      br-zephyr:
+        ipv4_address: 172.28.0.14
+
+  pc-4:
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: pc-4
+    cap_add:
+      - NET_ADMIN
+    networks:
+      br-zephyr:
+        ipv4_address: 172.28.0.15
+
+  pc-5:
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: pc-5
+    cap_add:
+      - NET_ADMIN
+    networks:
+      br-zephyr:
+        ipv4_address: 172.28.0.16
+
+  ext-net:
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: ext-net
+    cap_add:
+      - NET_ADMIN
+    networks:
+      br-zephyr:
+        ipv4_address: 172.28.0.100
+
+  traffic-gen:
+    build: 
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: traffic-gen
+    cap_add:
+      - NET_ADMIN
+    networks:
+      br-zephyr:
+        ipv4_address: 172.28.0.101
+
+networks:
+  br-zephyr:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16

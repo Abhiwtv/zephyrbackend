@@ -72,34 +72,50 @@ Your task is to analyze an incoming `NIDSAlert` JSON and output a strictly valid
 """
 
 
-def build_responder_user_prompt(
-    alert: Union[NIDSAlert, Dict[str, Any]],
-    critic_feedback: Optional[str] = None,
-) -> str:
+import json
+from collections import Counter
+
+def build_responder_user_prompt(alert_data: dict) -> str:
     """
-    Constructs the standardized user prompt for a NIDSAlert.
-    Appends deterministic Critic error feedback when self-correcting on retry.
+    Compresses raw Scapy packet floods into token-efficient statistical summaries.
     """
-    alert_obj = alert if isinstance(alert, NIDSAlert) else NIDSAlert.model_validate(alert)
-    alert_json_str = json.dumps(alert_obj.model_dump(), indent=2)
+    # 1. Extract the raw packet array (adjust the key based on your Scapy sensor's JSON output)
+    raw_packets = alert_data.get("packets", [])
+    
+    # 2. If the payload is bloated, aggregate it
+    if raw_packets and isinstance(raw_packets, list) and len(raw_packets) > 10:
+        
+        # Count occurrences to find the signal in the noise
+        total_packets = len(raw_packets)
+        src_ips = Counter([str(pkt.get("src", "unknown")) for pkt in raw_packets])
+        dst_ports = Counter([str(pkt.get("dport", "unknown")) for pkt in raw_packets])
+        tcp_flags = Counter([str(pkt.get("flags", "none")) for pkt in raw_packets])
+        
+        # Build a highly dense, token-efficient summary dictionary
+        packet_summary = {
+            "flow_metrics": {
+                "total_packets_captured": total_packets,
+                "unique_sources": len(src_ips),
+                "top_source_ips": src_ips.most_common(3),
+                "top_target_ports": dst_ports.most_common(3),
+                "tcp_flag_distribution": dict(tcp_flags)
+            }
+        }
+        
+        # Replace the massive array with our tight summary
+        alert_data["packets"] = "Omitted due to context limits. See flow_metrics."
+        alert_data["flow_metrics"] = packet_summary
 
-    prompt = (
-        "### INCOMING NIDS ALERT (CONTRACT A):\n"
-        f"{alert_json_str}\n\n"
-        "### REQUIRED ENTITY BINDINGS:\n"
-        f"- target_container: \"{alert_obj.target_node}\"\n"
-        f"- source_ip: \"{alert_obj.source_ip}\"\n"
-        f"- dest_port: {alert_obj.dest_port}\n"
-        f"- iptables protocol flag: \"{'tcp' if alert_obj.protocol in ('TCP', 'HTTP') else alert_obj.protocol.lower()}\"\n"
-    )
-
-    if critic_feedback:
-        prompt += (
-            "\n### CRITICAL SELF-CORRECTION REQUIRED (PREVIOUS ATTEMPT REJECTED BY CRITIC):\n"
-            f"{critic_feedback}\n"
-            "Fix every error listed above and return a corrected `MitigationEnvelope` JSON object."
-        )
-
+    # 3. Construct the strict prompt without the bloat
+    formatted_alert = json.dumps(alert_data, indent=2)
+    
+    prompt = f"""
+    Review the following aggregated network alert and propose a defense strategy.
+    
+    Alert Context:
+    {formatted_alert}
+    """
+    
     return prompt
 
 

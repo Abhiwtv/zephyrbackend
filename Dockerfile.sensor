@@ -1,0 +1,6 @@
+FROM python:3.11-slim
+# Install dependencies on the default network before we attach to pc-4
+RUN apt-get update && apt-get install -y tcpdump
+RUN pip install scapy requests
+WORKDIR /app
+CMD ["python", "sensor.py"]
