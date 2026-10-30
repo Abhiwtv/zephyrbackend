@@ -38,10 +38,10 @@ Your task is to analyze an incoming `NIDSAlert` JSON and output a strictly valid
    - If `alert.protocol` is `"HTTP"` or `"TCP"`, use `-p tcp`. If `"UDP"`, use `-p udp`. If `"ICMP"`, use `-p icmp`.
 
 3. **ACTION TYPE SEMANTICS & CANONICAL IPTABLES TEMPLATES:**
-   - `BLOCK_SOURCE_IP` (Surgical single-attacker block; use for `RCE_ATTEMPT`, `SQL_INJECTION`, `SSH_BRUTE_FORCE`, `PORT_SCAN`, or `SYN_FLOOD`):
+   - `BLOCK_SOURCE_IP` (Default surgical mitigation for ALL malicious attacks: `RCE_ATTEMPT`, `SQL_INJECTION`, `SSH_BRUTE_FORCE`, `PORT_SCAN`, and low-SYN `SYN_FLOOD` where `syn_ratio < 0.5` or `protocol == "UDP"`):
      * Template: `iptables -A INPUT -s <source_ip> -p <proto> --dport <dest_port> -j DROP`
      * `estimated_collateral_impact`: MUST be `"ZERO"` or `"LOW"`.
-   - `RATE_LIMIT_SYN` (Surgical TCP SYN flood throttle; preferred for `SYN_FLOOD`):
+   - `RATE_LIMIT_SYN` (USE ONLY when `threat_classification == "SYN_FLOOD"` AND `alert.flow_metrics.syn_ratio >= 0.5`; NEVER use when `syn_ratio < 0.5`):
      * Template: `iptables -A INPUT -s <source_ip> -p tcp --syn --dport <dest_port> -m limit --limit 15/s --limit-burst 30 -j ACCEPT`
      * `estimated_collateral_impact`: MUST be `"ZERO"` or `"LOW"`.
    - `DROP_PORT_TRAFFIC` (Over-broad global port block; drops the port for ALL containers—use ONLY in `rejected_alternative`):
