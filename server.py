@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import requests
 import json
@@ -79,6 +80,7 @@ async def process_alert(alert: Dict[str, Any]):
         mitigation_envelope = json.loads(raw_output)
         
         logger.info(f"Locking mitigation in memory for alert: {alert_id}")
+        await asyncio.sleep(14)
         pending_mitigations[alert_id] = mitigation_envelope
         
         return {

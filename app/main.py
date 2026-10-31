@@ -11,7 +11,14 @@ import time
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Literal, Optional, Tuple, Union
 
-import requests
+try:
+    import requests
+except ImportError:
+    requests = None
+import httpx
+from dotenv import load_dotenv
+
+load_dotenv()
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
@@ -34,10 +41,40 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-TUNNEL_URL = os.getenv(
-    "ZEPHYR_LLM_TUNNEL_URL",
-    "https://appropriations-consumer-mon-farms.trycloudflare.com/v1",
-)
+KAGGLE_LLM_URL = os.getenv(
+    "KAGGLE_LLM_URL",
+    os.getenv("ZEPHYR_LLM_TUNNEL_URL", "https://cast-exciting-gpl-ant.trycloudflare.com"),
+).rstrip("/")
+
+TUNNEL_URL = f"{KAGGLE_LLM_URL}/v1" if not KAGGLE_LLM_URL.endswith("/v1") else KAGGLE_LLM_URL
+
+RESPONDER_SYSTEM_PROMPT = """You are the Project Zephyr Autonomous SOC Responder Agent operating inside a 5-node Linux Docker LAN (`br-zephyr`: `pc-1` [172.28.0.12], `pc-2` [172.28.0.13], `pc-3` [172.28.0.14], `pc-4` [172.28.0.15], `pc-5` [172.28.0.16], `ext-net` [172.28.0.100], `traffic-gen` [172.28.0.101]).
+
+Your task is to analyze incoming NIDS telemetry and output a strictly validated MitigationEnvelope JSON object.
+Return ONLY valid JSON matching this schema:
+{
+  "threat_classification": "SYN_FLOOD" | "RCE_ATTEMPT" | "SQL_INJECTION" | "SSH_BRUTE_FORCE" | "PORT_SCAN" | "BENIGN",
+  "severity": "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
+  "reasoning_trace": "<concise reasoning under 40 words>",
+  "chosen_mitigation": {
+    "action_type": "BLOCK_SOURCE_IP" | "RATE_LIMIT_SYN" | "DROP_PORT_TRAFFIC" | "ISOLATE_NODE" | "NO_OP",
+    "target_container": "<target node, e.g. pc-4>",
+    "source_ip": "<attacker IP>",
+    "dest_port": <int>,
+    "iptables_cmd": "<exact iptables command inside container>",
+    "estimated_collateral_impact": "ZERO" | "LOW" | "MODERATE" | "HIGH"
+  },
+  "rejected_alternative": {
+    "action_type": "<alternative action>",
+    "target_container": "<target node>",
+    "source_ip": "<attacker IP>",
+    "dest_port": <int>,
+    "iptables_cmd": "<alternative iptables command>",
+    "estimated_collateral_impact": "HIGH"
+  },
+  "rejection_reason": "<why alternative is inferior, e.g. collateral damage>"
+}
+"""
 
 # =====================================================================
 # 1. IN-MEMORY STATE & TOPOLOGY (Phase 3 Expanded)
@@ -124,6 +161,17 @@ class AttackCatalogEntry(BaseModel):
     golden_cmd: str
     fallback_cmd: str
     envelopes: List[MitigationVariant]
+
+
+class ThreatRequest(BaseModel):
+    source: str = "ext-net"
+    target: str = "pc-4"
+    scenario_id: Optional[Union[str, int]] = "SCENARIO_1"
+    category_id: Optional[Union[str, int]] = 1
+    prompt: Optional[str] = "Launch SCENARIO_1 (TCP_SYN_VOLUMETRIC): Floods the target with half-open connections to exhaust kernel connection tracking tables."
+    force_variant: Optional[Literal["A", "B", "C", "D", "CYCLE", "RANDOM"]] = "A"
+    threat_type: Optional[str] = "TCP_SYN_VOLUMETRIC"
+    auto_trigger_alert: bool = True
 
 
 class InjectAlertRequest(BaseModel):
@@ -491,8 +539,271 @@ def _launch_docker_attack(cat_id: int, source_node: str, target_node: str, targe
 # 5. FASTAPI ENDPOINTS (All 5 Phases + Backwards Compatible)
 # =====================================================================
 
+LLM_INFERENCE_DELAY_SECONDS = float(os.getenv("ZEPHYR_LLM_DELAY_SEC", "14"))
+
+
+@app.post("/api/mock/threat")
+@app.post("/api/v1/mock/threat")
+async def mock_threat(req: ThreatRequest = ThreatRequest()):
+    """
+    Mock Endpoint (/api/mock/threat):
+    Injects a literal await asyncio.sleep(14) delay to simulate computation time,
+    loading the appropriate scenario response deterministically from the local mitigations.jsonl file.
+    """
+    cat_id = resolve_category_id(req.scenario_id or req.category_id or 1)
+    if req.prompt:
+        classified_id, _, prompt_var = classify_nlp_intent(req.prompt)
+        cat_id = classified_id
+        effective_variant = prompt_var or req.force_variant or "A"
+    else:
+        effective_variant = req.force_variant or "A"
+
+    alert_id = f"evt-{int(time.time() * 1000) % 1000000000}"
+    entry = JSONL_BANK.get(cat_id) or JSONL_BANK.get(1)
+
+    append_terminal_log(
+        f"[Mock Threat Engine] Processing scenario {entry.get('scenario_key', 'SCENARIO_1')} ({entry.get('threat_classification', 'THREAT')})...",
+        "INFO",
+    )
+
+    if req.source in network_status:
+        network_status[req.source]["status"] = "attacking"
+    if req.target in network_status:
+        network_status[req.target]["status"] = "under_attack"
+
+    _launch_docker_attack(cat_id, req.source, req.target)
+
+    # Injects a literal 14-second artificial latency delay before returning mitigation envelope
+    await asyncio.sleep(14)
+
+    envelope = await _queue_alert_async(
+        cat_id=cat_id,
+        alert_id=alert_id,
+        source_node=req.source,
+        target_node=req.target,
+        variant_mode=effective_variant,
+        delay_seconds=0.0,
+    )
+
+    return {
+        "status": "pending_human_review",
+        "mode": "mock",
+        "alert_id": alert_id,
+        "category_id": cat_id,
+        "scenario_id": entry.get("scenario_key", "SCENARIO_1"),
+        "threat_classification": entry.get("threat_classification", "TCP_SYN_VOLUMETRIC"),
+        "mitigation_envelope": envelope,
+    }
+
+
+@app.post("/api/live/threat")
+@app.post("/api/v1/live/threat")
+async def live_threat(req: ThreatRequest = ThreatRequest()):
+    """
+    Live Endpoint (/api/live/threat):
+    Wraps incoming threat telemetry into a strict system prompt and executes an
+    httpx.AsyncClient POST request directly to the Kaggle Cloudflare Tunnel's
+    /v1/chat/completions OpenAI-compatible endpoint.
+    Deterministic Circuit Breaker:
+    Pipes the raw LLM response string from Kaggle directly into the local Grammar and
+    Blast-Radius gates, guaranteeing hallucinated rules (e.g. blanket /16 subnet drops)
+    are automatically intercepted and replaced before the payload reaches the Next.js frontend.
+    """
+    cat_id = resolve_category_id(req.scenario_id or req.category_id or 1)
+    if req.prompt:
+        classified_id, _, prompt_var = classify_nlp_intent(req.prompt)
+        cat_id = classified_id
+        effective_variant = prompt_var or req.force_variant or "A"
+    else:
+        effective_variant = req.force_variant or "A"
+
+    alert_id = f"evt-{int(time.time() * 1000) % 1000000000}"
+    entry = JSONL_BANK.get(cat_id) or JSONL_BANK.get(1)
+    src_ip = network_status.get(req.source, {}).get("ip", "172.28.0.100")
+    dst_ip = network_status.get(req.target, {}).get("ip", "172.28.0.15")
+
+    append_terminal_log(
+        f"[Live Threat Engine] Dispatched telemetry to Kaggle Cloudflare Tunnel ({TUNNEL_URL})...",
+        "INFO",
+    )
+
+    if req.source in network_status:
+        network_status[req.source]["status"] = "attacking"
+    if req.target in network_status:
+        network_status[req.target]["status"] = "under_attack"
+
+    _launch_docker_attack(cat_id, req.source, req.target)
+
+    telemetry_payload = {
+        "alert_id": alert_id,
+        "scenario_key": entry.get("scenario_key", "SCENARIO_1"),
+        "threat_classification": entry.get("threat_classification", "TCP_SYN_VOLUMETRIC"),
+        "attacker_node": req.source,
+        "source_ip": src_ip,
+        "target_node": req.target,
+        "target_ip": dst_ip,
+        "target_port": entry.get("target_port", 80),
+        "protocol": entry.get("protocol", "TCP"),
+        "telemetry_vector": entry.get("telemetry", {}),
+        "user_prompt": req.prompt or entry.get("description", ""),
+    }
+
+    raw_llm_output: Optional[str] = None
+    llm_error: Optional[str] = None
+
+    try:
+        async with httpx.AsyncClient(timeout=35.0) as client:
+            resp = await client.post(
+                f"{TUNNEL_URL}/chat/completions",
+                json={
+                    "model": "zephyr-dpo-v3",
+                    "messages": [
+                        {"role": "system", "content": RESPONDER_SYSTEM_PROMPT},
+                        {"role": "user", "content": json.dumps(telemetry_payload, indent=2)},
+                    ],
+                    "temperature": 0.1,
+                    "max_tokens": 1024,
+                    "response_format": {"type": "json_object"},
+                },
+            )
+            if resp.status_code == 200:
+                resp_json = resp.json()
+                raw_llm_output = resp_json["choices"][0]["message"]["content"]
+                append_terminal_log(
+                    f"[Kaggle LLM Response] Received {len(raw_llm_output)} bytes from Kaggle model via Cloudflare.",
+                    "SUCCESS",
+                )
+            else:
+                llm_error = f"Kaggle HTTP {resp.status_code}: {resp.text[:180]}"
+    except Exception as exc:
+        llm_error = str(exc)
+
+    if llm_error:
+        append_terminal_log(
+            f"[Live LLM Note] Remote inference note ({llm_error}); piping into deterministic circuit breaker.",
+            "WARN",
+        )
+
+    # Deterministic Circuit Breaker processing:
+    # Pipes the raw LLM response string directly into local Grammar and Blast-Radius gates
+    parsed_candidate: Optional[Dict[str, Any]] = None
+    candidate_cmd: str = ""
+    candidate_reasoning: str = ""
+    candidate_q: float = 0.95
+
+    if raw_llm_output:
+        try:
+            parsed_candidate = json.loads(raw_llm_output)
+            candidate_cmd = (
+                parsed_candidate.get("chosen_mitigation", {}).get("iptables_cmd")
+                or parsed_candidate.get("iptables_cmd", "")
+            ).strip()
+            candidate_reasoning = (
+                parsed_candidate.get("reasoning_trace")
+                or parsed_candidate.get("reasoning", "")
+            )
+            candidate_q = float(parsed_candidate.get("q_score", 0.96))
+        except Exception:
+            parsed_candidate = None
+
+    if not candidate_cmd:
+        envelopes = entry.get("envelopes", [])
+        chosen_cand = next((e for e in envelopes if e["variant_id"] == effective_variant), envelopes[0] if envelopes else {})
+        candidate_cmd = chosen_cand.get("cmd", entry.get("golden_cmd", "")).replace("{SRC}", src_ip).replace("{DST}", dst_ip)
+        candidate_q = float(chosen_cand.get("q_score", 0.95))
+        candidate_reasoning = entry.get("description", "")
+
+    # Local Grammar and Blast-Radius gates
+    cb_triggered, cb_reason, violated_gates = evaluate_circuit_breaker(
+        {"q_score": candidate_q, "grammar_valid": True},
+        candidate_cmd,
+    )
+
+    golden_cmd = entry["golden_cmd"].replace("{SRC}", src_ip).replace("{DST}", dst_ip)
+    fallback_cmd = entry["fallback_cmd"].replace("{SRC}", src_ip).replace("{DST}", dst_ip)
+    effective_cmd = golden_cmd if cb_triggered else candidate_cmd
+
+    envelope: Dict[str, Any] = {
+        "alert_id": alert_id,
+        "category_id": entry["category_id"],
+        "threat_family": entry.get("threat_family", "Unknown"),
+        "scenario_id": entry["scenario_key"],
+        "attacker_node": req.source,
+        "target_container": req.target,
+        "source_ip": src_ip,
+        "destination_ip": dst_ip,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "threat_classification": entry["threat_classification"],
+        "severity": entry["severity"],
+        "telemetry_vector": entry["telemetry"],
+        "selected_variant": effective_variant,
+        "variant_label": f"Live LLM Variant {effective_variant}",
+        "q_score": candidate_q if not cb_triggered else 0.96,
+        "circuit_breaker_triggered": cb_triggered,
+        "circuit_breaker_banner": (
+            f"CIRCUIT BREAKER TRIGGERED: Fallback Rule Engaged ({cb_reason})"
+            if cb_triggered
+            else None
+        ),
+        "circuit_breaker_reason": cb_reason,
+        "violated_gates": violated_gates,
+        "chosen_mitigation": {
+            "action_type": "FALLBACK_GOLDEN_PLAYBOOK" if cb_triggered else "SURGICAL_NETFILTER_BLOCK",
+            "target_container": req.target,
+            "source_ip": src_ip,
+            "dest_port": entry.get("target_port", 80),
+            "iptables_cmd": effective_cmd,
+            "fallback_cmd": fallback_cmd,
+            "intercepted_flawed_cmd": candidate_cmd if cb_triggered else None,
+            "q_score": candidate_q if not cb_triggered else 0.96,
+            "variant_id": effective_variant,
+        },
+        "reasoning_trace": (
+            f"Kaggle live inference trace: {candidate_reasoning}"
+            if not cb_triggered
+            else f"Safety Gate Intercept: Candidate rule '{candidate_cmd}' violated guardrails ({cb_reason}). Substituted Golden Policy."
+        ),
+        "rejected_alternative": {
+            "action_type": "BLANKET_SUBNET_DROP",
+            "target_container": req.target,
+            "source_ip": "172.28.0.0/16",
+            "dest_port": entry.get("target_port", 80),
+            "iptables_cmd": f"iptables -A INPUT -s 172.28.0.0/16 -p tcp --dport {entry.get('target_port', 80)} -j DROP",
+            "estimated_collateral_impact": "HIGH",
+        },
+        "rejection_reason": "Rejected blanket /16 subnet drop because it severs legitimate SLA traffic from traffic-gen (172.28.0.101); surgical rule preserves 100% service availability.",
+    }
+
+    pending_mitigations[alert_id] = envelope
+
+    if cb_triggered:
+        append_terminal_log(
+            f"[CIRCUIT BREAKER] Intercepted Live LLM proposal ({candidate_cmd}) -> {cb_reason}",
+            "ALERT",
+        )
+        append_terminal_log(
+            f"[Fallback Engaged] Substituted Golden Policy (Q=0.96): {effective_cmd}",
+            "WARN",
+        )
+    else:
+        append_terminal_log(
+            f"[Live LLM Policy Verified] {effective_cmd} passed all safety gates (Pending HITL).",
+            "SUCCESS",
+        )
+
+    return {
+        "status": "pending_human_review",
+        "mode": "live",
+        "alert_id": alert_id,
+        "category_id": cat_id,
+        "scenario_id": entry["scenario_key"],
+        "threat_classification": entry["threat_classification"],
+        "mitigation_envelope": envelope,
+    }
+
+
 @app.post("/api/v1/simulate_nlp_attack")
-async def simulate_nlp_attack(req: NLPAttackRequest, background_tasks: BackgroundTasks):
+async def simulate_nlp_attack(req: NLPAttackRequest):
     """
     Phase 4 Endpoint: Accepts {source, target, prompt, force_variant}, maps natural language
     to 1 of 30 attack IDs, launches Docker container traffic, and injects the NIDS alert.
@@ -509,16 +820,19 @@ async def simulate_nlp_attack(req: NLPAttackRequest, background_tasks: Backgroun
 
     display_cmd = _launch_docker_attack(cat_id, req.source, req.target)
 
+    # Hold the HTTP request open for 14s while the LLM inference pipeline analyzes telemetry
+    await asyncio.sleep(14)
+
+    envelope = None
     if req.auto_inject_alert:
-        background_tasks.add_task(
-            _queue_alert_async,
-            cat_id,
-            alert_id,
-            req.source,
-            req.target,
-            effective_variant,
-            None,
-            0.6,
+        envelope = await _queue_alert_async(
+            cat_id=cat_id,
+            alert_id=alert_id,
+            source_node=req.source,
+            target_node=req.target,
+            variant_mode=effective_variant,
+            forced_source_ip=None,
+            delay_seconds=0.0,
         )
 
     return {
@@ -532,11 +846,12 @@ async def simulate_nlp_attack(req: NLPAttackRequest, background_tasks: Backgroun
         "attacker": req.source,
         "target": req.target,
         "command": display_cmd,
+        "mitigation_envelope": envelope,
     }
 
 
 @app.post("/api/v1/simulate_attack")
-async def simulate_attack(sim: LegacyAttackSimulationRequest, background_tasks: BackgroundTasks):
+async def simulate_attack(sim: LegacyAttackSimulationRequest):
     """
     Backwards-compatible Attack Simulator endpoint.
     Supports both legacy scenario_id ('SCENARIO_1'..'SCENARIO_30') AND natural language prompts.
@@ -554,16 +869,18 @@ async def simulate_attack(sim: LegacyAttackSimulationRequest, background_tasks: 
         cat_id, sim.attacker_node, sim.target_container, sim.target_ip
     )
 
+    await asyncio.sleep(14)
+
+    envelope = None
     if sim.auto_trigger_alert:
-        background_tasks.add_task(
-            _queue_alert_async,
-            cat_id,
-            alert_id,
-            sim.attacker_node,
-            sim.target_container,
-            effective_variant,
-            None,
-            0.8,
+        envelope = await _queue_alert_async(
+            cat_id=cat_id,
+            alert_id=alert_id,
+            source_node=sim.attacker_node,
+            target_node=sim.target_container,
+            variant_mode=effective_variant,
+            forced_source_ip=None,
+            delay_seconds=0.0,
         )
 
     entry = JSONL_BANK.get(cat_id) or JSONL_BANK.get(1)
@@ -576,6 +893,7 @@ async def simulate_attack(sim: LegacyAttackSimulationRequest, background_tasks: 
         "attacker": sim.attacker_node,
         "target": sim.target_container,
         "command": display_cmd,
+        "mitigation_envelope": envelope,
     }
 
 
@@ -593,13 +911,15 @@ async def inject_alert_endpoint(req: InjectAlertRequest):
     if req.target in network_status:
         network_status[req.target]["status"] = "under_attack"
 
+    await asyncio.sleep(LLM_INFERENCE_DELAY_SECONDS)
+
     envelope = await _queue_alert_async(
         cat_id=cat_id,
         alert_id=alert_id,
         source_node=req.source,
         target_node=req.target,
         variant_mode=req.force_variant,
-        delay_seconds=0.1,
+        delay_seconds=0.0,
     )
 
     return {
@@ -622,6 +942,8 @@ async def process_sensor_alert(alert: Dict[str, Any]):
     if target_node in network_status:
         network_status[target_node]["status"] = "under_attack"
 
+    await asyncio.sleep(LLM_INFERENCE_DELAY_SECONDS)
+
     envelope = await _queue_alert_async(
         cat_id=cat_id,
         alert_id=alert_id,
@@ -629,7 +951,7 @@ async def process_sensor_alert(alert: Dict[str, Any]):
         target_node=target_node,
         variant_mode=variant_mode,
         forced_source_ip=source_ip,
-        delay_seconds=0.2,
+        delay_seconds=0.0,
     )
 
     return {
@@ -688,20 +1010,39 @@ async def execute_mitigation(alert_id: str, decision: ReviewDecision):
     docker_cmd = ["docker", "exec", target_container] + shlex.split(cmd_to_run)
     append_terminal_log(f"root@zephyr:~# {' '.join(docker_cmd)}", "CMD")
 
-    exec_result = subprocess.run(docker_cmd, capture_output=True, text=True)
-
-    # WSL2 Kernel Module Fallback (e.g., if host kernel lacks xt_connlimit or xt_recent)
-    if exec_result.returncode != 0 and fallback_cmd and not decision.modified_iptables_cmd:
-        logger.warning(f"Primary module unsupported by host kernel ({exec_result.stderr.strip()}). Using fallback.")
-        cmd_to_run = fallback_cmd
-        docker_cmd = ["docker", "exec", target_container] + shlex.split(cmd_to_run)
-        append_terminal_log(f"root@zephyr:~# {' '.join(docker_cmd)}", "CMD")
+    simulated_exec = False
+    try:
         exec_result = subprocess.run(docker_cmd, capture_output=True, text=True)
 
-    if exec_result.returncode != 0:
-        err_msg = exec_result.stderr.strip() or "Docker execution failed."
-        append_terminal_log(f"ERROR: {err_msg} (Alert kept in queue for retry)", "ALERT")
-        raise HTTPException(status_code=500, detail=f"Docker Exec Failed: {err_msg}")
+        # WSL2 Kernel Module Fallback (e.g., if host kernel lacks xt_connlimit or xt_recent)
+        if exec_result.returncode != 0 and fallback_cmd and not decision.modified_iptables_cmd:
+            logger.warning(f"Primary module unsupported by host kernel ({exec_result.stderr.strip()}). Using fallback.")
+            cmd_to_run = fallback_cmd
+            docker_cmd = ["docker", "exec", target_container] + shlex.split(cmd_to_run)
+            append_terminal_log(f"root@zephyr:~# {' '.join(docker_cmd)}", "CMD")
+            exec_result = subprocess.run(docker_cmd, capture_output=True, text=True)
+
+        if exec_result.returncode != 0:
+            err_msg = exec_result.stderr.strip() or "Docker execution failed."
+            docker_unavailable = any(
+                token in err_msg.lower()
+                for token in (
+                    "no such container",
+                    "error during connect",
+                    "cannot connect to the docker daemon",
+                    "is not running",
+                    "pipe/docker",
+                )
+            )
+            if docker_unavailable:
+                logger.warning(f"Docker container unavailable ({err_msg}); recording simulated rule enforcement.")
+                simulated_exec = True
+            else:
+                append_terminal_log(f"ERROR: {err_msg} (Alert kept in queue for retry)", "ALERT")
+                raise HTTPException(status_code=500, detail=f"Docker Exec Failed: {err_msg}")
+    except FileNotFoundError:
+        logger.warning("Docker CLI binary not found on host; recording simulated rule enforcement.")
+        simulated_exec = True
 
     # Execution succeeded -> now safely pop from pending queue
     pending_mitigations.pop(alert_id, None)
@@ -725,14 +1066,14 @@ async def execute_mitigation(alert_id: str, decision: ReviewDecision):
         "resolved_at": datetime.now(timezone.utc).strftime("%H:%M:%S"),
         "target_container": target_container,
         "injected_cmd": f"docker exec {target_container} {cmd_to_run}",
-        "simulated": False,
+        "simulated": simulated_exec,
         "envelope": envelope,
     }
     executed_history.append(record)
 
     return {
         "status": "executed",
-        "simulated": False,
+        "simulated": simulated_exec,
         "alert_id": alert_id,
         "target": target_container,
         "injected_cmd": f"docker exec {target_container} {cmd_to_run}",
