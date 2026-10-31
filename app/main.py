@@ -218,6 +218,67 @@ JSONL_BANK: Dict[int, Dict[str, Any]] = {}
 KEYWORD_ROUTER_INDEX: Dict[str, int] = {}
 
 
+UNKNOWN_ANOMALY_ENTRY: Dict[str, Any] = {
+    "category_id": 99,
+    "threat_family": "Zero-Day / Out-of-Distribution",
+    "scenario_key": "UNKNOWN_ANOMALY",
+    "threat_classification": "UNKNOWN_ANOMALY",
+    "description": "Out-of-distribution anomaly detected. Unmapped network protocol flags and non-standard egress port.",
+    "severity": "CRITICAL",
+    "protocol": "TCP",
+    "target_port": 80,
+    "search_keywords": ["zero-day", "zero day", "unknown", "out-of-distribution", "ood", "unknown anomaly", "unmapped"],
+    "telemetry": {
+        "packet_rate_pps": 8400,
+        "byte_rate_bps": 512000,
+        "syn_ack_ratio": 0.62,
+        "payload_entropy": 7.88,
+        "avg_packet_size": 420,
+        "active_socket_count": 890,
+        "l7_indicator": "0xDEADBEEF_UNMAPPED_OPCODE",
+        "mitre_tactic": "TA0040 Impact",
+        "mitre_technique": "T1204",
+        "cve_reference": "CVE-2026-ZERO-DAY"
+    },
+    "docker_attack_template": "ping -c 1 {DST} >/dev/null 2>&1",
+    "golden_cmd": "iptables -A INPUT -s {SRC} -m limit --limit 50/s -j ACCEPT",
+    "fallback_cmd": "iptables -A INPUT -s {SRC} -m limit --limit 30/s -j ACCEPT",
+    "envelopes": [
+        {
+            "variant_id": "A",
+            "label": "CONSERVATIVE_RATE_LIMIT",
+            "q_score": 0.95,
+            "cmd": "iptables -A INPUT -s {SRC} -m limit --limit 50/s -j ACCEPT",
+            "grammar_valid": True,
+            "blast_radius": "{SRC}/32"
+        },
+        {
+            "variant_id": "B",
+            "label": "BLANKET_SUBNET_DROP",
+            "q_score": 0.40,
+            "cmd": "iptables -A INPUT -s 172.28.0.0/16 -j DROP",
+            "grammar_valid": True,
+            "blast_radius": "172.28.0.0/16"
+        },
+        {
+            "variant_id": "C",
+            "label": "SYNTAX_INVALID",
+            "q_score": 0.20,
+            "cmd": "iptables -A INPUT -s {SRC} --block-zero-day",
+            "grammar_valid": False,
+            "blast_radius": "{SRC}/32"
+        },
+        {
+            "variant_id": "D",
+            "label": "OVERLY_AGGRESSIVE_DROP",
+            "q_score": 0.65,
+            "cmd": "iptables -A INPUT -s {SRC} -j DROP",
+            "grammar_valid": True,
+            "blast_radius": "{SRC}/32"
+        }
+    ]
+}
+
 def load_jsonl_bank():
     """Loads the 30-category threat taxonomy and 4-variant mitigation envelopes."""
     base_dir = os.path.dirname(__file__)
@@ -250,6 +311,12 @@ def load_jsonl_bank():
             KEYWORD_ROUTER_INDEX[entry["scenario_key"].lower()] = cat_id
             KEYWORD_ROUTER_INDEX[f"id_{cat_id}"] = cat_id
 
+    # Register Zero-Day / Out-of-Distribution fallback
+    JSONL_BANK[99] = UNKNOWN_ANOMALY_ENTRY
+    KEYWORD_ROUTER_INDEX["unknown_anomaly"] = 99
+    KEYWORD_ROUTER_INDEX["zero_day"] = 99
+    KEYWORD_ROUTER_INDEX["zero-day"] = 99
+    KEYWORD_ROUTER_INDEX["out-of-distribution"] = 99
     logger.info(f"Loaded {len(JSONL_BANK)} Threat Categories from {os.path.basename(jsonl_path)}")
 
 
@@ -261,7 +328,316 @@ ALERTS_BANK = JSONL_BANK
 
 
 # =====================================================================
-# 4. CIRCUIT BREAKER, NLP TWO-TIER ROUTER & ENVELOPE BUILDER
+
+# =====================================================================
+# 3.5 TIERED INTENT CLASSIFICATION, 6 NETWORK PRIMITIVES & COMPOSITE 100-POINT MATRIX
+# =====================================================================
+
+
+AUDIT_LEDGER_PATH = os.path.join(os.path.dirname(__file__), "audit_ledger.jsonl")
+
+def write_audit_ledger_entry(entry_dict: Dict[str, Any]):
+    try:
+        with open(AUDIT_LEDGER_PATH, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry_dict) + "\n")
+    except Exception as e:
+        logger.error(f"Failed to append to audit ledger: {e}")
+
+def read_audit_ledger_entries(limit: int = 50) -> List[Dict[str, Any]]:
+    if not os.path.exists(AUDIT_LEDGER_PATH):
+        return []
+    records = []
+    try:
+        with open(AUDIT_LEDGER_PATH, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    records.append(json.loads(line))
+    except Exception as e:
+        logger.error(f"Failed to read audit ledger: {e}")
+    return records[-limit:]
+
+def classify_macro_family(threat_key: str, cat_id: int, telemetry: Dict[str, Any], prompt: str) -> str:
+    """Tier-1 Macro Classifier: Instantly routes incoming telemetry into 1 of 5 threat families or Zero-Day."""
+    p_low = (prompt or "").lower()
+    t_key = (threat_key or "").upper()
+    
+    if cat_id == 99 or "UNKNOWN_ANOMALY" in t_key or "zero-day" in p_low or "zero day" in p_low or "out-of-distribution" in p_low:
+        return "Zero-Day / Out-of-Distribution"
+
+    if any(k in p_low for k in ["syn flood", "volumetric", "udp flood", "amplification", "icmp flood"]) or telemetry.get("packet_rate_pps", 0) > 4000:
+        return "Volumetric (L3/L4 DDoS)"
+    if any(k in p_low for k in ["slowloris", "state exhaustion", "socket starvation", "connection pool", "half-open"]):
+        return "State Exhaustion"
+    if any(k in p_low for k in ["exfiltration", "tunnel", "dns exfil", "icmp exfil", "covert channel"]) or telemetry.get("payload_entropy", 0) > 6.8:
+        return "Data Exfiltration"
+    if any(k in p_low for k in ["ssh", "brute force", "credential", "lateral", "unauthorized", "login"]):
+        return "Unauthorized Access & Lateral Movement"
+    if any(k in p_low for k in ["sql", "sqli", "injection", "rce", "xss", "http", "traversal", "command injection"]) or telemetry.get("l7_indicator"):
+        return "Application Layer (L7)"
+    
+    return "Volumetric (L3/L4 DDoS)"
+
+def compute_explainable_trigger(macro_family: str, telemetry: Dict[str, Any], cat_id: int) -> str:
+    """Tier-2 Micro Classifier: Family-specific mathematical checks producing deterministic trace strings."""
+    if macro_family == "Zero-Day / Out-of-Distribution":
+        return "Unmapped anomaly signature - T1204 (Zero-Day Out-of-Distribution Vector)"
+    if macro_family == "Data Exfiltration":
+        return f"Excessive ICMP length ({telemetry.get('avg_packet_size', 816)}B) & entropy ({telemetry.get('payload_entropy', 6.8):.2f}) - T1048.003 Exfiltration Over Alternative Protocol"
+    if macro_family == "Volumetric (L3/L4 DDoS)":
+        return f"High SYN/ACK ratio ({telemetry.get('syn_ack_ratio', 0.99):.2f}) & PPS ({telemetry.get('packet_rate_pps', 14500):,}) - T1498.001 Direct Network Flood"
+    if macro_family == "State Exhaustion":
+        return f"Asymmetric HTTP socket starvation ({telemetry.get('active_socket_count', 1024)} sockets, low byte trickle) - T1499.001 OS Exhaustion Flood"
+    if macro_family == "Application Layer (L7)":
+        l7 = telemetry.get("l7_indicator")
+        if l7:
+            return f"L7 Artifact extracted: '{str(l7)[:32]}' - T1190 Exploit Public-Facing Application"
+        return "HTTP application payload anomaly - T1190 Exploit Public-Facing Application"
+    if macro_family == "Unauthorized Access & Lateral Movement":
+        return "Authentication burst rate deviation (>15 auth attempts/s) - T1110.001 Brute Force Password Guessing"
+    return "Anomalous ingress telemetry pattern detected - T1498"
+
+def compute_ttl_for_family(macro_family: str) -> Tuple[int, str]:
+    """Deterministic TTL Membrane: Volumetric=30m, State Exhaustion=15m, Exfil=4h, Access=1h, App=2h, Zero-Day=10m."""
+    if "Volumetric" in macro_family:
+        return 1800, "30m"
+    if "State Exhaustion" in macro_family:
+        return 900, "15m"
+    if "Data Exfiltration" in macro_family:
+        return 14400, "4h"
+    if "Unauthorized Access" in macro_family:
+        return 3600, "1h"
+    if "Application" in macro_family:
+        return 7200, "2h"
+    if "Zero-Day" in macro_family:
+        return 600, "10m"
+    return 1800, "30m"
+
+def build_telemetry_vector_primitives(entry: Dict[str, Any], src_ip: str, dst_ip: str, macro_family: str) -> Dict[str, Any]:
+    """Synthesizes the 6 deterministic network primitives from incoming telemetry."""
+    raw_tel = entry.get("telemetry", {})
+    pps = raw_tel.get("packet_rate_pps", 1200)
+    bps = raw_tel.get("byte_rate_bps", 180000)
+    syn_ack = raw_tel.get("syn_ack_ratio", 0.85)
+    entropy = raw_tel.get("payload_entropy", 3.4)
+    avg_size = raw_tel.get("avg_packet_size", 64)
+    sockets = raw_tel.get("active_socket_count", 128)
+    proto = entry.get("protocol", "TCP")
+    l7 = raw_tel.get("l7_indicator")
+
+    # 1. Volumetric Anomaly (pps/bps)
+    if pps > 5000 or bps > 500000:
+        vol_str = f"{pps:,} PPS / {bps//1000:,} KBps (High Volumetric Deviation)"
+    elif pps > 1000:
+        vol_str = f"{pps:,} PPS / {bps//1000:,} KBps (Moderate Deviation)"
+    else:
+        vol_str = f"{pps:,} PPS / {bps//1000:,} KBps (Sub-Flood Rate)"
+
+    # 2. Connection State (TCP Flags / Half-Open)
+    if syn_ack > 0.90:
+        conn_str = f"SYN/ACK ratio {syn_ack:.2f} ({sockets:,} unacknowledged half-open TCP connections)"
+    elif syn_ack > 0.50:
+        conn_str = f"SYN/ACK ratio {syn_ack:.2f} ({sockets:,} active sockets, balanced handshake)"
+    else:
+        conn_str = f"Established connection state ({sockets:,} sockets active)"
+
+    # 3. Temporal Burst Pattern
+    if "Volumetric" in macro_family:
+        burst_str = "Sustained Volumetric Stream (Automated Botnet Flood)"
+    elif "Data Exfiltration" in macro_family:
+        burst_str = "Periodic Low-and-Slow Beaconing (C2 Covert Channel)"
+    elif "State Exhaustion" in macro_family:
+        burst_str = "Asynchronous Trickle Burst (Keepalive Starvation)"
+    else:
+        burst_str = "High-Frequency Burst Transmission (Automated Scanner)"
+
+    # 4. Payload Entropy & Size
+    if entropy > 6.0:
+        entropy_str = f"Entropy: {entropy:.2f} / Avg Size: {avg_size}B (High Randomness / Encrypted Artifact)"
+    else:
+        entropy_str = f"Entropy: {entropy:.2f} / Avg Size: {avg_size}B (Structured Predictable Payload)"
+
+    # 5. L4/L7 Protocol Context
+    if l7:
+        proto_str = f"L7/{proto} Context (Extracted Artifact: '{str(l7)[:28]}')"
+    else:
+        proto_str = f"L4/{proto} Transport Layer (Flags/Port Exhaustion)"
+
+    # 6. Source Entity Reputation
+    if src_ip == "172.28.0.100":
+        rep_str = f"External Untrusted Ingress ({src_ip} via ext-net)"
+    elif src_ip.startswith("172.28.0."):
+        rep_str = f"Internal LAN Host ({src_ip} East-West Lateral Vector)"
+    else:
+        rep_str = f"Unmapped Origin ({src_ip})"
+
+    result = dict(raw_tel)
+    result.update({
+        "volumetric_anomaly": vol_str,
+        "connection_state": conn_str,
+        "temporal_burst_pattern": burst_str,
+        "payload_entropy_size": entropy_str,
+        "protocol_context": proto_str,
+        "source_reputation": rep_str,
+    })
+    return result
+
+def evaluate_composite_confidence(
+    candidate_cmd: str,
+    source_ip: str,
+    target_port: int,
+    protocol: str,
+    macro_family: str,
+    is_zero_day: bool,
+    grammar_valid: bool = True
+) -> Tuple[int, Dict[str, int], bool, str, Dict[str, str]]:
+    """
+    Composite Confidence Scoring (The 100-Point Matrix):
+    - Syntax Validity (20 Points)
+    - Blast Radius Scope (25 Points)
+    - Target Coherence (15 Points)
+    - Protocol & Port Alignment (15 Points)
+    - Directionality Check (10 Points)
+    - Action Severity (15 Points)
+    Execution Threshold = 80 Points.
+    """
+    gate_scores = {
+        "syntax_validity": 0,
+        "blast_radius_scope": 0,
+        "target_coherence": 0,
+        "protocol_port_alignment": 0,
+        "directionality": 0,
+        "action_severity": 0,
+    }
+    violation_reasons: List[str] = []
+
+    clean_cmd = re.sub(r"\bsudo\s+", "", candidate_cmd.strip()) if candidate_cmd else ""
+    sub_cmds = [c.strip() for c in clean_cmd.split(";") if c.strip()] if clean_cmd else []
+
+    # Gate 1: Syntax Validity (20 Points)
+    syntax_ok = True
+    if not sub_cmds or not grammar_valid or "--ban-subnet" in clean_cmd or "--block-zero-day" in clean_cmd:
+        syntax_ok = False
+        violation_reasons.append("SYNTAX_GATE: Invalid Netfilter command structure or unmapped flags.")
+    else:
+        for sub in sub_cmds:
+            try:
+                tokens = shlex.split(sub)
+            except Exception:
+                syntax_ok = False
+                violation_reasons.append(f"SYNTAX_GATE: Command parsing error in '{sub}'.")
+                break
+            if not tokens or tokens[0] != "iptables":
+                syntax_ok = False
+                violation_reasons.append(f"SYNTAX_GATE: Command does not invoke 'iptables' binary: '{sub}'.")
+                break
+            if "-j" in tokens:
+                j_idx = tokens.index("-j")
+                target_jump = tokens[j_idx + 1].rstrip(";") if j_idx + 1 < len(tokens) else ""
+                if target_jump not in VALID_IPTABLES_JUMPS:
+                    syntax_ok = False
+                    violation_reasons.append(f"SYNTAX_GATE: Invalid jump target '-j {target_jump}'.")
+                    break
+
+    if syntax_ok:
+        gate_scores["syntax_validity"] = 20
+
+    # Gate 2: Blast Radius Scope (25 Points)
+    if any(subnet in clean_cmd for subnet in ["172.28.0.0/16", "172.28.0.0/24", "0.0.0.0/0", "/16", "/24"]):
+        gate_scores["blast_radius_scope"] = 0
+        violation_reasons.append("BLAST_RADIUS_GATE: Rule attempts blanket subnet drop (/16 or /24), severing benign SLA traffic (Score capped at 75).")
+    elif source_ip in clean_cmd or f"{source_ip}/32" in clean_cmd or (is_zero_day and "-m limit" in clean_cmd):
+        gate_scores["blast_radius_scope"] = 25
+    else:
+        gate_scores["blast_radius_scope"] = 0
+        violation_reasons.append("BLAST_RADIUS_GATE: Missing surgical /32 host target specification.")
+
+    # Gate 3: Target Coherence (15 Points)
+    if source_ip and (f"-s {source_ip}" in clean_cmd or source_ip in clean_cmd):
+        gate_scores["target_coherence"] = 15
+    elif is_zero_day and "-m limit" in clean_cmd:
+        gate_scores["target_coherence"] = 15
+    else:
+        gate_scores["target_coherence"] = 0
+        violation_reasons.append(f"TARGET_COHERENCE_GATE: Rule does not target verified attacker IP ({source_ip}).")
+
+    # Gate 4: Protocol & Port Alignment (15 Points)
+    proto_lower = (protocol or "TCP").lower()
+    port_str = str(target_port) if target_port and target_port > 0 else ""
+    proto_ok = False
+
+    if is_zero_day:
+        proto_ok = True
+    elif proto_lower == "icmp":
+        proto_ok = "-p icmp" in clean_cmd or "icmp" in clean_cmd
+    elif port_str and target_port > 0:
+        proto_ok = f"--dport {port_str}" in clean_cmd or f"-p {proto_lower}" in clean_cmd or f"--dport" in clean_cmd
+    else:
+        proto_ok = f"-p {proto_lower}" in clean_cmd or "-p tcp" in clean_cmd or "-p udp" in clean_cmd
+
+    if proto_ok:
+        gate_scores["protocol_port_alignment"] = 15
+    else:
+        gate_scores["protocol_port_alignment"] = 0
+        violation_reasons.append(f"PROTOCOL_GATE: Rule does not target verified vector port ({port_str}) / protocol ({protocol}).")
+
+    # Gate 5: Directionality Check (10 Points)
+    if "Data Exfiltration" in macro_family:
+        if "OUTPUT" in clean_cmd or "FORWARD" in clean_cmd or "INPUT" in clean_cmd:
+            gate_scores["directionality"] = 10
+        else:
+            gate_scores["directionality"] = 0
+            violation_reasons.append("DIRECTION_GATE: Egress exfiltration vector requires OUTPUT or FORWARD chain.")
+    else:
+        if "INPUT" in clean_cmd or "FORWARD" in clean_cmd:
+            gate_scores["directionality"] = 10
+        else:
+            gate_scores["directionality"] = 0
+            violation_reasons.append("DIRECTION_GATE: Ingress attack requires INPUT netfilter chain.")
+
+    # Gate 6: Action Severity (15 Points)
+    if is_zero_day:
+        if "-m limit" in clean_cmd and "--limit" in clean_cmd:
+            gate_scores["action_severity"] = 15
+        else:
+            gate_scores["action_severity"] = 0
+            violation_reasons.append("SEVERITY_GATE: Out-of-distribution Zero-Day requires Layer 4 rate-limiting (-m limit) rather than hard drop.")
+    elif "Volumetric" in macro_family:
+        if "-j DROP" in clean_cmd or "DROP" in clean_cmd:
+            gate_scores["action_severity"] = 15
+        elif "-j REJECT" in clean_cmd:
+            gate_scores["action_severity"] = 5
+            violation_reasons.append("SEVERITY_GATE: REJECT penalized for generating outbound ICMP unreachable response storm.")
+        else:
+            gate_scores["action_severity"] = 0
+    else:
+        if any(j in clean_cmd for j in ["-j DROP", "-j REJECT", "-j ACCEPT"]):
+            gate_scores["action_severity"] = 15
+        else:
+            gate_scores["action_severity"] = 0
+
+    composite_score = sum(gate_scores.values())
+    cb_triggered = composite_score < 80 or (is_zero_day and gate_scores["action_severity"] == 0)
+
+    summary_reason = " | ".join(violation_reasons) if violation_reasons else "All 6 Gates Passed Deterministic Validation (Composite Score >= 80)."
+
+    delta = {
+        "attempted": candidate_cmd,
+        "enforced": clean_cmd,
+        "reason": summary_reason,
+    }
+    return composite_score, gate_scores, cb_triggered, summary_reason, delta
+
+async def schedule_rule_teardown(container: str, cmd_to_run: str, ttl_seconds: int, alert_id: str):
+    """Ephemeral Rule Teardown: Waits for TTL duration, then dismantles the Netfilter rule."""
+    await asyncio.sleep(ttl_seconds)
+    teardown_cmd = cmd_to_run.replace("iptables -A", "iptables -D").replace("iptables  -A", "iptables -D")
+    try:
+        subprocess.run(["docker", "exec", container] + shlex.split(teardown_cmd), capture_output=True)
+    except Exception:
+        pass
+    append_terminal_log(f"[TEARDOWN EXPIRED] Rule {alert_id} dismantled after {ttl_seconds}s TTL. Netfilter state released.", "INFO")
+
+# # 4. CIRCUIT BREAKER, NLP TWO-TIER ROUTER & ENVELOPE BUILDER
 # =====================================================================
 
 VALID_IPTABLES_JUMPS = {"ACCEPT", "DROP", "REJECT", "LOG", "RETURN"}
@@ -316,12 +692,18 @@ def evaluate_circuit_breaker(variant: Dict[str, Any], candidate_cmd: str) -> Tup
 
 
 def resolve_category_id(identifier: Union[int, str]) -> int:
-    """Resolves integer IDs (1..30), scenario strings ('SCENARIO_3'), or natural language."""
+    """Resolves integer IDs (1..30 or 99), scenario strings ('SCENARIO_3'), or natural language."""
     if isinstance(identifier, int):
+        if identifier == 99:
+            return 99
         return identifier if 1 <= identifier <= 30 else 1
     s = str(identifier).strip().upper()
+    if s == "99" or s in ("UNKNOWN_ANOMALY", "ZERO_DAY", "OUT_OF_DISTRIBUTION"):
+        return 99
     if s.isdigit():
         val = int(s)
+        if val == 99:
+            return 99
         return val if 1 <= val <= 30 else 1
     if s.startswith("SCENARIO_"):
         num_part = s.replace("SCENARIO_", "")
@@ -426,8 +808,32 @@ def build_mitigation_envelope(
     golden_cmd = entry["golden_cmd"].replace("{SRC}", src_ip).replace("{DST}", dst_ip)
     fallback_cmd = entry["fallback_cmd"].replace("{SRC}", src_ip).replace("{DST}", dst_ip)
 
-    # Evaluate the chosen candidate against the Circuit Breaker
-    cb_triggered, cb_reason, violated_gates = evaluate_circuit_breaker(chosen_cand, raw_cmd)
+    # Tier-1 & Tier-2 Hierarchical Classification
+    macro_family = classify_macro_family(entry.get("scenario_key", ""), cat_id, entry.get("telemetry", {}), entry.get("description", ""))
+    explainable_trigger = compute_explainable_trigger(macro_family, entry.get("telemetry", {}), cat_id)
+    is_zero_day = (cat_id == 99 or "UNKNOWN_ANOMALY" in entry.get("scenario_key", ""))
+    ttl_seconds, ttl_display = compute_ttl_for_family(macro_family)
+    telemetry_primitives = build_telemetry_vector_primitives(entry, src_ip, dst_ip, macro_family)
+
+    # 100-Point 6-Gate Mathematical Evaluation
+    composite_score, gate_scores, cb_triggered, cb_reason, delta = evaluate_composite_confidence(
+        candidate_cmd=raw_cmd,
+        source_ip=src_ip,
+        target_port=entry.get("target_port", 80),
+        protocol=entry.get("protocol", "TCP"),
+        macro_family=macro_family,
+        is_zero_day=is_zero_day,
+        grammar_valid=chosen_cand.get("grammar_valid", True)
+    )
+
+    if cb_triggered:
+        delta["enforced"] = golden_cmd
+        if "172.28.0.0/16" in raw_cmd or "/16" in raw_cmd:
+            delta["reason"] = f"[REJECTED] AI attempted subnet drop (/16). [ENFORCED] Playbook deployed surgical drop (/32)."
+        elif is_zero_day and "-m limit" not in raw_cmd:
+            delta["reason"] = f"[REJECTED] AI attempted hard DROP on Zero-Day anomaly. [ENFORCED] Playbook enforced Layer 4 rate-limit (50/s)."
+        else:
+            delta["reason"] = f"[REJECTED] Candidate rule violated 6-gate safety matrix ({cb_reason}). [ENFORCED] Playbook substituted Golden Policy."
 
     # Automatic Golden Playbook Fallback
     effective_cmd = golden_cmd if cb_triggered else raw_cmd
@@ -436,6 +842,8 @@ def build_mitigation_envelope(
         "alert_id": alert_id,
         "category_id": entry["category_id"],
         "threat_family": entry.get("threat_family", "Unknown"),
+        "macro_family": macro_family,
+        "explainable_trigger": explainable_trigger,
         "scenario_id": entry["scenario_key"],
         "attacker_node": source_node,
         "target_container": target_node,
@@ -444,15 +852,23 @@ def build_mitigation_envelope(
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "threat_classification": entry["threat_classification"],
         "severity": entry["severity"],
-        "telemetry_vector": entry["telemetry"],
+        "telemetry_vector": telemetry_primitives,
+        "composite_score": composite_score,
+        "gate_scores": gate_scores,
+        "execution_threshold": 80,
+        "violation_delta": delta if cb_triggered else None,
+        "ttl_seconds": ttl_seconds,
+        "ttl_display": ttl_display,
+        "is_zero_day": is_zero_day,
+        "l7_indicator": entry.get("telemetry", {}).get("l7_indicator"),
 
         "selected_variant": chosen_cand["variant_id"],
         "variant_label": chosen_cand["label"],
-        "q_score": chosen_cand["q_score"],
+        "q_score": round(composite_score / 100.0, 2),
         "circuit_breaker_triggered": cb_triggered,
         "circuit_breaker_banner": (f"CIRCUIT BREAKER TRIGGERED: Fallback Rule Engaged ({cb_reason})" if cb_triggered else None),
         "circuit_breaker_reason": cb_reason,
-        "violated_gates": violated_gates,
+        "violated_gates": [cb_reason] if cb_triggered else [],
 
         "chosen_mitigation": {
             "action_type": "FALLBACK_GOLDEN_PLAYBOOK" if cb_triggered else chosen_cand["label"],
@@ -575,12 +991,15 @@ async def mock_threat(req: ThreatRequest = ThreatRequest()):
     Injects a literal await asyncio.sleep(14) delay to simulate computation time,
     loading the appropriate scenario response deterministically from the local mitigations.jsonl file.
     """
-    cat_id = resolve_category_id(req.category_id or req.scenario_id or 1)
-    if req.prompt:
+    if req.category_id is not None or req.scenario_id is not None:
+        cat_id = resolve_category_id(req.category_id or req.scenario_id or 1)
+        effective_variant = req.force_variant or "A"
+    elif req.prompt:
         classified_id, _, prompt_var = classify_nlp_intent(req.prompt)
         cat_id = classified_id
         effective_variant = prompt_var or req.force_variant or "A"
     else:
+        cat_id = 1
         effective_variant = req.force_variant or "A"
 
     t_start = time.time()
@@ -640,12 +1059,15 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
     Blast-Radius gates, guaranteeing hallucinated rules (e.g. blanket /16 subnet drops)
     are automatically intercepted and replaced before the payload reaches the Next.js frontend.
     """
-    cat_id = resolve_category_id(req.category_id or req.scenario_id or 1)
-    if req.prompt:
+    if req.category_id is not None or req.scenario_id is not None:
+        cat_id = resolve_category_id(req.category_id or req.scenario_id or 1)
+        effective_variant = req.force_variant or "A"
+    elif req.prompt:
         classified_id, _, prompt_var = classify_nlp_intent(req.prompt)
         cat_id = classified_id
         effective_variant = prompt_var or req.force_variant or "A"
     else:
+        cat_id = 1
         effective_variant = req.force_variant or "A"
 
     alert_id = f"evt-{int(time.time() * 1000) % 1000000000}"
@@ -776,10 +1198,22 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
         candidate_cmd = chosen_cand.get("cmd", entry.get("golden_cmd", "")).replace("{SRC}", src_ip).replace("{DST}", dst_ip)
         candidate_q = float(chosen_cand.get("q_score", 0.95))
 
-    # Local Grammar and Blast-Radius gates
-    cb_triggered, cb_reason, violated_gates = evaluate_circuit_breaker(
-        {"q_score": candidate_q, "grammar_valid": True},
-        candidate_cmd,
+    # Tier-1 & Tier-2 Hierarchical Classification
+    macro_family = classify_macro_family(entry.get("scenario_key", ""), cat_id, entry.get("telemetry", {}), req.prompt or entry.get("description", ""))
+    explainable_trigger = compute_explainable_trigger(macro_family, entry.get("telemetry", {}), cat_id)
+    is_zero_day = (cat_id == 99 or "UNKNOWN_ANOMALY" in entry.get("scenario_key", ""))
+    ttl_seconds, ttl_display = compute_ttl_for_family(macro_family)
+    telemetry_primitives = build_telemetry_vector_primitives(entry, src_ip, dst_ip, macro_family)
+
+    # 100-Point 6-Gate Mathematical Evaluation
+    composite_score, gate_scores, cb_triggered, cb_reason, delta = evaluate_composite_confidence(
+        candidate_cmd=candidate_cmd,
+        source_ip=src_ip,
+        target_port=entry.get("target_port", 80),
+        protocol=entry.get("protocol", "TCP"),
+        macro_family=macro_family,
+        is_zero_day=is_zero_day,
+        grammar_valid=True
     )
 
     golden_cmd = entry["golden_cmd"].replace("{SRC}", src_ip).replace("{DST}", dst_ip)
@@ -787,6 +1221,17 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
     effective_cmd = golden_cmd if cb_triggered else candidate_cmd
 
     if cb_triggered:
+        delta["enforced"] = golden_cmd
+        if "172.28.0.0/16" in candidate_cmd or "/16" in candidate_cmd:
+            delta["reason"] = f"[REJECTED] AI attempted subnet drop (/16). [ENFORCED] Playbook deployed surgical drop (/32)."
+        elif is_zero_day and "-m limit" not in candidate_cmd:
+            delta["reason"] = f"[REJECTED] AI attempted hard DROP on Zero-Day anomaly. [ENFORCED] Playbook enforced Layer 4 rate-limit (50/s)."
+        else:
+            delta["reason"] = f"[REJECTED] Candidate rule violated 6-gate safety matrix ({cb_reason}). [ENFORCED] Playbook substituted Golden Policy."
+
+    if is_zero_day:
+        final_reasoning = "Out-of-distribution anomaly detected. Failing safe. Forcing Layer 4 rate-limit to preserve SLA."
+    elif cb_triggered:
         final_reasoning = (
             f"[Safety Gate Intercept: Candidate rule '{candidate_cmd}' violated guardrails ({cb_reason}). Substituted Golden Policy.] "
             f"Kaggle Live Analysis: {candidate_reasoning}"
@@ -798,6 +1243,8 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
         "alert_id": alert_id,
         "category_id": entry["category_id"],
         "threat_family": entry.get("threat_family", "Unknown"),
+        "macro_family": macro_family,
+        "explainable_trigger": explainable_trigger,
         "scenario_id": entry["scenario_key"],
         "attacker_node": req.source,
         "target_container": req.target,
@@ -806,10 +1253,20 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "threat_classification": entry["threat_classification"],
         "severity": entry["severity"],
-        "telemetry_vector": entry["telemetry"],
+        "telemetry_vector": telemetry_primitives,
+        "composite_score": composite_score,
+        "gate_scores": gate_scores,
+        "execution_threshold": 80,
+        "violation_delta": delta if cb_triggered else None,
+        "ttl_seconds": ttl_seconds,
+        "ttl_display": ttl_display,
+        "is_zero_day": is_zero_day,
+        "l7_indicator": entry.get("telemetry", {}).get("l7_indicator"),
+        "llm_raw_output": raw_llm_output,
+
         "selected_variant": effective_variant,
         "variant_label": f"Live LLM Variant {effective_variant}",
-        "q_score": candidate_q if not cb_triggered else 0.96,
+        "q_score": round(composite_score / 100.0, 2),
         "circuit_breaker_triggered": cb_triggered,
         "circuit_breaker_banner": (
             f"CIRCUIT BREAKER TRIGGERED: Fallback Rule Engaged ({cb_reason})"
@@ -817,7 +1274,7 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
             else None
         ),
         "circuit_breaker_reason": cb_reason,
-        "violated_gates": violated_gates,
+        "violated_gates": [cb_reason] if cb_triggered else [],
         "chosen_mitigation": {
             "action_type": "FALLBACK_GOLDEN_PLAYBOOK" if cb_triggered else "SURGICAL_NETFILTER_BLOCK",
             "target_container": req.target,
@@ -1045,7 +1502,7 @@ async def get_pending_alerts():
 
 
 @app.post("/api/v1/execute/{alert_id}")
-async def execute_mitigation(alert_id: str, decision: ReviewDecision):
+async def execute_mitigation(alert_id: str, decision: ReviewDecision, background_tasks: BackgroundTasks):
     """
     Executes the approved iptables command inside the target Docker container.
     Note: Only pops the alert from `pending_mitigations` AFTER execution succeeds,
@@ -1133,6 +1590,43 @@ async def execute_mitigation(alert_id: str, decision: ReviewDecision):
         "SUCCESS",
     )
 
+    ttl_seconds = envelope.get("ttl_seconds", 1800)
+    ttl_display = envelope.get("ttl_display", "30m")
+    append_terminal_log(
+        f"[ENFORCED] Rule applied. Teardown scheduled in {ttl_seconds}s (TTL: {ttl_display}).",
+        "SUCCESS",
+    )
+    background_tasks.add_task(schedule_rule_teardown, target_container, cmd_to_run, ttl_seconds, alert_id)
+
+    # Tripartite Audit Ledger entry
+    audit_entry = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "alert_id": alert_id,
+        "target_container": target_container,
+        "attacker_node": attacker_node,
+        "threat_classification": envelope.get("threat_classification"),
+        "macro_family": envelope.get("macro_family"),
+        "explainable_trigger": envelope.get("explainable_trigger"),
+        "telemetry_vector": envelope.get("telemetry_vector"),
+        "llm_raw_output": envelope.get("llm_raw_output") or envelope.get("reasoning_trace"),
+        "critic_gate_scores": envelope.get("gate_scores") or {
+            "syntax_validity": 20,
+            "blast_radius_scope": 25,
+            "target_coherence": 15,
+            "protocol_port_alignment": 15,
+            "directionality": 10,
+            "action_severity": 15,
+        },
+        "composite_score": envelope.get("composite_score", 100),
+        "circuit_breaker_triggered": envelope.get("circuit_breaker_triggered", False),
+        "violation_delta": envelope.get("violation_delta"),
+        "critic_final_rule": cmd_to_run,
+        "ttl_seconds": ttl_seconds,
+        "ttl_display": ttl_display,
+        "status": "ENFORCED"
+    }
+    write_audit_ledger_entry(audit_entry)
+
     record = {
         "alert_id": alert_id,
         "resolved_at": datetime.now(timezone.utc).strftime("%H:%M:%S"),
@@ -1140,6 +1634,7 @@ async def execute_mitigation(alert_id: str, decision: ReviewDecision):
         "injected_cmd": f"docker exec {target_container} {cmd_to_run}",
         "simulated": simulated_exec,
         "envelope": envelope,
+        "audit_entry": audit_entry,
     }
     executed_history.append(record)
 
@@ -1151,6 +1646,53 @@ async def execute_mitigation(alert_id: str, decision: ReviewDecision):
         "injected_cmd": f"docker exec {target_container} {cmd_to_run}",
         "postmortem_card": envelope.get("postmortem_card"),
     }
+
+
+
+@app.get("/api/v1/audit/ledger")
+async def get_audit_ledger(limit: int = Query(50, ge=1, le=500)):
+    """Returns the tripartite compliance audit ledger entries."""
+    entries = read_audit_ledger_entries(limit)
+    return {
+        "status": "success",
+        "count": len(entries),
+        "ledger": entries
+    }
+
+
+@app.get("/api/v1/audit/ledger/last")
+@app.get("/api/v1/audit/last")
+async def get_last_audit_entry():
+    """Returns the most recent tripartite compliance audit ledger entry."""
+    entries = read_audit_ledger_entries(1)
+    if not entries:
+        return {
+            "status": "no_records_yet",
+            "message": "Audit ledger is currently empty. Accept a mitigation in the cockpit to record an entry.",
+            "sample_entry": {
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "alert_id": "evt-preview-baseline",
+                "target_container": "pc-4",
+                "threat_classification": "TCP_SYN_VOLUMETRIC",
+                "macro_family": "Volumetric (L3/L4 DDoS)",
+                "explainable_trigger": "High SYN/ACK ratio (>0.95) & PPS > 10,000 - T1498.001",
+                "critic_gate_scores": {
+                    "syntax_validity": 20,
+                    "blast_radius_scope": 25,
+                    "target_coherence": 15,
+                    "protocol_port_alignment": 15,
+                    "directionality": 10,
+                    "action_severity": 15
+                },
+                "composite_score": 100,
+                "circuit_breaker_triggered": False,
+                "critic_final_rule": "iptables -A INPUT -s 172.28.0.100 -p tcp --syn --dport 80 -m limit ! --limit 15/s --limit-burst 30 -j DROP",
+                "ttl_seconds": 1800,
+                "ttl_display": "30m",
+                "status": "ENFORCED"
+            }
+        }
+    return entries[-1]
 
 
 @app.get("/api/v1/terminal/health")
