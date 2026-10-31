@@ -558,6 +558,7 @@ async def mock_threat(req: ThreatRequest = ThreatRequest()):
     else:
         effective_variant = req.force_variant or "A"
 
+    t_start = time.time()
     alert_id = f"evt-{int(time.time() * 1000) % 1000000000}"
     entry = JSONL_BANK.get(cat_id) or JSONL_BANK.get(1)
 
@@ -584,6 +585,10 @@ async def mock_threat(req: ThreatRequest = ThreatRequest()):
         variant_mode=effective_variant,
         delay_seconds=0.0,
     )
+    envelope["execution_mode"] = "demo"
+    envelope["latency_sec"] = 14.0
+    envelope["inference_source"] = "Deterministic Local Playbook (14s Simulated Latency Hold)"
+    envelope["model_name"] = "zephyr-dataset-playbook"
 
     return {
         "status": "pending_human_review",
@@ -599,6 +604,7 @@ async def mock_threat(req: ThreatRequest = ThreatRequest()):
 @app.post("/api/live/threat")
 @app.post("/api/v1/live/threat")
 async def live_threat(req: ThreatRequest = ThreatRequest()):
+    t_start = time.time()
     """
     Live Endpoint (/api/live/threat):
     Wraps incoming threat telemetry into a strict system prompt and executes an
@@ -774,6 +780,11 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
         "rejection_reason": "Rejected blanket /16 subnet drop because it severs legitimate SLA traffic from traffic-gen (172.28.0.101); surgical rule preserves 100% service availability.",
     }
 
+    elapsed_sec = round(time.time() - t_start, 2)
+    envelope["execution_mode"] = "live"
+    envelope["latency_sec"] = elapsed_sec
+    envelope["inference_source"] = f"Kaggle Remote LLM via Cloudflare Tunnel ({TUNNEL_URL})"
+    envelope["model_name"] = "zephyr-dpo-v3 (Kaggle GPU)"
     pending_mitigations[alert_id] = envelope
 
     if cb_triggered:
