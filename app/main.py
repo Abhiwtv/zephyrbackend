@@ -51,11 +51,17 @@ TUNNEL_URL = f"{KAGGLE_LLM_URL}/v1" if not KAGGLE_LLM_URL.endswith("/v1") else K
 RESPONDER_SYSTEM_PROMPT = """You are the Project Zephyr Autonomous SOC Responder Agent operating inside a 5-node Linux Docker LAN (`br-zephyr`: `pc-1` [172.28.0.12], `pc-2` [172.28.0.13], `pc-3` [172.28.0.14], `pc-4` [172.28.0.15], `pc-5` [172.28.0.16], `ext-net` [172.28.0.100], `traffic-gen` [172.28.0.101]).
 
 Your task is to analyze incoming NIDS telemetry and output a strictly validated MitigationEnvelope JSON object.
+Provide detailed, expert-level technical operational reasoning analyzing:
+1) Anomaly signature and telemetry vectors (packet rate, SYN/ACK ratio, entropy, targeted port).
+2) Blast radius and collateral risk assessment (why broad /16 drops are unacceptable).
+3) Kernel netfilter mitigation strategy (how the chosen iptables command protects kernel conntrack while preserving benign SLA availability).
+
 Return ONLY valid JSON matching this schema:
 {
   "threat_classification": "SYN_FLOOD" | "RCE_ATTEMPT" | "SQL_INJECTION" | "SSH_BRUTE_FORCE" | "PORT_SCAN" | "BENIGN",
   "severity": "LOW" | "MEDIUM" | "HIGH" | "CRITICAL",
-  "reasoning_trace": "<concise reasoning under 40 words>",
+  "confidence_score": <float between 0.10 and 0.99 representing algorithmic certainty based on telemetry vector clarity>,
+  "reasoning_trace": "<detailed 2-4 sentence technical operational breakdown: 1. Vector analysis identifying anomalous ingress flow; 2. Collateral impact assessment; 3. Exact Netfilter kernel mitigation strategy explaining why the surgical rule is superior.>",
   "chosen_mitigation": {
     "action_type": "BLOCK_SOURCE_IP" | "RATE_LIMIT_SYN" | "DROP_PORT_TRAFFIC" | "ISOLATE_NODE" | "NO_OP",
     "target_container": "<target node, e.g. pc-4>",
@@ -65,14 +71,14 @@ Return ONLY valid JSON matching this schema:
     "estimated_collateral_impact": "ZERO" | "LOW" | "MODERATE" | "HIGH"
   },
   "rejected_alternative": {
-    "action_type": "<alternative action>",
+    "action_type": "<alternative action, e.g. BLANKET_SUBNET_DROP>",
     "target_container": "<target node>",
     "source_ip": "<attacker IP>",
     "dest_port": <int>,
-    "iptables_cmd": "<alternative iptables command>",
+    "iptables_cmd": "<alternative iptables command, e.g. iptables -A INPUT -s 172.28.0.0/16 -j DROP>",
     "estimated_collateral_impact": "HIGH"
   },
-  "rejection_reason": "<why alternative is inferior, e.g. collateral damage>"
+  "rejection_reason": "<why alternative is inferior, e.g. collateral damage severing legitimate traffic>"
 }
 """
 
@@ -708,7 +714,11 @@ async def live_threat(req: ThreatRequest = ThreatRequest()):
                 parsed_candidate.get("reasoning_trace")
                 or parsed_candidate.get("reasoning", "")
             )
-            candidate_q = float(parsed_candidate.get("q_score", 0.96))
+            raw_q = parsed_candidate.get("confidence_score") or parsed_candidate.get("q_score")
+            if raw_q is not None:
+                candidate_q = float(raw_q)
+            else:
+                candidate_q = 0.45 if effective_variant == "B" else (0.22 if effective_variant == "C" else (0.84 if effective_variant == "D" else 0.96))
         except Exception:
             parsed_candidate = None
 
